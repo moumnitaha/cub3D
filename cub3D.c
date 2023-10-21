@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:18 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/21 18:21:10 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/21 18:54:37 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void leaks(void)
 {
 	system("leaks cub3D");
 }
-
-
 
 int	main(int ac, char **av)
 {
@@ -35,16 +33,28 @@ int	main(int ac, char **av)
 		}
 		char *line;
 		line = get_next_line(fd);
+		int i;
 		while (line)
 		{
-			printf("%d => %s",ft_strlen(line), line);
+			printf("%d => %s",ft_strlen(line) - 1, line);
 			map[length] = ft_strdup(line);
 			free(line);
+			i = 0;
+			while(map[length][i] &&  map[length][i] == 32)
+				i++;
+			if (length >= 8 && (map[length][i] != '1' || map[length][ft_strlen(map[length]) - 2] != '1'))
+			{
+				printf("Error at %s\n", map[length]);
+				return (0);
+			}
+			if (map[length + 1] && map[length + 1][i] != '1')
+			{
+				printf("Error at %s\n", map[length + 1]);
+				return (0);
+			}
 			line = get_next_line(fd);
 			length++;
 		}
-		printf("\nlength = %d\n", length);
-		printf("\nmap = %s\n", map[length - 1]);
 	}
 	// atexit(leaks);
 	return (0);
