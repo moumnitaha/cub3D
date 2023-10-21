@@ -6,7 +6,7 @@
 #    By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/21 13:47:28 by tmoumni           #+#    #+#              #
-#    Updated: 2023/10/21 14:58:25 by tmoumni          ###   ########.fr        #
+#    Updated: 2023/10/21 18:24:10 by tmoumni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,14 +20,13 @@ NAME = cub3D
 HEADER = cub3D.h
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 
-SRCS = cub3D.c
+SRCS = cub3D.c gnl/get_next_line.c gnl/get_next_line_utils.c
 OBJS_DIR = OBJS_FILES
-BUILTINS_OBJS_DIR = $(OBJS_DIR)/builtins
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
-RM = rm -f
+RM = rm -rf
 
 all: $(NAME)
 	@echo "\n$(GREEN)[[ cub3D created successfully! ]]$(END)\n"
@@ -41,7 +40,7 @@ $(OBJS_DIR)/%.o: %.c $(HEADER)
 	@echo "$(CYAN)Compiling:$(END)" $< "..."
 
 clean:
-	@$(RM) $(OBJS)
+	@$(RM) $(OBJS) $(OBJS_DIR)
 	@echo "$(RED)$(BOLD)$(NAME) objects files removed.$(END)"
 
 fclean: clean
