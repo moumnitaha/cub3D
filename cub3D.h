@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/25 17:45:11 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/25 22:51:36 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,28 @@
 
 # include <stdio.h>
 # include "gnl/get_next_line.h"
-# include "mlx.h"
+# include <mlx.h>
 
 # define DM				        32
 # define X_EVENT_KEY_PRESS		2
 # define X_EVENT_KEY_RELEASE	3
 # define X_EVENT_KEY_EXIT		17
-# define KEY_ESC				53
-# define KEY_W					13
-# define KEY_A					0
-# define KEY_S					1
-# define KEY_D					2
-# define KEY_UP					126
-# define KEY_DOWN				125
-# define KEY_LEFT				123
-# define KEY_RIGHT				124
+// # define KEY_W					13
+// # define KEY_A					0
+// # define KEY_S					1
+// # define KEY_D					2
+
+// # define KEY_ESC					53
+// # define KEY_LEFT				123
+// # define KEY_RIGHT				124
+// # define KEY_DOWN				125
+// # define KEY_UP					126
+
+# define KEY_ESC				65307
+# define KEY_LEFT				65361
+# define KEY_RIGHT				65363
+# define KEY_DOWN				65364
+# define KEY_UP					65362
 
 typedef struct s_player {
 	int		x;

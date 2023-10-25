@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:13:39 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/25 18:56:45 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/25 22:58:58 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 #include <string.h>
 #include "cub3D.h"
 #include <math.h>
-#include<time.h>
+#include <time.h>
+#include "math.h"
 
 #define MAX_ROWS 14
 #define MAX_COLS 33
@@ -258,7 +259,7 @@ int	key_press(int keycode, t_game *game)
 		mlx_clear_window(game->mlx, game->win);
 		mlx_put_imgs(game);
 		draw_player(game, game->player->x, game->player->y);
-		DDA(game, game->player->x, game->player->y, game->player->x  + cos(game->player->dir) * 30, game->player->y + sin(game->player->dir) * 30);
+		DDA(game, game->player->x, game->player->y, game->player->x + cos(game->player->dir) * 30, game->player->y + sin(game->player->dir) * 30);
 
 	}
 	else if (keycode == KEY_DOWN)
@@ -323,7 +324,8 @@ int main()
 	mlx_put_imgs(g);
 	draw_player(g, p->x, p->y);
 	DDA(g, p->x, p->y, p->x + (cos(p->dir) * 30), p->y + (sin(p->dir) * 30));
-	mlx_hook(g->win, X_EVENT_KEY_PRESS, 0, &key_press, g);
+	// mlx_hook(g->win, X_EVENT_KEY_PRESS, 0, &key_press, g);
+	mlx_key_hook(g->win, &key_press, g);
 	mlx_hook(g->win, X_EVENT_KEY_EXIT, 0, &escape_game, g);
 	mlx_loop(g->mlx);
     return 0;
