@@ -6,7 +6,7 @@
 #    By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/21 13:47:28 by tmoumni           #+#    #+#              #
-#    Updated: 2023/10/25 23:01:43 by tmoumni          ###   ########.fr        #
+#    Updated: 2023/10/26 09:46:26 by tmoumni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,7 @@ $(NAME): $(OBJS)
 
 $(OBJS_DIR)/%.o: %.c $(HEADER)
 	@mkdir -p $(@D)
-	@$(CC) $(KEYCODES) -c $< -o $@
+	@$(CC) -c $< -o $@
 	@printf "$(CYAN)Compiling:$(END) $< ...\n"
 
 clean:

@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:13:39 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/25 22:58:58 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/26 18:53:02 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,26 @@
 #include <time.h>
 #include "math.h"
 
-#define MAX_ROWS 14
+#define MAX_ROWS 10
 #define MAX_COLS 33
 #define green 0x00008000
 #define red  0x00FF0000
 #define blue 0x000000FF
 #define white 0x00FFFFFF
 #define black 0x00000000
+#define gray 0x00C0C0C0
 
 
 char* map[] = {
-    "111111111 11111111111111111111111",
-    "11111111111110000000000001111111 ",
-    "        1011000001110000111111111",
-    "       1100100000000000000000001 ",
-    "111111111011000001110000000000011",
-    "10000000000000000111011111110011 ",
-    "111101111111110111000000100000101",
+    "111111111111111111111111111111111",
+    "10000000000000000011011111110011 ",
+    "111101111111110110000000100000101",
     "111101111111110111010100100011111",
     "11100000111  10111000000100000001",
     "10000000001  10011000000100011111",
     "10000000000111000101010P10001    ",
-    "110000011101010111000111000111   ",
-    "11110111 1110101 1111100000111   ",
+    "110000011100010111000111000111   ",
+    "11110111 1110001 1111100000111   ",
     "11111111 1111111 111111111111    "
 };
 
@@ -152,10 +149,15 @@ bool isSurroundedByWalls() {
 	return true;
 }
 
-void draw_rect(t_game *g, int x , int y, int color)
+double degToRad(double deg)
 {
-	int width = DM + y;
-	int height = DM + x;
+	return deg * M_PI / 180;
+}
+
+void draw_rect(t_game *g, int x , int y, int color, double scale)
+{
+	double width = (DM * scale) + y;
+	double height = (DM * scale) + x;
 	int i = y;
 	int j = x;
 	while (i < width)
@@ -163,22 +165,25 @@ void draw_rect(t_game *g, int x , int y, int color)
 		j = x;
 		while (j < height)
 		{
-			mlx_pixel_put(g->mlx, g->win, j, i, color);
+			// if ((double)(j % (DM * scale)) == 0 || (double)(i % (DM * scale)) == 0)
+			// 	mlx_pixel_put(g->mlx, g->win, j, i, gray);
+			// else
+				mlx_pixel_put(g->mlx, g->win, j, i, color);
 			j++;
 		}
 		i++;
 	}
 }
 
-void DDA(t_game *g, int X0, int Y0, int X1, int Y1)
+void draw_line(t_game *g, double X0, double Y0, double X1, double Y1)
 {
-	int dx = X1 - X0;
-	int dy = Y1 - Y0;
-	int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
-	float Xinc = dx / (float)steps;
-	float Yinc = dy / (float)steps;
-	float X = X0;
-	float Y = Y0;
+	double dx = X1 - X0;
+	double dy = Y1 - Y0;
+	double steps = fabs(dx) > fabs(dy) ? fabs(dx) : fabs(dy);
+	double Xinc = dx / (double)steps;
+	double Yinc = dy / (double)steps;
+	double X = X0;
+	double Y = Y0;
 	for (int i = 0; i <= steps; i++)
 	{
 		mlx_pixel_put(g->mlx, g->win, X, Y, red);
@@ -187,36 +192,34 @@ void DDA(t_game *g, int X0, int Y0, int X1, int Y1)
 	}  
 } 
 
-void	mlx_put_imgs(t_game *g)
+void	mlx_put_imgs(t_game *g, double scale)
 {
 	for (int i = 0; i < MAX_ROWS; i++)
 	{
 		for (int j = 0; j < MAX_COLS; j++)
 		{
 			if (map[i][j] == '1')
-				draw_rect(g, j * DM , i * DM , black);
+				draw_rect(g, j * (DM * scale) , i * (DM * scale) , black, scale);
 			else if (map[i][j] == ' ')
-				draw_rect(g, j * DM, i * DM, red);
-			// else if (map[i][j] == 'P')
-			// 	draw_rect(g, j * DM, i * DM, blue);
+				draw_rect(g, j * (DM * scale), i * (DM * scale), red, scale);
 			else if (map[i][j] == '0' || map[i][j] == 'P')
-				draw_rect(g, j * DM, i * DM, white);
+				draw_rect(g, j * (DM * scale), i * (DM * scale), white, scale);
 		}
 	}
 }
 
-void draw_player(t_game *g, int x_pos, int y_pos)
+void draw_player(t_game *g, double x_pos, double y_pos, double scale)
 {
-	int width = 8 + y_pos;
-	int height = 8 + x_pos;
-	int i = y_pos;
-	int j = x_pos;
+	double width = 12 + y_pos;
+	double height = 12 + x_pos;
+	double i = y_pos;
+	double j = x_pos;
 	while (i < width)
 	{
 		j = x_pos;
 		while (j < height)
 		{
-			mlx_pixel_put(g->mlx, g->win, j - 4, i - 4, blue);
+			mlx_pixel_put(g->mlx, g->win, (j - 6) * scale, (i - 6) * scale, blue);
 			j++;
 		}
 		i++;
@@ -243,53 +246,114 @@ int	exit_game(t_game *game)
 	exit(0);
 }
 
+void mlx_draw_cercle(t_game *g)
+{
+	int x = 10;
+	int y = 10;
+	int r = 5;
+	int i = 0;
+	int j = 0;
+	while (i < 2 * r)
+	{
+		j = 0;
+		while (j < 2 * r)
+		{
+			if ((int)sqrt((i - r) * (i - r) + (j - r) * (j - r)) == r)
+				mlx_pixel_put(g->mlx, g->win, x + i, y + j, red);
+			j++;
+		}
+		i++;
+	}
+}
+
+void render3DProjectedWalls(t_game *game, double wallStripHeight, int X)
+{
+	for (int i = 0; i <= wallStripHeight; i++)
+	{
+		mlx_pixel_put(game->mlx, game->win, X, ((game->height  - wallStripHeight) / 2) + i, white);
+	}
+}
+
+void draw_rays(t_game *g)
+{
+	double pX = g->player->x;
+	double pY = g->player->y;
+	double rayAngle = g->player->dir - degToRad(30);
+	double distanceProjectionPlane;
+	double wallStripHeight;
+	double mapDistance;
+	double mapWidth = 60 / g->width;
+	int i = 0;
+	while(rayAngle < g->player->dir + degToRad(30))
+	{
+		mapDistance = 0;
+		while(map[(int)(pY + sin(rayAngle) * mapDistance) / DM][(int)(pX + cos(rayAngle) * mapDistance) / DM] != '1')
+				mapDistance += 0.05;
+		distanceProjectionPlane = ((g->width ) / 2) / tan(degToRad(30));
+		wallStripHeight = (DM / mapDistance) * distanceProjectionPlane;
+		render3DProjectedWalls(g, wallStripHeight, i);
+		rayAngle += degToRad(mapWidth);
+		i++;
+	}
+	printf("i = %d\n", i);
+}
+
+
+int mainDraws(t_game *game)
+{
+	double pX = game->player->x;
+	double pY = game->player->y;
+	double rayAngle = game->player->dir - degToRad(30);
+	mlx_clear_window(game->mlx, game->win);
+	draw_rays(game);
+	mlx_put_imgs(game, 0.2);
+	draw_player(game, game->player->x, game->player->y, 0.2);
+	draw_line(game, pX * 0.2, pY * 0.2, (pX + cos( game->player->dir) * 50) * 0.2, (pY + sin( game->player->dir) * 50) * 0.2);
+	return (0);
+}
 
 int	key_press(int keycode, t_game *game)
 {
-	time_t t;
-    time(&t);
+	double pX;
+	double pY;
+	double mapX = 0;
+	double mapY = 0;
+	if (keycode == KEY_ESC)
+		exit_game(game);
 	if (keycode == KEY_UP)
 	{
-		// if (map[(game->player->y - 8) / DM][game->player->x / DM] == '1')
-		// 	return (0);
-		game->player->y += 8 * sin(game->player->dir);
-		game->player->x += 8 * cos(game->player->dir);
-		if (map[game->player->y / DM][game->player->x / DM] == '1')
-			printf("%s POSITIONS : X = %d, Y = %d\n",ctime(&t), game->player->x / DM, game->player->y / DM);
-		mlx_clear_window(game->mlx, game->win);
-		mlx_put_imgs(game);
-		draw_player(game, game->player->x, game->player->y);
-		DDA(game, game->player->x, game->player->y, game->player->x + cos(game->player->dir) * 30, game->player->y + sin(game->player->dir) * 30);
-
+		pX = game->player->x + 4 * cos(game->player->dir);
+		pY = game->player->y + 4 * sin(game->player->dir);
+		if(map[(int)(pY / DM)][(int)(pX/ DM)] == '1')
+			return (0);
+		game->player->x = pX;
+		game->player->y = pY;
 	}
 	else if (keycode == KEY_DOWN)
 	{
-		game->player->y -= 8 * sin(game->player->dir);
-		game->player->x -= 8 * cos(game->player->dir);
-		if (map[game->player->y / DM][game->player->x / DM] == '1')
-			printf("POSITIONS : X = %d, Y = %d\n", game->player->x / DM, game->player->y / DM);
-		mlx_clear_window(game->mlx, game->win);
-		mlx_put_imgs(game);
-		draw_player(game, game->player->x, game->player->y);
-		DDA(game, game->player->x, game->player->y, game->player->x + cos(game->player->dir) * 30, game->player->y + sin(game->player->dir) * 30);
+		pX = game->player->x - 4 * cos(game->player->dir);
+		pY = game->player->y - 4 * sin(game->player->dir);
+		if(map[(int)(pY / DM)][(int)(pX/ DM)] == '1')
+			return (0);
+		game->player->x = pX;
+		game->player->y = pY;
 	}
 	else if (keycode == KEY_LEFT)
 	{
-		game->player->dir -= 0.1;
-		mlx_clear_window(game->mlx, game->win);
-		mlx_put_imgs(game);
-		draw_player(game, game->player->x, game->player->y);
-		DDA(game, game->player->x, game->player->y, game->player->x + cos(game->player->dir) * 30, game->player->y + sin(game->player->dir) * 30);
+		game->player->dir -= degToRad(4);
+		pX = game->player->x;
+		pY = game->player->y;
 	}
 	else if (keycode == KEY_RIGHT){
-		game->player->dir += 0.1;
-		mlx_clear_window(game->mlx, game->win);
-		mlx_put_imgs(game);
-		draw_player(game, game->player->x, game->player->y);
-		DDA(game, game->player->x, game->player->y, game->player->x + cos(game->player->dir) * 30, game->player->y + sin(game->player->dir) * 30);
+		game->player->dir += degToRad(4);
+		pX = game->player->x;
+		pY = game->player->y;
 	}
-	if (keycode == KEY_ESC)
-		exit_game(game);
+	// mlx_clear_window(game->mlx, game->win);
+	// mlx_put_imgs(game, 0.2);
+	// draw_player(game, pX, pY);
+	// draw_rays(game);
+	mainDraws(game);
 	return (0);
 }
 
@@ -312,20 +376,19 @@ int main()
 	p = malloc(sizeof(t_player));
 	g = malloc(sizeof(t_game));
 	g->mlx = mlx_init();
-	g->height = MAX_ROWS;
-	g->width = MAX_COLS;
-	g->win = mlx_new_window(g->mlx, DM * g->width, DM * g->height, "./cub3D");
+	g->height = MAX_ROWS * DM;
+	g->width = MAX_COLS * DM;
+	g->win = mlx_new_window(g->mlx, g->width, g->height, "./cub3D");
 
 	p->x = (get_player_position() % MAX_COLS) * DM;
 	p->y = (get_player_position() / MAX_COLS) * DM;
 	p->dir = -M_PI_2;
 	g->player = p;
 
-	mlx_put_imgs(g);
-	draw_player(g, p->x, p->y);
-	DDA(g, p->x, p->y, p->x + (cos(p->dir) * 30), p->y + (sin(p->dir) * 30));
-	// mlx_hook(g->win, X_EVENT_KEY_PRESS, 0, &key_press, g);
-	mlx_key_hook(g->win, &key_press, g);
+	mainDraws(g);
+	mlx_hook(g->win, X_EVENT_KEY_PRESS, 0, &key_press, g);
+	// mlx_key_hook(g->win, &key_press, g);
+	// mlx_loop_hook(g->mlx, &mainDraws, g);
 	mlx_hook(g->win, X_EVENT_KEY_EXIT, 0, &escape_game, g);
 	mlx_loop(g->mlx);
     return 0;

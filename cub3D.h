@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/25 22:51:36 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/26 18:15:19 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,21 @@
 // # define KEY_S					1
 // # define KEY_D					2
 
-// # define KEY_ESC					53
-// # define KEY_LEFT				123
-// # define KEY_RIGHT				124
-// # define KEY_DOWN				125
-// # define KEY_UP					126
+# define KEY_ESC					53
+# define KEY_LEFT				123
+# define KEY_RIGHT				124
+# define KEY_DOWN				125
+# define KEY_UP					126
 
-# define KEY_ESC				65307
-# define KEY_LEFT				65361
-# define KEY_RIGHT				65363
-# define KEY_DOWN				65364
-# define KEY_UP					65362
+// # define KEY_ESC				65307
+// # define KEY_LEFT				65361
+// # define KEY_RIGHT				65363
+// # define KEY_DOWN				65364
+// # define KEY_UP					65362
 
 typedef struct s_player {
-	int		x;
-	int		y;
+	double		x;
+	double		y;
 	double		dir;
 	int		turn_dir;
 	int		walk_dir;
@@ -50,9 +50,9 @@ typedef struct s_player {
 }	t_player;
 
 typedef struct s_game {
-	int		height;
+	double		height;
+	double		width;
 	int		clctbls;
-	int		width;
 	int		mvmnts;
 	int		clcted;
 	int		pos_x;
