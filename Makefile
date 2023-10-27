@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+         #
+#    By: admin <admin@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/21 13:47:28 by tmoumni           #+#    #+#              #
-#    Updated: 2023/10/21 18:24:10 by tmoumni          ###   ########.fr        #
+#    Updated: 2023/10/27 11:36:41 by admin            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ HEADER = cub3D.h
 CC = cc
 FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 
-SRCS = cub3D.c gnl/get_next_line.c gnl/get_next_line_utils.c
+SRCS = cub3D.c gnl/get_next_line.c gnl/get_next_line_utils.c utils/ft_1.c utils/ft_2.c \
+		parse.c u_parse.c utils/ft_3.c
 OBJS_DIR = OBJS_FILES
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
