@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/26 18:15:19 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/27 11:04:09 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@
 // # define KEY_S					1
 // # define KEY_D					2
 
-# define KEY_ESC					53
-# define KEY_LEFT				123
-# define KEY_RIGHT				124
-# define KEY_DOWN				125
-# define KEY_UP					126
+// # define KEY_ESC					53
+// # define KEY_LEFT				123
+// # define KEY_RIGHT				124
+// # define KEY_DOWN				125
+// # define KEY_UP					126
 
 // # define KEY_ESC				65307
 // # define KEY_LEFT				65361

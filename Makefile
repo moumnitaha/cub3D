@@ -6,7 +6,7 @@
 #    By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/21 13:47:28 by tmoumni           #+#    #+#              #
-#    Updated: 2023/10/26 09:46:26 by tmoumni          ###   ########.fr        #
+#    Updated: 2023/10/27 21:33:58 by tmoumni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ Q = KEY_Q=12
 
 SHELL = /bin/bash
 UNAME = $(shell uname -s)
+KEYCODES = -D $(ESC) -D $(Q) -D $(R) -D $(W) -D $(A) -D $(S) -D $(D) -D $(UP) -D $(DOWN) -D $(LEFT) -D $(RIGHT)
 ifeq ($(UNAME), Linux)
 	MFLAGS =  -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 	# Key Codes for Linux
@@ -60,9 +61,9 @@ ifeq ($(UNAME), Linux)
 	RIGHT = KEY_RIGHT=65363
 	R = KEY_R=114
 	Q = KEY_Q=113
+	KEYCODES =  -D $(ESC) -D $(Q) -D $(R) -D $(W) -D $(A) -D $(S) -D $(D) -D $(UP) -D $(DOWN) -D $(LEFT) -D $(RIGHT)
 endif
 
-KEYCODES =  -D $(ESC) -D $(Q) -D $(R) -D $(W) -D $(A) -D $(S) -D $(D) -D $(UP) -D $(DOWN) -D $(LEFT) -D $(RIGHT)
 
 all: $(NAME)
 	@printf "\n$(GREEN)[[ cub3D created successfully! ]]$(END)\n"
@@ -72,7 +73,7 @@ $(NAME): $(OBJS)
 
 $(OBJS_DIR)/%.o: %.c $(HEADER)
 	@mkdir -p $(@D)
-	@$(CC) -c $< -o $@
+	@$(CC) -c $(KEYCODES) $< -o $@
 	@printf "$(CYAN)Compiling:$(END) $< ...\n"
 
 clean:

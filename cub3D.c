@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:13:39 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/26 18:53:02 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/27 22:06:37 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 #define white 0x00FFFFFF
 #define black 0x00000000
 #define gray 0x00C0C0C0
+#define bluesky 0x00199EF3
 
 
 char* map[] = {
@@ -175,7 +176,7 @@ void draw_rect(t_game *g, int x , int y, int color, double scale)
 	}
 }
 
-void draw_line(t_game *g, double X0, double Y0, double X1, double Y1)
+void draw_line(t_game *g, double X0, double Y0, double X1, double Y1, int color)
 {
 	double dx = X1 - X0;
 	double dy = Y1 - Y0;
@@ -186,14 +187,35 @@ void draw_line(t_game *g, double X0, double Y0, double X1, double Y1)
 	double Y = Y0;
 	for (int i = 0; i <= steps; i++)
 	{
-		mlx_pixel_put(g->mlx, g->win, X, Y, red);
+		mlx_pixel_put(g->mlx, g->win, X, Y, color);
 		X += Xinc;
 		Y += Yinc;
 	}  
-} 
+}
 
-void	mlx_put_imgs(t_game *g, double scale)
+void draw_player(t_game *g, double x_pos, double y_pos, double scale)
 {
+	double width = 18 + y_pos;
+	double height = 18 + x_pos;
+	double i = y_pos;
+	double j = x_pos;
+	while (i < width)
+	{
+		j = x_pos;
+		while (j < height)
+		{
+			mlx_pixel_put(g->mlx, g->win, (j - 9) * scale, (i - 9) * scale, blue);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	draw_map(t_game *g, double scale)
+{
+	double pX = g->player->x;
+	double pY = g->player->y;
+	double pAngle = g->player->dir;
 	for (int i = 0; i < MAX_ROWS; i++)
 	{
 		for (int j = 0; j < MAX_COLS; j++)
@@ -206,26 +228,9 @@ void	mlx_put_imgs(t_game *g, double scale)
 				draw_rect(g, j * (DM * scale), i * (DM * scale), white, scale);
 		}
 	}
+	draw_player(g, g->player->x, g->player->y, scale);
+	// draw_line(g, pX * scale, pY * scale, (pX + cos(pAngle) * 40) * scale, (pY + sin(pAngle) * 40) * scale);
 }
-
-void draw_player(t_game *g, double x_pos, double y_pos, double scale)
-{
-	double width = 12 + y_pos;
-	double height = 12 + x_pos;
-	double i = y_pos;
-	double j = x_pos;
-	while (i < width)
-	{
-		j = x_pos;
-		while (j < height)
-		{
-			mlx_pixel_put(g->mlx, g->win, (j - 6) * scale, (i - 6) * scale, blue);
-			j++;
-		}
-		i++;
-	}
-}
-
 
 int get_player_position()
 {
@@ -266,12 +271,38 @@ void mlx_draw_cercle(t_game *g)
 	}
 }
 
+double dis_two_pnts(double x1, double y1, double x2, double y2)
+{
+	return(sqrtf((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2)));
+}
+
 void render3DProjectedWalls(t_game *game, double wallStripHeight, int X)
 {
+	if (wallStripHeight > game->height)
+		wallStripHeight = game->height;
+	for (int i = 0; i <= (game->height - wallStripHeight) / 2; i++)
+	{
+		mlx_pixel_put(game->mlx, game->win, X, i, bluesky);
+	}
 	for (int i = 0; i <= wallStripHeight; i++)
 	{
-		mlx_pixel_put(game->mlx, game->win, X, ((game->height  - wallStripHeight) / 2) + i, white);
+		if (floor(fmod(i, wallStripHeight / 4)) == 0)
+			mlx_pixel_put(game->mlx, game->win, X, ((game->height  - wallStripHeight) / 2) + i, red);
+		else
+			mlx_pixel_put(game->mlx, game->win, X, ((game->height  - wallStripHeight) / 2) + i, gray);
 	}
+	for (int i = 0; i <= (game->height - wallStripHeight) / 2; i++)
+	{
+		mlx_pixel_put(game->mlx, game->win, X, game->height - i, white);
+	}
+}
+
+double fixAngle(double angle)
+{
+	angle = fmod(angle , 2 * M_PI);
+	if (angle < 0)
+		angle = (2 * M_PI) + angle;
+	return angle;
 }
 
 void draw_rays(t_game *g)
@@ -283,32 +314,116 @@ void draw_rays(t_game *g)
 	double wallStripHeight;
 	double mapDistance;
 	double mapWidth = 60 / g->width;
+	double yIntercept;
+	double xIntercept;
+	bool isFacingUp;
+	bool isFacingDown;
+	bool isFacingRight;
+	bool isFacingLeft;
+	double xStep;
+	double yStep;
+	double hwallHiyX = 0;
+	double hwallHiyY = 0;
+	double vwallHiyX = 0;
+	double vwallHiyY = 0;
 	int i = 0;
-	while(rayAngle < g->player->dir + degToRad(30))
-	{
-		mapDistance = 0;
-		while(map[(int)(pY + sin(rayAngle) * mapDistance) / DM][(int)(pX + cos(rayAngle) * mapDistance) / DM] != '1')
-				mapDistance += 0.05;
-		distanceProjectionPlane = ((g->width ) / 2) / tan(degToRad(30));
-		wallStripHeight = (DM / mapDistance) * distanceProjectionPlane;
-		render3DProjectedWalls(g, wallStripHeight, i);
-		rayAngle += degToRad(mapWidth);
-		i++;
-	}
-	printf("i = %d\n", i);
-}
+	// while(rayAngle < g->player->dir + degToRad(30))
+	// {
+		// rayAngle = fixAngle(rayAngle);
+		isFacingDown = fixAngle(rayAngle) > 0 && fixAngle(rayAngle) < M_PI;
+		isFacingUp = !isFacingDown;
+		isFacingRight = (fixAngle(rayAngle) < 0.5 * M_PI) || (fixAngle(rayAngle) > 1.5 * M_PI);
+		isFacingLeft = !isFacingRight;
+		
+		bool hitHz = false;
 
+		//y-coord to the closest horz grid intersection
+		yIntercept = floor(pY / DM) * DM;
+		yIntercept += isFacingDown ? DM : 0;
+		//x-coord to the closest horz grid intersection
+		xIntercept = pX + (yIntercept - pY) / tanf(rayAngle);
+		yStep = DM;
+		yStep *= isFacingUp ? -1 : 1;
+		xStep = DM / tanf(rayAngle);
+		xStep *= (isFacingLeft && xStep > 0) ? -1 : 1;
+		xStep *= (isFacingRight && xStep < 0) ? -1 : 1;
+		distanceProjectionPlane = (g->width / 2) / tanf(degToRad(30));
+		wallStripHeight = (DM / mapDistance) * distanceProjectionPlane;
+		// if (i == 1056 / 2)
+		// {
+			double xH = xIntercept;
+			double yH = yIntercept;
+			if (isFacingUp)
+				yH--;
+			while (xH >= 0 && xH <= g->width && yH >= 0 && yH <= g->height )
+			{
+				if (map[(int)(yH / DM)][(int)(xH / DM)] == '1')
+				{
+					hitHz = true;
+					hwallHiyX = xH;
+					hwallHiyY = yH;
+					break;
+				}
+				else {
+					xH += xStep;
+					yH += yStep;
+				}
+			}
+			// if (hitHz)
+			// 	draw_line(g, pX, pY, xH, yH, green);
+			//VERTICAL
+			bool hitVc = false;
+			xIntercept = floor(pX / DM) * DM;
+			xIntercept += isFacingRight ? DM : 0;
+			//x-coord to the closest horz grid intersection
+			yIntercept = pY + (xIntercept - pX) * tanf(rayAngle);
+			xStep = DM;
+			xStep *= isFacingLeft ? -1 : 1;
+			
+			yStep = DM * tanf(rayAngle);
+			yStep *= (isFacingUp && yStep > 0) ? -1 : 1;
+			yStep *= (isFacingDown && yStep < 0) ? -1 : 1;
+			distanceProjectionPlane = (g->width / 2) / tanf(degToRad(30));
+			wallStripHeight = (DM / mapDistance) * distanceProjectionPlane;
+			// if (i == 1056 / 2)
+			// {
+			double xV = xIntercept;
+			double yV = yIntercept;
+			if (isFacingLeft)
+				xV--;
+			while (xV >= 0 && xV <= g->width && yV >= 0 && yV <= g->height )
+			{
+				if (map[(int)(yV / DM)][(int)(xV / DM)] == '1')
+				{
+					hitVc = true;
+					vwallHiyX = xV;
+					vwallHiyY = yV;
+					break;
+				}
+				else {
+					xV += xStep;
+					yV += yStep;
+				}
+			}
+			if (hitVc)
+				draw_line(g, pX, pY, xV, yV, red);
+			double hHitdis = hitHz ? dis_two_pnts(pX, pY, hwallHiyX, hwallHiyY) : INT_MAX;
+			double vHitdis = hitVc ? dis_two_pnts(pX, pY, vwallHiyX, vwallHiyY) : INT_MAX;
+			double wallHitx = hHitdis < vHitdis ? hwallHiyX : hwallHiyY;
+			double wallHity = hHitdis < vHitdis ? vwallHiyX : vwallHiyY;
+			// draw_line(g, pX, pY, wallHitx, wallHity, blue);
+			// }
+		rayAngle += degToRad(mapWidth);
+	// 	i++;
+	// }
+	printf("I => [%d]\n", i);
+}
 
 int mainDraws(t_game *game)
 {
-	double pX = game->player->x;
-	double pY = game->player->y;
-	double rayAngle = game->player->dir - degToRad(30);
 	mlx_clear_window(game->mlx, game->win);
+	draw_map(game, 1);
 	draw_rays(game);
-	mlx_put_imgs(game, 0.2);
-	draw_player(game, game->player->x, game->player->y, 0.2);
-	draw_line(game, pX * 0.2, pY * 0.2, (pX + cos( game->player->dir) * 50) * 0.2, (pY + sin( game->player->dir) * 50) * 0.2);
 	return (0);
 }
 
@@ -340,17 +455,17 @@ int	key_press(int keycode, t_game *game)
 	}
 	else if (keycode == KEY_LEFT)
 	{
-		game->player->dir -= degToRad(4);
+		game->player->dir -= degToRad(5);
 		pX = game->player->x;
 		pY = game->player->y;
 	}
 	else if (keycode == KEY_RIGHT){
-		game->player->dir += degToRad(4);
+		game->player->dir += degToRad(5);
 		pX = game->player->x;
 		pY = game->player->y;
 	}
 	// mlx_clear_window(game->mlx, game->win);
-	// mlx_put_imgs(game, 0.2);
+	// draw_map(game, 0.2);
 	// draw_player(game, pX, pY);
 	// draw_rays(game);
 	mainDraws(game);
@@ -380,14 +495,14 @@ int main()
 	g->width = MAX_COLS * DM;
 	g->win = mlx_new_window(g->mlx, g->width, g->height, "./cub3D");
 
-	p->x = (get_player_position() % MAX_COLS) * DM;
-	p->y = (get_player_position() / MAX_COLS) * DM;
+	p->x = (get_player_position() % MAX_COLS) * DM + DM / 2;
+	p->y = (get_player_position() / MAX_COLS) * DM + DM / 2;
 	p->dir = -M_PI_2;
 	g->player = p;
 
 	mainDraws(g);
-	mlx_hook(g->win, X_EVENT_KEY_PRESS, 0, &key_press, g);
-	// mlx_key_hook(g->win, &key_press, g);
+	// mlx_hook(g->win, X_EVENT_KEY_PRESS, 0, &key_press, g);
+	mlx_key_hook(g->win, &key_press, g);
 	// mlx_loop_hook(g->mlx, &mainDraws, g);
 	mlx_hook(g->win, X_EVENT_KEY_EXIT, 0, &escape_game, g);
 	mlx_loop(g->mlx);
