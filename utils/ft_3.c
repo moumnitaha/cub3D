@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_3.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/28 09:39:17 by akhaliss          #+#    #+#             */
+/*   Updated: 2023/10/28 09:39:18 by akhaliss         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3D.h"
 
 int	ft_isdigit(int c)
@@ -32,4 +44,16 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	s01[i] = '\0';
 	return (s01);
+}
+
+size_t	ft_strlen(const char *str)
+{
+	int	length;
+
+	length = 0;
+	if (!str)
+		return (0);
+	while (str[length])
+		length++;
+	return (length);
 }

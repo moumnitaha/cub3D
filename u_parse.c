@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   u_parse.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/28 09:40:20 by akhaliss          #+#    #+#             */
+/*   Updated: 2023/10/28 12:35:52 by akhaliss         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 int	maplen(int fd)
@@ -51,30 +63,30 @@ static int	_spaces(char *line)
 	return (1);
 }
 
-int get_info(t_data *game, char *line)
-{
+int get_info(t_data *game, char *line) {
     int i;
-    int flag;
     int j;
-
-    flag = 0;
     i = 0;
-    while (line[i])
-    {
-        if ((i == 0 || line[i - 1] == ' ') && line[i] != ' ' && line[i] != '\n')
-        {
+    while (line[i]) {
+        if ((i == 0 || line[i - 1] == ' ') && line[i] != ' ' && line[i] != '\n') {
             j = i + 1;
             while (line[j] && line[j] != ' ')
                 j++;
-            if (j - i == 2)
-            {
-                flag = _line(game, line + j);
-            }
+            if (strncmp(line + j - i + 1, "NO", 2) == 0 ||
+                strncmp(line + j - i + 1, "SO", 2) == 0 ||
+                strncmp(line + j - i + 1, "WE", 2) == 0 ||
+				strncmp(line + j - i + 1, "EA", 2) == 0 ||
+                strncmp(line + j - i, "F", 1) == 0 ||
+                strncmp(line + j - i, "C", 1) == 0)
+                return _line(game, line + j, j - i);
+            else
+                _error("Error: Invalid Format\n");
         }
         i++;
     }
-    return (flag);
+    return 0;
 }
+
 
 void	read_map(char *file, t_data *game)
 {
@@ -91,15 +103,18 @@ void	read_map(char *file, t_data *game)
 		line = get_next_line(fd);
 		if (!line)
 			break;
-		if (!_spaces(line) && i < 6)
-			i += get_info(game, line);
-		else if (i >= 6)
+		if (i >= 6)
 		{
 			if (_spaces(line))
 				write(2, "Map not found\n", 14);
 			map = ft_strjoin(map, line);
 			i++;
 		}
+		else if (!_spaces(line) && i < 6)
+			i += get_info(game, line);
 	}
 	game->map = ft_split(map, '\n');
+	// int j = -1;
+	// while(game->map[++j])
+	// 	printf("%s\n", game->map[j]);
 }

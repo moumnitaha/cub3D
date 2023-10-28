@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/28 09:39:27 by akhaliss          #+#    #+#             */
+/*   Updated: 2023/10/28 12:25:51 by akhaliss         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 int _colors(char *line, int *rgb)
@@ -5,10 +17,12 @@ int _colors(char *line, int *rgb)
     int i;
     int j;
     int start;
+    int c;
 
     j = 0;
+    c = -1;
     i = 0;
-    while (j < 3)
+    while (line[i])
     {
         while (line[i] && !ft_isdigit(line[i]))
         {
@@ -27,21 +41,22 @@ int _colors(char *line, int *rgb)
         start = i;
         while (line[i] && ft_isdigit(line[i]))
             i++;
-        if (i - start > 3)
-            _error("Error: Invalid Color 1\n");
         rgb[j] = ft_atoi(line + start);
-        if (rgb[j] < 0 || rgb[j] > 255)
+        if ((i - start > 3) || rgb[j] < 0 || rgb[j] > 255)
             _error("Error: Invalid Color 1\n");
-        j++;
     }
     return (i);
 }
 
+
 int get_color(char *line)
 {
-    int rgb[3] = {0};
-    int i;
+    int rgb[3];
+    size_t i;
 
+    rgb[0] = 0;
+    rgb[1] = 0;
+    rgb[2] = 0;
     i = 0;
     i = _colors(line, rgb);
     if (i == 0 || (i < ft_strlen(line) && ft_isdigit(line[i])))
@@ -76,7 +91,7 @@ void set_txt(t_data *game, char c, char *path)
         _error("Error: Invalid Texture Key\n");
 }
 
-int _line(t_data *game, char *line)
+int _line(t_data *game, char *line, int l)
 {
     int start;
     int end;
@@ -84,16 +99,16 @@ int _line(t_data *game, char *line)
     int i;
     char *value;
 
+    c = *(line - l);
     i = 0;
     while (line[i] && line[i] == ' ')
         i++;
     start = i;
-    while (line[i] && line[i] != '\n' && line[i] != ' ')
+    while (line[i] && line[i] != '\n')
         i++;
     end = i;
     if (start >= end)
         return (0);
-    c = line[start];
     value = malloc(end - start + 1);
     if (!value)
         return (0);
@@ -105,22 +120,23 @@ int _line(t_data *game, char *line)
     {
         _error("Error: Duplicate values\n");
     }
-    if ((c == 'N' || c == 'S' || c == 'W' || c == 'E') && end - start == 2)
+    if (c == 'N' || c == 'S' || c == 'W' || c == 'E' || c == 'F' || c == 'C')
     {
-        set_txt(game, c, value);
-    }
-    else if (c == 'F' || c == 'C')
-    {
-        if (end - start > 2 && value[2] == 0)
+        if (c == 'N' || c == 'S' || c == 'W' || c == 'E' )
         {
+            printf("texture : %c%c %s\n", c, *(line - l + 1), value);
+            set_txt(game, c, value);
+        } 
+        else if (c == 'F' || c == 'C')
+        {
+            // printf("color : %c %s\n", c, value);
+            printf("texture : %c%c %s\n", c, *(line - l + 1), value);
+
+
             if (c == 'F')
                 game->floor_c = get_color(value);
             else
                 game->ceilling_c = get_color(value);
-        }
-        else
-        {
-            _error("Error: Invalid Color Format\n");
         }
     }
     else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/27 12:03:09 by admin            ###   ########.fr       */
+/*   Updated: 2023/10/28 11:06:51 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 int		ft_atoi(const char *str);
 int		ft_isdigit(int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+size_t  ft_strlen(const char *str);
 
 
 // *** CUB3D FUNCTIONS *** //
@@ -47,7 +48,7 @@ void	init_map(t_data *game);
 void	read_map(char *file, t_data *game);
 int		get_info(t_data *game, char *line);
 void	_error(char *err);
-int		_line(t_data *game, char *line);
+int     _line(t_data *game, char *line, int l);
 void	set_txt(t_data *game, char c, char *path);
 int		get_color(char *line);
 int		_colors(char *line, int *rgb);
