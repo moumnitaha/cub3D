@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/28 11:06:51 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/10/28 16:10:31 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int		ft_atoi(const char *str);
 int		ft_isdigit(int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 size_t  ft_strlen(const char *str);
+int     ft_strcmp(const char *s1, const char *s2);
 
 
 // *** CUB3D FUNCTIONS *** //

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:39:27 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/10/28 12:25:51 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/10/28 16:07:58 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int _colors(char *line, int *rgb)
     int i;
     int j;
     int start;
-    int c;
+    // int c;
 
     j = 0;
-    c = -1;
+    // c = -1;
     i = 0;
     while (line[i])
     {
@@ -129,10 +129,7 @@ int _line(t_data *game, char *line, int l)
         } 
         else if (c == 'F' || c == 'C')
         {
-            // printf("color : %c %s\n", c, value);
             printf("texture : %c%c %s\n", c, *(line - l + 1), value);
-
-
             if (c == 'F')
                 game->floor_c = get_color(value);
             else
@@ -143,6 +140,7 @@ int _line(t_data *game, char *line, int l)
     {
         _error("Error: Invalid Key\n");
     }
+    free(value);
     return (1);
 }
 

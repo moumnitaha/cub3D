@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   u_parse.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:40:20 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/10/28 12:35:52 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/10/28 16:06:25 by admin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,30 +63,36 @@ static int	_spaces(char *line)
 	return (1);
 }
 
-int get_info(t_data *game, char *line) {
+int get_info(t_data *game, char *line)
+{
     int i;
     int j;
+	char *key ;
+	int	key_length;
+
     i = 0;
-    while (line[i]) {
-        if ((i == 0 || line[i - 1] == ' ') && line[i] != ' ' && line[i] != '\n') {
+    while (line[i])
+	{
+        if ((i == 0 || line[i - 1] == ' ') && line[i] != ' ' && line[i] != '\n')
+		{
             j = i + 1;
             while (line[j] && line[j] != ' ')
                 j++;
-            if (strncmp(line + j - i + 1, "NO", 2) == 0 ||
-                strncmp(line + j - i + 1, "SO", 2) == 0 ||
-                strncmp(line + j - i + 1, "WE", 2) == 0 ||
-				strncmp(line + j - i + 1, "EA", 2) == 0 ||
-                strncmp(line + j - i, "F", 1) == 0 ||
-                strncmp(line + j - i, "C", 1) == 0)
-                return _line(game, line + j, j - i);
+			key_length = j - i;
+			key = malloc(key_length + 1);
+			if (!key)
+				return(0);
+            ft_strlcpy(key, line + i, key_length + 1);
+            if (ft_strcmp(key, "NO") == 0 || ft_strcmp(key, "SO") == 0 || ft_strcmp(key, "WE") == 0
+				|| ft_strcmp(key, "EA") == 0 || ft_strcmp(key, "F") == 0 || ft_strcmp(key, "C") == 0)
+                return(free(key), _line(game, line + j, j - i));
             else
                 _error("Error: Invalid Format\n");
         }
         i++;
     }
-    return 0;
+    return (0);
 }
-
 
 void	read_map(char *file, t_data *game)
 {
@@ -114,6 +120,7 @@ void	read_map(char *file, t_data *game)
 			i += get_info(game, line);
 	}
 	game->map = ft_split(map, '\n');
+	free(map);
 	// int j = -1;
 	// while(game->map[++j])
 	// 	printf("%s\n", game->map[j]);
