@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:13:39 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/28 17:58:48 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/28 23:10:19 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@
 char* map[] = {
     "111111111111111111111111111111111",
     "10000000000000000011011111110011 ",
-    "111101111111110110000000100000101",
-    "111101111111110111010100100011111",
-    "11100000111  10111000000100000001",
-    "10000000001  10011000000100011111",
-    "10000000000111000101010P10001    ",
+    "111101111111110110000000000000101",
+    "111101111111110111010100000011111",
+    "11100000111  10111000000000000001",
+    "10000000001  10011000000000011111",
+    "10000000000111000101010P00001    ",
     "110000011100010111000111000111   ",
     "11110111 1110001 1111100000111   ",
     "11111111 1111111 111111111111    "
@@ -273,7 +273,7 @@ void mlx_draw_cercle(t_game *g)
 
 double dis_two_pnts(double x1, double y1, double x2, double y2)
 {
-	return(sqrtf((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2)));
+	return(sqrtf((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)));
 }
 
 void render3DProjectedWalls(t_game *game, double wallStripHeight, int X, int color)
@@ -319,10 +319,6 @@ void draw_rays(t_game *g)
 	bool isFacingLeft;
 	double xStep;
 	double yStep;
-	double hwallHiyX = 0;
-	double hwallHiyY = 0;
-	double vwallHiyX = 0;
-	double vwallHiyY = 0;
 	int i = 0;
 	// rayAngle = fixAngle(rayAngle);
 	while(rayAngle < g->player->dir + degToRad(30))
@@ -353,8 +349,6 @@ void draw_rays(t_game *g)
 			if (map[(int)(yH / DM)][(int)(xH / DM)] == '1')
 			{
 				hitHz = true;
-				hwallHiyX = xH;
-				hwallHiyY = yH;
 				break;
 			}
 			else {
@@ -384,8 +378,6 @@ void draw_rays(t_game *g)
 			if (map[(int)(yV / DM)][(int)(xV / DM)] == '1')
 			{
 				hitVc = true;
-				vwallHiyX = xV;
-				vwallHiyY = yV;
 				break;
 			}
 			else {
@@ -401,14 +393,14 @@ void draw_rays(t_game *g)
 			if (hHitDis < vHitDis)
 			{
 				// Draw a horizontal wall
-				wallStripHeight = (DM / hHitDis) * distanceProjectionPlane;
+				wallStripHeight = (DM / hHitDis) * distanceProjectionPlane / cos(g->player->dir - rayAngle);
 				render3DProjectedWalls(g, wallStripHeight, i, gray);
 				// draw_line(g, pX, pY, xH, yH, blue);
 			}
 			else
 			{
 				// Draw a vertical wall
-				wallStripHeight = (DM / vHitDis) * distanceProjectionPlane;
+				wallStripHeight = (DM / vHitDis) * distanceProjectionPlane / cos(g->player->dir - rayAngle);
 				render3DProjectedWalls(g, wallStripHeight, i, green);
 				// draw_line(g, pX, pY, xV, yV, bluesky);
 			}
@@ -417,14 +409,14 @@ void draw_rays(t_game *g)
 		else if (hitHz)
 		{
 			// Draw a horizontal wall
-			wallStripHeight = (DM / dis_two_pnts(pX, pY, xH, yH)) * distanceProjectionPlane;
+			wallStripHeight = (DM / dis_two_pnts(pX, pY, xH, yH)) * distanceProjectionPlane / cos(g->player->dir - rayAngle);
 			render3DProjectedWalls(g, wallStripHeight, i, gray);
 			// draw_line(g, pX, pY, xH, yH, green);
 		}
 		else if (hitVc)
 		{
 			// Draw a vertical wall
-			wallStripHeight = (DM / dis_two_pnts(pX, pY, xV, yV)) * distanceProjectionPlane;
+			wallStripHeight = (DM / dis_two_pnts(pX, pY, xV, yV)) * distanceProjectionPlane / cos(g->player->dir - rayAngle);
 			render3DProjectedWalls(g, wallStripHeight, i, green);
 			// draw_line(g, pX, pY, xV, yV, red);
 		}
@@ -432,8 +424,6 @@ void draw_rays(t_game *g)
 		i++;
 	}
 	printf("I => [%d]\n", i);
-	if (!i)
-		printf("rayAngle => [%f][%f]\n", rayAngle, rayAngle + degToRad(mapWidth));
 }
 
 int mainDraws(t_game *game)
