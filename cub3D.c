@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:13:39 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/27 22:06:37 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/28 17:58:48 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ void	draw_map(t_game *g, double scale)
 		}
 	}
 	draw_player(g, g->player->x, g->player->y, scale);
-	// draw_line(g, pX * scale, pY * scale, (pX + cos(pAngle) * 40) * scale, (pY + sin(pAngle) * 40) * scale);
+	draw_line(g, pX * scale, pY * scale, (pX + cos(pAngle) * 40) * scale, (pY + sin(pAngle) * 40) * scale, red);
 }
 
 int get_player_position()
@@ -276,7 +276,7 @@ double dis_two_pnts(double x1, double y1, double x2, double y2)
 	return(sqrtf((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2)));
 }
 
-void render3DProjectedWalls(t_game *game, double wallStripHeight, int X)
+void render3DProjectedWalls(t_game *game, double wallStripHeight, int X, int color)
 {
 	if (wallStripHeight > game->height)
 		wallStripHeight = game->height;
@@ -286,10 +286,7 @@ void render3DProjectedWalls(t_game *game, double wallStripHeight, int X)
 	}
 	for (int i = 0; i <= wallStripHeight; i++)
 	{
-		if (floor(fmod(i, wallStripHeight / 4)) == 0)
-			mlx_pixel_put(game->mlx, game->win, X, ((game->height  - wallStripHeight) / 2) + i, red);
-		else
-			mlx_pixel_put(game->mlx, game->win, X, ((game->height  - wallStripHeight) / 2) + i, gray);
+		mlx_pixel_put(game->mlx, game->win, X, ((game->height  - wallStripHeight) / 2) + i, color);
 	}
 	for (int i = 0; i <= (game->height - wallStripHeight) / 2; i++)
 	{
@@ -309,11 +306,11 @@ void draw_rays(t_game *g)
 {
 	double pX = g->player->x;
 	double pY = g->player->y;
-	double rayAngle = g->player->dir - degToRad(30);
 	double distanceProjectionPlane;
 	double wallStripHeight;
 	double mapDistance;
 	double mapWidth = 60 / g->width;
+	double rayAngle = g->player->dir - degToRad(30);
 	double yIntercept;
 	double xIntercept;
 	bool isFacingUp;
@@ -327,9 +324,9 @@ void draw_rays(t_game *g)
 	double vwallHiyX = 0;
 	double vwallHiyY = 0;
 	int i = 0;
-	// while(rayAngle < g->player->dir + degToRad(30))
-	// {
-		// rayAngle = fixAngle(rayAngle);
+	// rayAngle = fixAngle(rayAngle);
+	while(rayAngle < g->player->dir + degToRad(30))
+	{
 		isFacingDown = fixAngle(rayAngle) > 0 && fixAngle(rayAngle) < M_PI;
 		isFacingUp = !isFacingDown;
 		isFacingRight = (fixAngle(rayAngle) < 0.5 * M_PI) || (fixAngle(rayAngle) > 1.5 * M_PI);
@@ -347,83 +344,103 @@ void draw_rays(t_game *g)
 		xStep = DM / tanf(rayAngle);
 		xStep *= (isFacingLeft && xStep > 0) ? -1 : 1;
 		xStep *= (isFacingRight && xStep < 0) ? -1 : 1;
+		double xH = xIntercept;
+		double yH = yIntercept;
+		if (isFacingUp)
+			yH--;
+		while (xH >= 0 && xH < g->width && yH >= 0 && yH < g->height )
+		{
+			if (map[(int)(yH / DM)][(int)(xH / DM)] == '1')
+			{
+				hitHz = true;
+				hwallHiyX = xH;
+				hwallHiyY = yH;
+				break;
+			}
+			else {
+				xH += xStep;
+				yH += yStep;
+			}
+		}
+		//VERTICAL
+		bool hitVc = false;
+		xIntercept = floor(pX / DM) * DM;
+		xIntercept += isFacingRight ? DM : 0;
+		//x-coord to the closest horz grid intersection
+		yIntercept = pY + (xIntercept - pX) * tanf(rayAngle);
+		xStep = DM;
+		xStep *= isFacingLeft ? -1 : 1;
+		
+		yStep = DM * tanf(rayAngle);
+		yStep *= (isFacingUp && yStep > 0) ? -1 : 1;
+		yStep *= (isFacingDown && yStep < 0) ? -1 : 1;
 		distanceProjectionPlane = (g->width / 2) / tanf(degToRad(30));
-		wallStripHeight = (DM / mapDistance) * distanceProjectionPlane;
-		// if (i == 1056 / 2)
-		// {
-			double xH = xIntercept;
-			double yH = yIntercept;
-			if (isFacingUp)
-				yH--;
-			while (xH >= 0 && xH <= g->width && yH >= 0 && yH <= g->height )
+		double xV = xIntercept;
+		double yV = yIntercept;
+		if (isFacingLeft)
+			xV--;
+		while (xV >= 0 && xV < g->width && yV >= 0 && yV < g->height )
+		{
+			if (map[(int)(yV / DM)][(int)(xV / DM)] == '1')
 			{
-				if (map[(int)(yH / DM)][(int)(xH / DM)] == '1')
-				{
-					hitHz = true;
-					hwallHiyX = xH;
-					hwallHiyY = yH;
-					break;
-				}
-				else {
-					xH += xStep;
-					yH += yStep;
-				}
+				hitVc = true;
+				vwallHiyX = xV;
+				vwallHiyY = yV;
+				break;
 			}
-			// if (hitHz)
-			// 	draw_line(g, pX, pY, xH, yH, green);
-			//VERTICAL
-			bool hitVc = false;
-			xIntercept = floor(pX / DM) * DM;
-			xIntercept += isFacingRight ? DM : 0;
-			//x-coord to the closest horz grid intersection
-			yIntercept = pY + (xIntercept - pX) * tanf(rayAngle);
-			xStep = DM;
-			xStep *= isFacingLeft ? -1 : 1;
-			
-			yStep = DM * tanf(rayAngle);
-			yStep *= (isFacingUp && yStep > 0) ? -1 : 1;
-			yStep *= (isFacingDown && yStep < 0) ? -1 : 1;
-			distanceProjectionPlane = (g->width / 2) / tanf(degToRad(30));
-			wallStripHeight = (DM / mapDistance) * distanceProjectionPlane;
-			// if (i == 1056 / 2)
-			// {
-			double xV = xIntercept;
-			double yV = yIntercept;
-			if (isFacingLeft)
-				xV--;
-			while (xV >= 0 && xV <= g->width && yV >= 0 && yV <= g->height )
+			else {
+				xV += xStep;
+				yV += yStep;
+			}
+		}
+		if (hitHz && hitVc)
+		{
+			double hHitDis = dis_two_pnts(pX, pY, xH, yH);
+			double vHitDis = dis_two_pnts(pX, pY, xV, yV);
+
+			if (hHitDis < vHitDis)
 			{
-				if (map[(int)(yV / DM)][(int)(xV / DM)] == '1')
-				{
-					hitVc = true;
-					vwallHiyX = xV;
-					vwallHiyY = yV;
-					break;
-				}
-				else {
-					xV += xStep;
-					yV += yStep;
-				}
+				// Draw a horizontal wall
+				wallStripHeight = (DM / hHitDis) * distanceProjectionPlane;
+				render3DProjectedWalls(g, wallStripHeight, i, gray);
+				// draw_line(g, pX, pY, xH, yH, blue);
 			}
-			if (hitVc)
-				draw_line(g, pX, pY, xV, yV, red);
-			double hHitdis = hitHz ? dis_two_pnts(pX, pY, hwallHiyX, hwallHiyY) : INT_MAX;
-			double vHitdis = hitVc ? dis_two_pnts(pX, pY, vwallHiyX, vwallHiyY) : INT_MAX;
-			double wallHitx = hHitdis < vHitdis ? hwallHiyX : hwallHiyY;
-			double wallHity = hHitdis < vHitdis ? vwallHiyX : vwallHiyY;
-			// draw_line(g, pX, pY, wallHitx, wallHity, blue);
-			// }
+			else
+			{
+				// Draw a vertical wall
+				wallStripHeight = (DM / vHitDis) * distanceProjectionPlane;
+				render3DProjectedWalls(g, wallStripHeight, i, green);
+				// draw_line(g, pX, pY, xV, yV, bluesky);
+			}
+			// printf("rayAngle => [%f][%f]\n", rayAngle, rayAngle + degToRad(mapWidth));
+		}
+		else if (hitHz)
+		{
+			// Draw a horizontal wall
+			wallStripHeight = (DM / dis_two_pnts(pX, pY, xH, yH)) * distanceProjectionPlane;
+			render3DProjectedWalls(g, wallStripHeight, i, gray);
+			// draw_line(g, pX, pY, xH, yH, green);
+		}
+		else if (hitVc)
+		{
+			// Draw a vertical wall
+			wallStripHeight = (DM / dis_two_pnts(pX, pY, xV, yV)) * distanceProjectionPlane;
+			render3DProjectedWalls(g, wallStripHeight, i, green);
+			// draw_line(g, pX, pY, xV, yV, red);
+		}
 		rayAngle += degToRad(mapWidth);
-	// 	i++;
-	// }
+		i++;
+	}
 	printf("I => [%d]\n", i);
+	if (!i)
+		printf("rayAngle => [%f][%f]\n", rayAngle, rayAngle + degToRad(mapWidth));
 }
 
 int mainDraws(t_game *game)
 {
 	mlx_clear_window(game->mlx, game->win);
-	draw_map(game, 1);
 	draw_rays(game);
+	draw_map(game, 0.2);
 	return (0);
 }
 
@@ -455,12 +472,12 @@ int	key_press(int keycode, t_game *game)
 	}
 	else if (keycode == KEY_LEFT)
 	{
-		game->player->dir -= degToRad(5);
+		game->player->dir -= degToRad(2.5);
 		pX = game->player->x;
 		pY = game->player->y;
 	}
 	else if (keycode == KEY_RIGHT){
-		game->player->dir += degToRad(5);
+		game->player->dir += degToRad(2.5);
 		pX = game->player->x;
 		pY = game->player->y;
 	}

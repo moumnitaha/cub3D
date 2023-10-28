@@ -6,7 +6,7 @@
 #    By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/21 13:47:28 by tmoumni           #+#    #+#              #
-#    Updated: 2023/10/27 21:33:58 by tmoumni          ###   ########.fr        #
+#    Updated: 2023/10/28 15:39:05 by tmoumni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ NAME = cub3D
 HEADER = cub3D.h
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror #-g3 -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 MFLAGS = -lmlx -framework OpenGL -framework AppKit
 I = -I/usr/include -Imlx_linux -O3
 L = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
