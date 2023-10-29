@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:13:39 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/29 10:50:11 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/29 20:15:53 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 char* map[] = {
     "111111111111111111111111111111111",
     "10000000000000000011011111110011 ",
-    "111101111111110110000000000000101",
+    "111101111111110110000000000000001",
     "111101111111110111010100000011111",
     "11100000111  10111000000000000001",
     "10000000001  10011000000000011111",
@@ -278,17 +278,19 @@ double dis_two_pnts(double x1, double y1, double x2, double y2)
 
 void render3DProjectedWalls(t_game *game, double wallStripHeight, int X, int color)
 {
+	wallStripHeight = round(wallStripHeight);
 	if (wallStripHeight > game->height)
 		wallStripHeight = game->height;
-	for (int i = 0; i <= (game->height - wallStripHeight) / 2; i++)
+	int i = 0;
+	for (i = 0; i < (game->height - wallStripHeight) / 2; i++)
 	{
 		mlx_pixel_put(game->mlx, game->win, X, i, bluesky);
 	}
-	for (int i = 0; i <= wallStripHeight; i++)
+	for (i = 0; i <= wallStripHeight; i++)
 	{
 		mlx_pixel_put(game->mlx, game->win, X, ((game->height  - wallStripHeight) / 2) + i, color);
 	}
-	for (int i = 0; i <= (game->height - wallStripHeight) / 2; i++)
+	for (i = 0; i < (game->height - wallStripHeight) / 2; i++)
 	{
 		mlx_pixel_put(game->mlx, game->win, X, game->height - i, white);
 	}
@@ -343,7 +345,7 @@ void draw_rays(t_game *g)
 		double xH = xIntercept;
 		double yH = yIntercept;
 		if (isFacingUp)
-			yH -= 1 / g->height;
+			yH -= (0.1 / g->height);
 		while (xH >= 0 && xH < g->width && yH >= 0 && yH < g->height )
 		{
 			if (map[(int)(yH / DM)][(int)(xH / DM)] == '1')
@@ -372,7 +374,7 @@ void draw_rays(t_game *g)
 		double xV = xIntercept;
 		double yV = yIntercept;
 		if (isFacingLeft)
-			xV -= 1 / g->width;
+			xV -= (0.1 / g->width);
 		while (xV >= 0 && xV < g->width && yV >= 0 && yV < g->height )
 		{
 			if (map[(int)(yV / DM)][(int)(xV / DM)] == '1')
@@ -444,8 +446,8 @@ int	key_press(int keycode, t_game *game)
 		exit_game(game);
 	if (keycode == KEY_UP)
 	{
-		pX = game->player->x + 4 * cos(game->player->dir);
-		pY = game->player->y + 4 * sin(game->player->dir);
+		pX = game->player->x + 8 * cos(game->player->dir);
+		pY = game->player->y + 8 * sin(game->player->dir);
 		if(map[(int)(pY / DM)][(int)(pX/ DM)] == '1')
 			return (0);
 		game->player->x = pX;
@@ -453,8 +455,8 @@ int	key_press(int keycode, t_game *game)
 	}
 	else if (keycode == KEY_DOWN)
 	{
-		pX = game->player->x - 4 * cos(game->player->dir);
-		pY = game->player->y - 4 * sin(game->player->dir);
+		pX = game->player->x - 8 * cos(game->player->dir);
+		pY = game->player->y - 8 * sin(game->player->dir);
 		if(map[(int)(pY / DM)][(int)(pX/ DM)] == '1')
 			return (0);
 		game->player->x = pX;
@@ -462,15 +464,17 @@ int	key_press(int keycode, t_game *game)
 	}
 	else if (keycode == KEY_LEFT)
 	{
-		game->player->dir -= degToRad(2.5);
+		game->player->dir -= degToRad(5);
 		pX = game->player->x;
 		pY = game->player->y;
 	}
 	else if (keycode == KEY_RIGHT){
-		game->player->dir += degToRad(2.5);
+		game->player->dir += degToRad(5);
 		pX = game->player->x;
 		pY = game->player->y;
 	}
+	else
+		return (0);
 	// mlx_clear_window(game->mlx, game->win);
 	// draw_map(game, 0.2);
 	// draw_player(game, pX, pY);
@@ -483,6 +487,14 @@ int	escape_game(t_game *game)
 {
 	printf("\033[1;31m[[ U gaved up :/ ]]\033[0m\n");
 	return (exit_game(game));
+}
+
+int mouse_move(int x, int y, t_game *game) {
+	if (x > 0 && y > 0 && y < game->height && x < game->width){
+		game->player->dir = degToRad((x / 10)) + M_PI;
+		mainDraws(game);
+	}
+    return 0;
 }
 
 int main()
@@ -508,8 +520,11 @@ int main()
 	g->player = p;
 
 	mainDraws(g);
-	// mlx_hook(g->win, X_EVENT_KEY_PRESS, 0, &key_press, g);
-	mlx_key_hook(g->win, &key_press, g);
+	//for MacOs
+	mlx_hook(g->win, X_EVENT_KEY_PRESS, 0, &key_press, g);
+	//for Linux
+	// mlx_key_hook(g->win, &key_press, g);
+	mlx_hook(g->win, 6, 1L << 6, mouse_move, g);
 	// mlx_loop_hook(g->mlx, &mainDraws, g);
 	mlx_hook(g->win, X_EVENT_KEY_EXIT, 0, &escape_game, g);
 	mlx_loop(g->mlx);
