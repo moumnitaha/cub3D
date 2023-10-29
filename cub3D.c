@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:13:39 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/29 20:15:53 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/29 22:37:23 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ char* map[] = {
     "111101111111110110000000000000001",
     "111101111111110111010100000011111",
     "11100000111  10111000000000000001",
-    "10000000001  10011000000000011111",
-    "10000000000111000101010P00001    ",
+    "10000000001  1001100P000000011111",
+    "10000000000111000101010000001    ",
     "110000011100010111000111000111   ",
     "11110111 1110001 1111100000111   ",
     "11111111 1111111 111111111111    "
@@ -432,7 +432,7 @@ int mainDraws(t_game *game)
 {
 	mlx_clear_window(game->mlx, game->win);
 	draw_rays(game);
-	draw_map(game, 0.2);
+	draw_map(game, 2 / (game->height / DM));
 	return (0);
 }
 
@@ -450,6 +450,8 @@ int	key_press(int keycode, t_game *game)
 		pY = game->player->y + 8 * sin(game->player->dir);
 		if(map[(int)(pY / DM)][(int)(pX/ DM)] == '1')
 			return (0);
+		if(map[(int)(pY / DM)][(int)(pX/ DM)] == ' ')
+			return (0);
 		game->player->x = pX;
 		game->player->y = pY;
 	}
@@ -459,17 +461,19 @@ int	key_press(int keycode, t_game *game)
 		pY = game->player->y - 8 * sin(game->player->dir);
 		if(map[(int)(pY / DM)][(int)(pX/ DM)] == '1')
 			return (0);
+		if(map[(int)(pY / DM)][(int)(pX/ DM)] == ' ')
+			return (0);
 		game->player->x = pX;
 		game->player->y = pY;
 	}
 	else if (keycode == KEY_LEFT)
 	{
-		game->player->dir -= degToRad(5);
+		game->player->dir -= degToRad(6);
 		pX = game->player->x;
 		pY = game->player->y;
 	}
 	else if (keycode == KEY_RIGHT){
-		game->player->dir += degToRad(5);
+		game->player->dir += degToRad(6);
 		pX = game->player->x;
 		pY = game->player->y;
 	}
@@ -521,10 +525,10 @@ int main()
 
 	mainDraws(g);
 	//for MacOs
-	mlx_hook(g->win, X_EVENT_KEY_PRESS, 0, &key_press, g);
+	// mlx_hook(g->win, X_EVENT_KEY_PRESS, 0, &key_press, g);
 	//for Linux
-	// mlx_key_hook(g->win, &key_press, g);
-	mlx_hook(g->win, 6, 1L << 6, mouse_move, g);
+	mlx_key_hook(g->win, &key_press, g);
+	// mlx_hook(g->win, 6, 1L << 6, mouse_move, g);
 	// mlx_loop_hook(g->mlx, &mainDraws, g);
 	mlx_hook(g->win, X_EVENT_KEY_EXIT, 0, &escape_game, g);
 	mlx_loop(g->mlx);
