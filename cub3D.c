@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:13:39 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/29 22:37:23 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/29 23:01:21 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,7 +345,7 @@ void draw_rays(t_game *g)
 		double xH = xIntercept;
 		double yH = yIntercept;
 		if (isFacingUp)
-			yH -= (0.1 / g->height);
+			yH -= (0.1 / g->width);
 		while (xH >= 0 && xH < g->width && yH >= 0 && yH < g->height )
 		{
 			if (map[(int)(yH / DM)][(int)(xH / DM)] == '1')
@@ -425,7 +425,7 @@ void draw_rays(t_game *g)
 		rayAngle += degToRad(mapWidth);
 		i++;
 	}
-	printf("I => [%d]\n", i);
+	printf("I => [%f]\n", 0.1 / g->width);
 }
 
 int mainDraws(t_game *game)
