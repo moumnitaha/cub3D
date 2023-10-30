@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:40:20 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/10/30 13:57:08 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/10/30 18:10:09 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,37 +96,60 @@ int get_info(t_data *game, char *line)
     return (0);
 }
 
-void	fill_spaces(t_data *game, size_t len, char **map)
+
+void fill_spaces(t_data *game, size_t len, char **map)
 {
-	int j;
-	int	i;
+    size_t j;
+    size_t i;
+
+    game->map = malloc(sizeof(char *) * (game->mlen + 1));
+    if (!game->map)
+        return ;
+    j = -1;
+    while (map[++j])
+    {
+        game->map[j] = malloc(len + 1);
+        if (game->map[j] == NULL)
+            return ;
+        i = 0;
+		while (i < len)
+        {
+            if (i < ft_strlen(map[j]))
+            {
+                if (map[j][i] == ' ' || map[j][i] == '\t')
+                    game->map[j][i] = 'X';
+                else
+                    game->map[j][i] = map[j][i];
+            }
+            else
+                game->map[j][i] = 'X';
+            i++;
+        }
+        game->map[j][i] = '\0';
+    }
+    game->map[j] = NULL;
+	j = -1;
+	printf("len : %zu\n" ,ft_strlen(game->map[++j]));
+    while (game->map[++j])
+    {
+        printf("%s\n", game->map[j]);
+    }
+	
+}
+
+void	_map(char **map, t_data *game)
+{
+	size_t len;
+	int		j;
 
 	j = -1;
-	printf("lenn : %zu\n", len);
-	game->map = malloc(sizeof(char *) * game->mlen);
-	while(game->map[++j])
-		// printf("%s\n", game->map[j]);
-		game->map[j] = malloc(sizeof(char) * len);
-	j = -1;
-	i = -1;
+	len = ft_strlen(map[0]);
 	while(map[++j])
 	{
-		while(map[j][++i] && ft_strlen(&map[j][i]) < len)
-		{
-			if(map[j][i] == ' ' || map[j][i] == '\t')
-				map[j][i] = 'X';
-		}
+		if (ft_strlen(map[j]) > len)
+			len = ft_strlen(map[j]);
 	}
-	game->map = map;
-	j = -1;
-	// i = -1;
-	while(game->map[++j])
-	{
-		// while(game->map[j][++i])
-		// {
-			printf("%s\n", game->map[j]);
-		// }
-	}	
+	fill_spaces(game, len, map);
 }
 
 void	read_map(char *file, t_data *game)
@@ -149,7 +172,6 @@ void	read_map(char *file, t_data *game)
 		{
 			if (_spaces(line))
 				write(2, "Map not found\n", 14);
-			
 			l_map = ft_strjoin(l_map, line);
 			i++;
 		}
@@ -157,20 +179,6 @@ void	read_map(char *file, t_data *game)
 			i += get_info(game, line);
 	}
 	map = ft_split(l_map, '\n');
-	int j = 0;
 	free(l_map);
-	size_t len = ft_strlen(map[0]);
-	while(map[++j])
-	{
-		if (ft_strlen(map[j]) > len)
-			len = ft_strlen(map[j]);
-	}
-	// j = -1;
-	// while(map[++j])
-	// {
-		// if(ft_strlen(map[j]) < len)
-		// printf("%s\n", map[j]);
-	fill_spaces(game, len, map);
-	// }
-	printf("len : %zu\n", len);
+	_map(map, game);
 }
