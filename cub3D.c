@@ -6,40 +6,23 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:25:20 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/30 17:23:42 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/30 18:17:24 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <string.h>
 #include "cub3D.h"
-#include <math.h>
-#include <time.h>
-#include "math.h"
 
-#define MAX_ROWS 10
-#define MAX_COLS 33
-#define green 0x00008000
-#define red  0x00FF0000
-#define blue 0x000000FF
-#define white 0x00FFFFFF
-#define black 0x00000000
-#define gray 0x00C0C0C0
-#define bluesky 0x00199EF3
-
-
-char* map[] = {
-    "111111111111111111111111111111111",
-    "10000000000000000011011111110011 ",
-    "111101111111110110000000000000001",
-    "111101111111110111010100000011111",
-    "11100000111  10111000000000000001",
-    "10000000001  10011000000000011111",
-    "10000000000111000101010P00001    ",
-    "110000011100010111000111000111   ",
-    "11110111 1110001 1111100000111   ",
-    "11111111 1111111 111111111111    "
+char*	map[] = {
+	"111111111111111111111111111111111",
+	"10000000000000000011011111110011 ",
+	"111101111111110110000000000000001",
+	"111101111111110111010100000011111",
+	"11100000111  10111000000000000001",
+	"10000000001  10011000000000011111",
+	"10000000000111000101010P00001    ",
+	"110000011100010111000111000111   ",
+	"11110111 1110001 1111100000111   ",
+	"11111111 1111111 111111111111    "
 };
 
 bool checkfirsNlast()
@@ -298,62 +281,66 @@ void render3DProjectedWalls(t_game *game, double wallStripHeight, int X, int col
 
 void horizontalIntersection(t_game *g, t_ray *ray)
 {
-	double xHhit;
-	double yHhit;
 	double xStep;
 	double yStep;
 
-	yHhit = floor(g->player->y / DM) * DM;
-	yHhit += ray->isRayFacingDown ? DM : 0;
-	xHhit = g->player->x + (yHhit - g->player->y) / tanf(ray->rayAngle);
+	ray->yHhit = floor(g->player->y / DM) * DM;
+	if (ray->isRayFacingDown)
+		ray->yHhit += DM;
+	ray->xHhit = g->player->x + (ray->yHhit - g->player->y) / tanf(ray->rayAngle);
 	yStep = DM;
-	yStep *= ray->isRayFacingUp ? -1 : 1;
-	xStep = DM / tanf(ray->rayAngle);
-	xStep *= (ray->isRayFacingLeft && xStep > 0) ? -1 : 1;
-	xStep *= (ray->isRayFacingRight && xStep < 0) ? -1 : 1;
 	if (ray->isRayFacingUp)
-		yHhit -= (0.1 / g->width);
-	while (xHhit >= 0 && xHhit < g->width && yHhit >= 0 && yHhit < g->height)
+		yStep *= -1;
+	xStep = DM / tanf(ray->rayAngle);
+	if (ray->isRayFacingLeft && xStep > 0)
+		xStep *= -1;
+	if (ray->isRayFacingRight && xStep < 0)
+		xStep *= -1;
+	if (ray->isRayFacingUp)
+		ray->yHhit -= (0.1 / g->width);
+	while (ray->xHhit >= 0 && ray->xHhit < g->width && ray->yHhit >= 0 && ray->yHhit < g->height)
 	{
-		if (map[(int)(yHhit / DM)][(int)(xHhit / DM)] == '1')
+		if (map[(int)(ray->yHhit / DM)][(int)(ray->xHhit / DM)] == '1')
 		{
 			ray->isHzHit = true;
 			break;
 		}
-		xHhit += xStep;
-		yHhit += yStep;
+		ray->xHhit += xStep;
+		ray->yHhit += yStep;
 	}
-	ray->hHitDis = dis_two_pnts(g->player->x, g->player->y, xHhit, yHhit);
+	ray->hHitDis = dis_two_pnts(g->player->x, g->player->y, ray->xHhit, ray->yHhit);
 }
 
 void verticalIntersection(t_game *g, t_ray *ray)
 {
-	double xVhit;
-	double yVhit;
 	double xStep;
 	double yStep;
 
-	xVhit = floor(g->player->x / DM) * DM;
-	xVhit += ray->isRayFacingRight ? DM : 0;
-	yVhit = g->player->y + (xVhit - g->player->x) * tanf(ray->rayAngle);
+	ray->xVhit = floor(g->player->x / DM) * DM;
+	if (ray->isRayFacingRight)
+		ray->xVhit += DM;
+	ray->yVhit = g->player->y + (ray->xVhit - g->player->x) * tanf(ray->rayAngle);
 	xStep = DM;
-	xStep *= ray->isRayFacingLeft ? -1 : 1;
-	yStep = DM * tanf(ray->rayAngle);
-	yStep *= (ray->isRayFacingUp && yStep > 0) ? -1 : 1;
-	yStep *= (ray->isRayFacingDown && yStep < 0) ? -1 : 1;
 	if (ray->isRayFacingLeft)
-		xVhit -= (0.1 / g->width);
-	while (xVhit >= 0 && xVhit < g->width && yVhit >= 0 && yVhit < g->height)
+		xStep *= -1;
+	yStep = DM * tanf(ray->rayAngle);
+	if (ray->isRayFacingUp && yStep > 0)
+		yStep *= -1;
+	if (ray->isRayFacingDown && yStep < 0)
+		yStep *= -1;
+	if (ray->isRayFacingLeft)
+		ray->xVhit -= (0.1 / g->width);
+	while (ray->xVhit >= 0 && ray->xVhit < g->width && ray->yVhit >= 0 && ray->yVhit < g->height)
 	{
-		if (map[(int)(yVhit / DM)][(int)(xVhit / DM)] == '1')
+		if (map[(int)(ray->yVhit / DM)][(int)(ray->xVhit / DM)] == '1')
 		{
 			ray->isVcHit = true;
 			break;
 		}
-		xVhit += xStep;
-		yVhit += yStep;
+		ray->xVhit += xStep;
+		ray->yVhit += yStep;
 	}
-	ray->vHitDis = dis_two_pnts(g->player->x, g->player->y, xVhit, yVhit);
+	ray->vHitDis = dis_two_pnts(g->player->x, g->player->y, ray->xVhit, ray->yVhit);
 }
 
 double fixAngle(double angle)
@@ -413,6 +400,7 @@ void draw_rays(t_game *g)
 		i++;
 	}
 	printf("I => [%d]\n", i);
+	free(ray);
 }
 
 int mainDraws(t_game *game)
@@ -427,8 +415,6 @@ int	key_press(int keycode, t_game *game)
 {
 	double pX;
 	double pY;
-	double mapX = 0;
-	double mapY = 0;
 	if (keycode == KEY_ESC)
 		exit_game(game);
 	if (keycode == KEY_UP)
@@ -459,7 +445,8 @@ int	key_press(int keycode, t_game *game)
 		pX = game->player->x;
 		pY = game->player->y;
 	}
-	else if (keycode == KEY_RIGHT){
+	else if (keycode == KEY_RIGHT)
+	{
 		game->player->dir += degToRad(6);
 		pX = game->player->x;
 		pY = game->player->y;

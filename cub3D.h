@@ -6,16 +6,30 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/30 17:05:42 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/30 17:59:55 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# include <stdbool.h>
 # include <stdio.h>
-# include "gnl/get_next_line.h"
+# include <string.h>
+# include <math.h>
 # include <mlx.h>
+# include "gnl/get_next_line.h"
+# include "math.h"
+
+# define MAX_ROWS 10
+# define MAX_COLS 33
+# define green 0x00008000
+# define red  0x00FF0000
+# define blue 0x000000FF
+# define white 0x00FFFFFF
+# define black 0x00000000
+# define gray 0x00C0C0C0
+# define bluesky 0x00199EF3
 
 # define DM				        32
 # define X_EVENT_KEY_PRESS		2
@@ -43,17 +57,19 @@ typedef struct s_player {
 	double		y;
 	double		dir;
 	double		FOV;
-	int		turn_dir;
-	int		walk_dir;
-	int		rotation_angle;
-	int		walk_speed;
-	int		turn_speed;
+	int			turn_dir;
+	int			walk_dir;
+	int			rotation_angle;
+	int			walk_speed;
+	int			turn_speed;
 }	t_player;
 
 typedef struct s_ray {
 	double		rayAngle;
-	double		wallHitX;
-	double		wallHitY;
+	double		xHhit;
+	double		yHhit;
+	double		xVhit;
+	double		yVhit;
 	double		hHitDis;
 	double		vHitDis;
 	double		dToPP;
