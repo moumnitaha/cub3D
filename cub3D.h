@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/30 17:59:55 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/30 18:54:11 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <mlx.h>
 # include "gnl/get_next_line.h"
 # include "math.h"
+# include "map.h"
 
 # define MAX_ROWS 10
 # define MAX_COLS 33
@@ -90,4 +91,27 @@ typedef struct s_game {
 	t_player	*player;
 }	t_game;
 
+void		initRayDirection(t_ray *ray);
+void		horizontalIntersection(t_game *g, t_ray *ray);
+void		verticalIntersection(t_game *g, t_ray *ray);
+void		draw_rays(t_game *g);
+void		render3DProjectedWalls(t_game *g, double wallStripHeight, int i, int color);
+bool checkfirsNlast();
+bool checkColumns();
+bool checkAroundSpaces();
+bool isSurroundedByWalls();
+int get_player_position();
+int mouse_move(int x, int y, t_game *game);
+void draw_rect(t_game *g, int x , int y, int color, double scale);
+void draw_line(t_game *g, double X0, double Y0, double X1, double Y1, int color);
+void draw_player(t_game *g, double x_pos, double y_pos, double scale);
+void	draw_map(t_game *g, double scale);
+int mainDraws(t_game *game);
+double fixAngle(double angle);
+double degToRad(double deg);
+double dis_two_pnts(double x1, double y1, double x2, double y2);
+void initRayDirection(t_ray *ray);
+int	key_press(int keycode, t_game *game);
+int	exit_game(t_game *game);
+int	escape_game(t_game *game);
 #endif
