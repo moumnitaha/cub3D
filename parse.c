@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:39:27 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/10/30 11:17:55 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/10/30 18:39:22 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char    *_path(char *path)
     return (path);
 }
 
-void set_txt(t_data *game, char c, char *path)
+void set_txt(t_game *game, char c, char *path)
 {
     if (c == 'N')
         game->no_txt = _path(path);
@@ -89,7 +89,7 @@ void set_txt(t_data *game, char c, char *path)
         _error("Error: Invalid Texture Key\n");
 }
 
-int _line(t_data *game, char *line, int l)
+int _line(t_game *game, char *line, int l)
 {
     int start;
     int end;

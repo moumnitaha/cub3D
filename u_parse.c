@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:40:20 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/10/30 18:10:09 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/10/30 18:38:55 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ int	maplen(int fd)
 	return (count);
 }
 
-int	ft_open(char *file, int perm, t_data *game)
+int	ft_open(char *file, int perm, t_game *game)
 {
 	int	fd;
 	int	fd_len;
-	// t_data	*game;
+	// t_game	*game;
 
 	fd = open(file, perm);
 	if (fd < 0)
@@ -65,7 +65,7 @@ static int	_spaces(char *line)
 	return (1);
 }
 
-int get_info(t_data *game, char *line)
+int get_info(t_game *game, char *line)
 {
     int i;
     int j;
@@ -97,7 +97,7 @@ int get_info(t_data *game, char *line)
 }
 
 
-void fill_spaces(t_data *game, size_t len, char **map)
+void fill_spaces(t_game *game, size_t len, char **map)
 {
     size_t j;
     size_t i;
@@ -137,7 +137,7 @@ void fill_spaces(t_data *game, size_t len, char **map)
 	
 }
 
-void	_map(char **map, t_data *game)
+void	_map(char **map, t_game *game)
 {
 	size_t len;
 	int		j;
@@ -152,7 +152,7 @@ void	_map(char **map, t_data *game)
 	fill_spaces(game, len, map);
 }
 
-void	read_map(char *file, t_data *game)
+void	read_map(char *file, t_game *game)
 {
 	int	fd;
 	int	i;
