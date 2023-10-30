@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:13:39 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/29 23:01:21 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/30 09:32:01 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -425,7 +425,7 @@ void draw_rays(t_game *g)
 		rayAngle += degToRad(mapWidth);
 		i++;
 	}
-	printf("I => [%f]\n", 0.1 / g->width);
+	printf("I => [%d]\n", i);
 }
 
 int mainDraws(t_game *game)
@@ -494,8 +494,10 @@ int	escape_game(t_game *game)
 }
 
 int mouse_move(int x, int y, t_game *game) {
-	if (x > 0 && y > 0 && y < game->height && x < game->width){
-		game->player->dir = degToRad((x / 10)) + M_PI;
+	if (x > 0 && y > 0 && y < game->height && x < game->width)
+	{
+		game->player->dir = atan2(y - game->player->y, x - game->player->x);
+		printf("Angle => [%f]\n", game->player->dir);
 		mainDraws(game);
 	}
     return 0;
@@ -525,10 +527,10 @@ int main()
 
 	mainDraws(g);
 	//for MacOs
-	// mlx_hook(g->win, X_EVENT_KEY_PRESS, 0, &key_press, g);
+	mlx_hook(g->win, X_EVENT_KEY_PRESS, 0, &key_press, g);
 	//for Linux
-	mlx_key_hook(g->win, &key_press, g);
-	// mlx_hook(g->win, 6, 1L << 6, mouse_move, g);
+	// mlx_key_hook(g->win, &key_press, g);
+	mlx_hook(g->win, 6, 1L << 6, mouse_move, g);
 	// mlx_loop_hook(g->mlx, &mainDraws, g);
 	mlx_hook(g->win, X_EVENT_KEY_EXIT, 0, &escape_game, g);
 	mlx_loop(g->mlx);
