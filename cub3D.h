@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/29 22:56:43 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/30 17:05:42 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@
 // # define KEY_S					1
 // # define KEY_D					2
 
-// # define KEY_ESC					53
-// # define KEY_LEFT				123
-// # define KEY_RIGHT				124
-// # define KEY_DOWN				125
-// # define KEY_UP					126
+# define KEY_ESC				53
+# define KEY_LEFT				123
+# define KEY_RIGHT				124
+# define KEY_DOWN				125
+# define KEY_UP					126
 
 // # define KEY_ESC				65307
 // # define KEY_LEFT				65361
@@ -42,6 +42,7 @@ typedef struct s_player {
 	double		x;
 	double		y;
 	double		dir;
+	double		FOV;
 	int		turn_dir;
 	int		walk_dir;
 	int		rotation_angle;
@@ -49,26 +50,27 @@ typedef struct s_player {
 	int		turn_speed;
 }	t_player;
 
+typedef struct s_ray {
+	double		rayAngle;
+	double		wallHitX;
+	double		wallHitY;
+	double		hHitDis;
+	double		vHitDis;
+	double		dToPP;
+	bool		isHzHit;
+	bool		isVcHit;
+	bool		isRayFacingUp;
+	bool		isRayFacingDown;
+	bool		isRayFacingLeft;
+	bool		isRayFacingRight;
+}	t_ray;
+
 typedef struct s_game {
 	double		height;
 	double		width;
-	int		clctbls;
-	int		mvmnts;
-	int		clcted;
-	int		pos_x;
-	int		pos_y;
-	int		clct_x;
-	int		clct_y;
-	char	**map;
-	void	*mlx;
-	void	*win;
-	char	*wall;
-	char	*clct;
-	char	*exit;
-	char	*open;
-	char	*crc_l;
-	char	*crc_r;
-	char	*land;
+	char		**map;
+	void		*mlx;
+	void		*win;
 	t_player	*player;
 }	t_game;
 

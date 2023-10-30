@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 15:13:39 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/30 09:32:01 by tmoumni          ###   ########.fr       */
+/*   Created: 2023/10/30 11:25:20 by tmoumni           #+#    #+#             */
+/*   Updated: 2023/10/30 17:23:42 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -36,8 +35,8 @@ char* map[] = {
     "111101111111110110000000000000001",
     "111101111111110111010100000011111",
     "11100000111  10111000000000000001",
-    "10000000001  1001100P000000011111",
-    "10000000000111000101010000001    ",
+    "10000000001  10011000000000011111",
+    "10000000000111000101010P00001    ",
     "110000011100010111000111000111   ",
     "11110111 1110001 1111100000111   ",
     "11111111 1111111 111111111111    "
@@ -166,9 +165,9 @@ void draw_rect(t_game *g, int x , int y, int color, double scale)
 		j = x;
 		while (j < height)
 		{
-			// if ((double)(j % (DM * scale)) == 0 || (double)(i % (DM * scale)) == 0)
-			// 	mlx_pixel_put(g->mlx, g->win, j, i, gray);
-			// else
+			
+			
+			
 				mlx_pixel_put(g->mlx, g->win, j, i, color);
 			j++;
 		}
@@ -296,6 +295,67 @@ void render3DProjectedWalls(t_game *game, double wallStripHeight, int X, int col
 	}
 }
 
+
+void horizontalIntersection(t_game *g, t_ray *ray)
+{
+	double xHhit;
+	double yHhit;
+	double xStep;
+	double yStep;
+
+	yHhit = floor(g->player->y / DM) * DM;
+	yHhit += ray->isRayFacingDown ? DM : 0;
+	xHhit = g->player->x + (yHhit - g->player->y) / tanf(ray->rayAngle);
+	yStep = DM;
+	yStep *= ray->isRayFacingUp ? -1 : 1;
+	xStep = DM / tanf(ray->rayAngle);
+	xStep *= (ray->isRayFacingLeft && xStep > 0) ? -1 : 1;
+	xStep *= (ray->isRayFacingRight && xStep < 0) ? -1 : 1;
+	if (ray->isRayFacingUp)
+		yHhit -= (0.1 / g->width);
+	while (xHhit >= 0 && xHhit < g->width && yHhit >= 0 && yHhit < g->height)
+	{
+		if (map[(int)(yHhit / DM)][(int)(xHhit / DM)] == '1')
+		{
+			ray->isHzHit = true;
+			break;
+		}
+		xHhit += xStep;
+		yHhit += yStep;
+	}
+	ray->hHitDis = dis_two_pnts(g->player->x, g->player->y, xHhit, yHhit);
+}
+
+void verticalIntersection(t_game *g, t_ray *ray)
+{
+	double xVhit;
+	double yVhit;
+	double xStep;
+	double yStep;
+
+	xVhit = floor(g->player->x / DM) * DM;
+	xVhit += ray->isRayFacingRight ? DM : 0;
+	yVhit = g->player->y + (xVhit - g->player->x) * tanf(ray->rayAngle);
+	xStep = DM;
+	xStep *= ray->isRayFacingLeft ? -1 : 1;
+	yStep = DM * tanf(ray->rayAngle);
+	yStep *= (ray->isRayFacingUp && yStep > 0) ? -1 : 1;
+	yStep *= (ray->isRayFacingDown && yStep < 0) ? -1 : 1;
+	if (ray->isRayFacingLeft)
+		xVhit -= (0.1 / g->width);
+	while (xVhit >= 0 && xVhit < g->width && yVhit >= 0 && yVhit < g->height)
+	{
+		if (map[(int)(yVhit / DM)][(int)(xVhit / DM)] == '1')
+		{
+			ray->isVcHit = true;
+			break;
+		}
+		xVhit += xStep;
+		yVhit += yStep;
+	}
+	ray->vHitDis = dis_two_pnts(g->player->x, g->player->y, xVhit, yVhit);
+}
+
 double fixAngle(double angle)
 {
 	angle = fmod(angle , 2 * M_PI);
@@ -304,125 +364,52 @@ double fixAngle(double angle)
 	return angle;
 }
 
+void initDirection(t_ray *ray)
+{
+	ray->isRayFacingDown = false;
+	ray->isRayFacingUp = false;
+	ray->isRayFacingLeft = false;
+	ray->isRayFacingRight = false;
+	if (fixAngle(ray->rayAngle) > 0 && fixAngle(ray->rayAngle) < M_PI)
+		ray->isRayFacingDown = true;
+	ray->isRayFacingUp = !ray->isRayFacingDown;
+	if ((fixAngle(ray->rayAngle) < 0.5 * M_PI) || (fixAngle(ray->rayAngle) > 1.5 * M_PI))
+		ray->isRayFacingRight =	true;
+	ray->isRayFacingLeft = !ray->isRayFacingRight;
+}
+
 void draw_rays(t_game *g)
 {
-	double pX = g->player->x;
-	double pY = g->player->y;
-	double distanceProjectionPlane;
-	double wallStripHeight;
-	double mapDistance;
-	double mapWidth = 60 / g->width;
-	double rayAngle = g->player->dir - degToRad(30);
-	double yIntercept;
-	double xIntercept;
-	bool isFacingUp;
-	bool isFacingDown;
-	bool isFacingRight;
-	bool isFacingLeft;
-	double xStep;
-	double yStep;
+	t_ray *ray;
+	double vWallStripHeight;
+	double hWallStripHeight;
+	double mapWidth = g->player->FOV / g->width;
 	int i = 0;
-	// rayAngle = fixAngle(rayAngle);
-	while(rayAngle < g->player->dir + degToRad(30))
+
+	ray = malloc(sizeof(t_ray));
+	ray->rayAngle = g->player->dir - degToRad(g->player->FOV / 2);
+	while(ray->rayAngle < g->player->dir + degToRad(g->player->FOV / 2))
 	{
-		isFacingDown = fixAngle(rayAngle) > 0 && fixAngle(rayAngle) < M_PI;
-		isFacingUp = !isFacingDown;
-		isFacingRight = (fixAngle(rayAngle) < 0.5 * M_PI) || (fixAngle(rayAngle) > 1.5 * M_PI);
-		isFacingLeft = !isFacingRight;
-		
-		bool hitHz = false;
-
-		//y-coord to the closest horz grid intersection
-		yIntercept = floor(pY / DM) * DM;
-		yIntercept += isFacingDown ? DM : 0;
-		//x-coord to the closest horz grid intersection
-		xIntercept = pX + (yIntercept - pY) / tanf(rayAngle);
-		yStep = DM;
-		yStep *= isFacingUp ? -1 : 1;
-		xStep = DM / tanf(rayAngle);
-		xStep *= (isFacingLeft && xStep > 0) ? -1 : 1;
-		xStep *= (isFacingRight && xStep < 0) ? -1 : 1;
-		double xH = xIntercept;
-		double yH = yIntercept;
-		if (isFacingUp)
-			yH -= (0.1 / g->width);
-		while (xH >= 0 && xH < g->width && yH >= 0 && yH < g->height )
+		initDirection(ray);
+		ray->isHzHit = false;
+		horizontalIntersection(g, ray);
+		ray->isVcHit = false;
+		verticalIntersection(g, ray);
+		ray->dToPP = (g->width / 2) / tanf(degToRad(g->player->FOV / 2));
+		hWallStripHeight = (DM / ray->hHitDis) * ray->dToPP / cos(g->player->dir - ray->rayAngle);
+		vWallStripHeight = (DM / ray->vHitDis) * ray->dToPP / cos(g->player->dir - ray->rayAngle);
+		if (ray->isHzHit && ray->isVcHit)
 		{
-			if (map[(int)(yH / DM)][(int)(xH / DM)] == '1')
-			{
-				hitHz = true;
-				break;
-			}
-			else {
-				xH += xStep;
-				yH += yStep;
-			}
-		}
-		//VERTICAL
-		bool hitVc = false;
-		xIntercept = floor(pX / DM) * DM;
-		xIntercept += isFacingRight ? DM : 0;
-		//x-coord to the closest horz grid intersection
-		yIntercept = pY + (xIntercept - pX) * tanf(rayAngle);
-		xStep = DM;
-		xStep *= isFacingLeft ? -1 : 1;
-		
-		yStep = DM * tanf(rayAngle);
-		yStep *= (isFacingUp && yStep > 0) ? -1 : 1;
-		yStep *= (isFacingDown && yStep < 0) ? -1 : 1;
-		distanceProjectionPlane = (g->width / 2) / tanf(degToRad(30));
-		double xV = xIntercept;
-		double yV = yIntercept;
-		if (isFacingLeft)
-			xV -= (0.1 / g->width);
-		while (xV >= 0 && xV < g->width && yV >= 0 && yV < g->height )
-		{
-			if (map[(int)(yV / DM)][(int)(xV / DM)] == '1')
-			{
-				hitVc = true;
-				break;
-			}
-			else {
-				xV += xStep;
-				yV += yStep;
-			}
-		}
-		if (hitHz && hitVc)
-		{
-			double hHitDis = dis_two_pnts(pX, pY, xH, yH);
-			double vHitDis = dis_two_pnts(pX, pY, xV, yV);
-
-			if (hHitDis < vHitDis)
-			{
-				// Draw a horizontal wall
-				wallStripHeight = (DM / hHitDis) * distanceProjectionPlane / cos(g->player->dir - rayAngle);
-				render3DProjectedWalls(g, wallStripHeight, i, gray);
-				// draw_line(g, pX, pY, xH, yH, blue);
-			}
+			if (ray->hHitDis < ray->vHitDis + (0.1 / g->width))
+				render3DProjectedWalls(g, hWallStripHeight, i, gray);
 			else
-			{
-				// Draw a vertical wall
-				wallStripHeight = (DM / vHitDis) * distanceProjectionPlane / cos(g->player->dir - rayAngle);
-				render3DProjectedWalls(g, wallStripHeight, i, green);
-				// draw_line(g, pX, pY, xV, yV, bluesky);
-			}
-			// printf("rayAngle => [%f][%f]\n", rayAngle, rayAngle + degToRad(mapWidth));
+				render3DProjectedWalls(g, vWallStripHeight, i, green);
 		}
-		else if (hitHz)
-		{
-			// Draw a horizontal wall
-			wallStripHeight = (DM / dis_two_pnts(pX, pY, xH, yH)) * distanceProjectionPlane / cos(g->player->dir - rayAngle);
-			render3DProjectedWalls(g, wallStripHeight, i, gray);
-			// draw_line(g, pX, pY, xH, yH, green);
-		}
-		else if (hitVc)
-		{
-			// Draw a vertical wall
-			wallStripHeight = (DM / dis_two_pnts(pX, pY, xV, yV)) * distanceProjectionPlane / cos(g->player->dir - rayAngle);
-			render3DProjectedWalls(g, wallStripHeight, i, green);
-			// draw_line(g, pX, pY, xV, yV, red);
-		}
-		rayAngle += degToRad(mapWidth);
+		else if (ray->isHzHit)
+			render3DProjectedWalls(g, hWallStripHeight, i, gray);
+		else if (ray->isVcHit)
+			render3DProjectedWalls(g, vWallStripHeight, i, green);
+		ray->rayAngle += degToRad(mapWidth);
 		i++;
 	}
 	printf("I => [%d]\n", i);
@@ -479,10 +466,6 @@ int	key_press(int keycode, t_game *game)
 	}
 	else
 		return (0);
-	// mlx_clear_window(game->mlx, game->win);
-	// draw_map(game, 0.2);
-	// draw_player(game, pX, pY);
-	// draw_rays(game);
 	mainDraws(game);
 	return (0);
 }
@@ -496,7 +479,7 @@ int	escape_game(t_game *game)
 int mouse_move(int x, int y, t_game *game) {
 	if (x > 0 && y > 0 && y < game->height && x < game->width)
 	{
-		game->player->dir = atan2(y - game->player->y, x - game->player->x);
+		game->player->dir = atan2((y - game->player->y) / 10, (x - game->player->x) / 10);
 		printf("Angle => [%f]\n", game->player->dir);
 		mainDraws(game);
 	}
@@ -509,29 +492,28 @@ int main()
         printf("The map is completely surrounded by walls.\n");
     } else {
         printf("XXXX The map is not completely surrounded by walls. XXXX\n");
+		return (0);
     }
-
 	t_game		*g;
 	t_player	*p;
+	t_ray		*ray;
+
 	p = malloc(sizeof(t_player));
 	g = malloc(sizeof(t_game));
+	ray = malloc(sizeof(t_ray));
 	g->mlx = mlx_init();
 	g->height = MAX_ROWS * DM;
 	g->width = MAX_COLS * DM;
 	g->win = mlx_new_window(g->mlx, g->width, g->height, "./cub3D");
-
 	p->x = (get_player_position() % MAX_COLS) * DM + DM / 2;
 	p->y = (get_player_position() / MAX_COLS) * DM + DM / 2;
 	p->dir = -M_PI_2;
-	g->player = p;
+	p->FOV = 60;
 
+	g->player = p;
 	mainDraws(g);
-	//for MacOs
 	mlx_hook(g->win, X_EVENT_KEY_PRESS, 0, &key_press, g);
-	//for Linux
-	// mlx_key_hook(g->win, &key_press, g);
 	mlx_hook(g->win, 6, 1L << 6, mouse_move, g);
-	// mlx_loop_hook(g->mlx, &mainDraws, g);
 	mlx_hook(g->win, X_EVENT_KEY_EXIT, 0, &escape_game, g);
 	mlx_loop(g->mlx);
     return 0;
