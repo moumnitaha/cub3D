@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:39:27 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/10/28 16:07:58 by admin            ###   ########.fr       */
+/*   Updated: 2023/10/30 11:17:55 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@ int _colors(char *line, int *rgb)
     int i;
     int j;
     int start;
-    // int c;
 
     j = 0;
-    // c = -1;
     i = 0;
     while (line[i])
     {
@@ -143,4 +141,3 @@ int _line(t_data *game, char *line, int l)
     free(value);
     return (1);
 }
-

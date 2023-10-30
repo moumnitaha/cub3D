@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/28 16:10:31 by admin            ###   ########.fr       */
+/*   Updated: 2023/10/30 11:45:19 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ typedef struct s_data
     char	*so_txt;
     char	*we_txt;
     char	*ea_txt;
-    int	floor_c;
-    int	ceilling_c;
+    int	    floor_c;
+    int	    ceilling_c;
+    int     mlen;
 }	t_data;
 
 // *** LIBFT FUNCTIONS *** //
@@ -44,7 +45,7 @@ int     ft_strcmp(const char *s1, const char *s2);
 
 // *** CUB3D FUNCTIONS *** //
 
-int		ft_open(char *file, int perm);
+int     ft_open(char *file, int perm, t_data *game);
 void	init_map(t_data *game);
 void	read_map(char *file, t_data *game);
 int		get_info(t_data *game, char *line);
