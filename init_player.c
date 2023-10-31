@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:33:54 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 12:43:34 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 15:35:53 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,6 @@ void	init_player(t_game *game)
 	game->player->y = (get_player_position() / MAX_COLS) * DM + DM / 2;
 	game->player->dir = -M_PI_2;
 	game->player->fov = 60;
+	game->player->walk_dir = 0;
+	game->player->turn_dir = 6;
 }

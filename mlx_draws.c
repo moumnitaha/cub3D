@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:31:11 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 12:40:47 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 14:50:51 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	draw_line(t_game *g, double x_1, double y_1)
 	y_inc = (y_1 - p_y) / (double)steps;
 	while ((int)steps)
 	{
-		mlx_pixel_put(g->mlx, g->win, p_x, p_y, GREEN);
+		mlx_pixel_put(g->mlx, g->win, p_x, p_y, RED);
 		p_x += x_inc;
 		p_y += y_inc;
 		steps -= 1;

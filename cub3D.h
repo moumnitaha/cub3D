@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 12:47:40 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 14:47:35 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ double		fix_ang(double angle);
 double		deg_to_rad(double deg);
 double		d_t_pnts(double x1, double y1, double x2, double y2);
 void		init_ray_direction(t_ray *ray);
+void		init_player(t_game *game);
+void		init_game(t_game *g, t_player*player);
 int			key_press(int keycode, t_game *game);
 int			exit_game(t_game *game);
 int			escape_game(t_game *game);
