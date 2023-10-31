@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 12:55:19 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/10/31 12:56:42 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/10/31 15:22:33 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,27 @@ int	maplen(int fd)
 	}
 	free(line);
 	return (count);
+}
+
+int	ft_open(char *file, int perm, t_game *game)
+{
+	int	fd;
+	int	fd_len;
+
+	fd = open(file, perm);
+	if (fd < 0)
+	{
+		write(2, "Wrong file\n", 11);
+		exit(1);
+	}
+	fd_len = maplen(fd);
+	if (!fd_len)
+	{
+		write(2, "Empty file\n", 11);
+		exit(1);
+	}
+	game->mlen = fd_len;
+	close(fd);
+	fd = open(file, perm);
+	return (fd);
 }
