@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:19:35 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/10/31 12:54:24 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/10/31 16:12:42 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,19 @@ void	init_map(t_game *game)
 	game->mlen = 0;
 }
 
-int	cub(char *av)
+int	cub(char *av, t_game *game)
 {
-	t_game	*game;
-
 	if (!p_name(av))
 		return(write(2, "Invalid map name\n", 17), 0);
-	game = malloc(sizeof(t_game));
 	init_map(game);
 	read_map(av, game);
 	// if (parse_map(game))
 	// 	return (1);
 	// return (0);
-	return (1);	
+	if (!is_surrounded_by_walls())
+	{
+		printf("XXXX The map is not completely surrounded by walls. XXXX\n");
+		return (0);
+	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:18 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 12:14:45 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/10/31 16:12:27 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,21 @@
 
 int	main(int ac, char **av)
 {
-	if (ac != 2)
-		write(2, "invalid path\n", 13);
-	else
-	{
-		if (cub(av[1]))
-			printf("done\n");
-	}
-
 	t_game		*g;
 	t_player	*p;
 	t_ray		*ray;
 
-	if (!is_surrounded_by_walls())
-	{
-		printf("XXXX The map is not completely surrounded by walls. XXXX\n");
-		return (0);
-	}
-	p = malloc(sizeof(t_player));
 	g = malloc(sizeof(t_game));
+	p = malloc(sizeof(t_player));
 	ray = malloc(sizeof(t_ray));
+	if (ac != 2)
+		write(2, "invalid path\n", 13);
+	else
+	{
+		if (cub(av[1], g))
+			printf("done\n");
+	}
+
 	g->mlx = mlx_init();
 	init_game(g, p);
 	init_player(g);

@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 12:57:04 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/10/31 16:04:52 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct s_game
 	int			mlen;
 	double		height;
 	double		width;
+	double		scale;
 	char		**map;
 	char		*no_txt;
 	char		*so_txt;
@@ -142,7 +143,7 @@ size_t	ft_strlen(const char *str);
 
 // *** CUB3D FUNCTIONS *** //
 
-int		cub(char *av);
+int		cub(char *av, t_game *game);
 int		maplen(int fd);
 int		p_name(char *s);
 int		ft_open(char *file, int perm, t_game *game);

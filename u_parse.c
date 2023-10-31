@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:40:20 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/10/31 15:24:27 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/10/31 15:59:34 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	fill_spaces(t_game *game, size_t len, char **map)
 	size_t	j;
 	size_t	i;
 
+	printf("mlen : %d\n", game->mlen);
 	game->map = malloc(sizeof(char *) * (game->mlen + 1));
 	if (!game->map)
 		return ;
@@ -72,6 +73,8 @@ void	fill_spaces(t_game *game, size_t len, char **map)
 	}
 	game->map[j] = NULL;
 	free(map);
+	// int i = -1;
+	// while ()
 }
 
 void	_map(char **map, t_game *game)
