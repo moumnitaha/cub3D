@@ -6,28 +6,11 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:40:20 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/10/31 11:45:20 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/10/31 12:57:07 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-int	maplen(int fd)
-{
-	char	*line;
-	int		count;
-
-	count = 0;
-	line = get_next_line(fd);
-	while (line != NULL)
-	{
-		free(line);
-		line = get_next_line(fd);
-		count++;
-	}
-	free(line);
-	return (count);
-}
 
 int	ft_open(char *file, int perm, t_game *game)
 {
@@ -50,18 +33,6 @@ int	ft_open(char *file, int perm, t_game *game)
 	close(fd);
 	fd = open(file, perm);
 	return (fd);
-}
-
-static int	_spaces(char *line)
-{
-	while (*line)
-	{
-		if (*line != ' ' || *line != '\t'
-			|| *line != '\n')
-			return (0);
-		line++;
-	}
-	return (1);
 }
 
 int get_info(t_game *game, char *line)

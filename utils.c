@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:19:35 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/10/31 11:47:13 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/10/31 12:54:24 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,18 @@ void	_error(char *err)
 {
 	ft_putstr_fd(err, 2);
 	exit(1);
+}
+
+int	_spaces(char *line)
+{
+	while (*line)
+	{
+		if (*line != ' ' || *line != '\t'
+			|| *line != '\n')
+			return (0);
+		line++;
+	}
+	return (1);
 }
 
 int p_name(char *s)
