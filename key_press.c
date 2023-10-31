@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:24:05 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 15:36:21 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 16:40:07 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	go_up_down(t_game *game)
 	w_dir = game->player->walk_dir;
 	p_x = game->player->x + (8 * cos(game->player->dir)) * w_dir;
 	p_y = game->player->y + (8 * sin(game->player->dir)) * w_dir;
-	if (map[(int)(p_y / DM)][(int)(p_x / DM)] == '1')
+	if (game->map[(int)(p_y / DM)][(int)(p_x / DM)] == '1')
 		return ;
-	if (map[(int)(p_y / DM)][(int)(p_x / DM)] == ' ')
+	if (game->map[(int)(p_y / DM)][(int)(p_x / DM)] == ' ')
 		return ;
 	game->player->x = p_x;
 	game->player->y = p_y;

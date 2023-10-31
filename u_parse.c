@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   u_parse.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:40:20 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/10/31 15:59:34 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/10/31 16:42:06 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ void	fill_spaces(t_game *game, size_t len, char **map)
 			if (i < ft_strlen(map[j]))
 			{
 				if (map[j][i] == ' ' || map[j][i] == '\t')
-					game->map[j][i] = 'X';
+					game->map[j][i] = ' ';
 				else
 					game->map[j][i] = map[j][i];
 			}
 			else
-				game->map[j][i] = 'X';
+				game->map[j][i] = ' ';
 		}
 		game->map[j][i] = '\0';
 	}

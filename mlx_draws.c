@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:31:11 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 14:50:51 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 16:56:58 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,11 @@ void	draw_map(t_game *g, double scale)
 		j = 0;
 		while (j < MAX_COLS)
 		{
-			if (map[i][j] == '1')
+			if (g->map[i][j] == '1')
 				draw_rect(g, j * (DM * scale), i * (DM * scale), BLACK);
-			else if (map[i][j] == ' ')
+			else if (g->map[i][j] == ' ')
 				draw_rect(g, j * (DM * scale), i * (DM * scale), RED);
-			else if (map[i][j] == '0' || map[i][j] == 'P')
+			else if (g->map[i][j] == '0' || g->map[i][j] == 'N')
 				draw_rect(g, j * (DM * scale), i * (DM * scale), WHITE);
 			j++;
 		}

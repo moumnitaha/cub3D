@@ -6,71 +6,72 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:45:44 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 15:20:10 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 16:34:49 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-bool	check_fl(void)
+bool	check_fl(t_game *game)
 {
 	int	start;
 	int	end;
 
 	start = 0;
-	end = strlen(map[0]) - 1;
-	while (map[0][start] == ' ')
+	end = strlen(game->map[0]) - 1;
+	while (game->map[0][start] == ' ')
 		start++;
-	while (map[0][end] == ' ')
+	while (game->map[0][end] == ' ')
 		end--;
 	while (start < end)
 	{
-		if (map[0][start] != '1' && map[0][start] != ' ')
+		if (game->map[0][start] != '1' && game->map[0][start] != ' ')
 			return (false);
 		start++;
 	}
 	return (true);
 }
 
-bool	check_ll(void)
+bool	check_ll(t_game *game)
 {
 	int	start;
 	int	end;
 
 	start = 0;
-	end = strlen(map[0]) - 1;
-	while (map[MAX_ROWS - 1][start] == ' ')
+	end = strlen(game->map[0]) - 1;
+	while (game->map[MAX_ROWS - 1][start] == ' ')
 		start++;
-	while (map[MAX_ROWS - 1][end] == ' ')
+	while (game->map[MAX_ROWS - 1][end] == ' ')
 		end--;
 	while (start <= end)
 	{
-		if (map[MAX_ROWS - 1][start] != '1' && map[MAX_ROWS - 1][start] != ' ')
+		if (game->map[MAX_ROWS - 1][start] != '1' && 
+			game->map[MAX_ROWS - 1][start] != ' ')
 			return (false);
 		start++;
 	}
 	return (true);
 }
 
-bool	check_firs_last(void)
+bool	check_firs_last(t_game *game)
 {
-	if (!check_fl())
+	if (!check_fl(game))
 		return (false);
-	if (!check_ll())
+	if (!check_ll(game))
 		return (false);
 	return (true);
 }
 
-bool	check_clm(int i, int index)
+bool	check_clm(int i, int index, t_game *game)
 {
-	if (i < MAX_ROWS - 1 && map[i + 1][index] == '0')
+	if (i < MAX_ROWS - 1 && game->map[i + 1][index] == '0')
 		return (false);
-	if (i > 0 && map[i - 1][index] == '0')
+	if (i > 0 && game->map[i - 1][index] == '0')
 		return (false);
 	return (true);
 }
 
-bool	check_columns(void)
+bool	check_columns(t_game *game)
 {
 	int	start;
 	int	end;
@@ -80,20 +81,20 @@ bool	check_columns(void)
 	while (++i < MAX_ROWS)
 	{
 		start = 0;
-		end = strlen(map[0]) - 1;
-		while (map[i][start] == ' ')
+		end = strlen(game->map[0]) - 1;
+		while (game->map[i][start] == ' ')
 		{
-			if (!check_clm(i, start))
+			if (!check_clm(i, start, game))
 				return (false);
 			start++;
 		}
-		while (map[i][end] == ' ')
+		while (game->map[i][end] == ' ')
 		{
-			if (!check_clm(i, end))
+			if (!check_clm(i, end, game))
 				return (false);
 			end--;
 		}
-		if (map[i][start] != '1' || map[i][end] != '1')
+		if (game->map[i][start] != '1' || game->map[i][end] != '1')
 			return (false);
 	}
 	return (true);

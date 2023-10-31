@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 16:04:52 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/10/31 17:03:58 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 # include <mlx.h>
 # include "gnl/get_next_line.h"
 # include "math.h"
-# include "map.h"
 
-# define MAX_ROWS 10
-# define MAX_COLS 33
+# define MAX_ROWS 14
+# define MAX_COLS 38
+
 # define GREEN 0x00008000
 # define RED  0x00FF0000
 # define BLUE 0x000000FF
@@ -108,11 +108,11 @@ void		horizontal_intersection(t_game *g, t_ray *ray);
 void		vertical_intersection(t_game *g, t_ray *ray);
 void		draw_rays(t_game *g);
 void		render_3d_walls(t_game *g, double wall_height, int i, int color);
-bool		check_firs_last(void);
-bool		check_columns(void);
-bool		check_around_spaces(void);
-bool		is_surrounded_by_walls(void);
-int			get_player_position(void);
+bool		check_firs_last(t_game *game);
+bool		check_columns(t_game *game);
+bool		check_around_spaces(t_game *game);
+bool		is_surrounded_by_walls(t_game *game);
+int			get_player_position(t_game *game);
 int			mouse_move(int x, int y, t_game *game);
 void		draw_rect(t_game *g, int x, int y, int color);
 void		draw_line(t_game *g, double x_1, double y_1);
@@ -128,34 +128,35 @@ void		init_game(t_game *g, t_player*player);
 int			key_press(int keycode, t_game *game);
 int			exit_game(t_game *game);
 int			escape_game(t_game *game);
+
 // *** LIBFT FUNCTIONS *** //
 
-char	*ft_strjoin(char const *s1, char const *s2);
-char	**ft_split(char const *s, char c);
-char	*ft_strdup(const char *s1);
-void	ft_putstr_fd(char *s, int fd);
-int		ft_atoi(const char *str);
-int		ft_isdigit(int c);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-int		ft_strcmp(const char *s1, const char *s2);
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-size_t	ft_strlen(const char *str);
+char		*ft_strjoin(char const *s1, char const *s2);
+char		**ft_split(char const *s, char c);
+char		*ft_strdup(const char *s1);
+void		ft_putstr_fd(char *s, int fd);
+int			ft_atoi(const char *str);
+int			ft_isdigit(int c);
+char		*ft_substr(char const *s, unsigned int start, size_t len);
+int			ft_strcmp(const char *s1, const char *s2);
+size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
+size_t		ft_strlen(const char *str);
 
 // *** CUB3D FUNCTIONS *** //
 
-int		cub(char *av, t_game *game);
-int		maplen(int fd);
-int		p_name(char *s);
-int		ft_open(char *file, int perm, t_game *game);
-int		get_info(t_game *game, char *line);
-int		_line(t_game *game, char *line, int l);
-int		get_color(char *line);
-int		_colors(char *line, int *rgb);
-int		_spaces(char *line);
-void	_error(char *err);
-void	read_map(char *file, t_game *game);
-void	init_map(t_game *game);
-void	set_txt(t_game *game, char c, char *path);
-char	*_path(char *path);
+int			cub(char *av, t_game *game);
+int			maplen(int fd);
+int			p_name(char *s);
+int			ft_open(char *file, int perm, t_game *game);
+int			get_info(t_game *game, char *line);
+int			_line(t_game *game, char *line, int l);
+int			get_color(char *line);
+int			_colors(char *line, int *rgb);
+int			_spaces(char *line);
+void		_error(char *err);
+void		read_map(char *file, t_game *game);
+void		init_map(t_game *game);
+void		set_txt(t_game *game, char c, char *path);
+char		*_path(char *path);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:27:29 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 12:01:04 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 16:37:24 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	get_hintersections(t_game *g, t_ray *ray, float x_step, float y_step)
 	while (ray->x_h_hit >= 0 && ray->x_h_hit < g->width
 		&& ray->y_h_hit >= 0 && ray->y_h_hit < g->height)
 	{
-		if (map[(int)(ray->y_h_hit / DM)][(int)(ray->x_h_hit / DM)] == '1')
+		if (g->map[(int)(ray->y_h_hit / DM)][(int)(ray->x_h_hit / DM)] == '1')
 		{
 			ray->is_hz_hit = true;
 			break ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:18 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 16:12:27 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/10/31 16:48:45 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,12 @@ int	main(int ac, char **av)
 	{
 		if (cub(av[1], g))
 			printf("done\n");
+		else
+		{
+			write(2, "invalid map\n", 12);
+			return (0);
+		}
 	}
-
 	g->mlx = mlx_init();
 	init_game(g, p);
 	init_player(g);

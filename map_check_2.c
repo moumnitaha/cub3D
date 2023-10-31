@@ -6,45 +6,45 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 15:12:52 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 15:13:14 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 16:32:47 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-bool	check_lr(int i, int j)
+bool	check_lr(int i, int j, t_game *game)
 {
 	int	right;
 	int	left;
 
 	right = j;
 	left = j;
-	while (map[i][right] == ' ')
+	while (game->map[i][right] == ' ')
 		right++;
-	while (map[i][left] == ' ')
+	while (game->map[i][left] == ' ')
 		left--;
-	if (map[i][right] != '1' || map[i][left] != '1')
+	if (game->map[i][right] != '1' || game->map[i][left] != '1')
 		return (false);
 	return (true);
 }
 
-bool	check_ud(int i, int j)
+bool	check_ud(int i, int j, t_game *game)
 {
 	int	top;
 	int	bottom;
 
 	top = i;
 	bottom = i;
-	while (map[top][j] == ' ' && top > 0)
+	while (game->map[top][j] == ' ' && top > 0)
 		top--;
-	while (map[bottom][j] == ' ' && bottom < MAX_ROWS - 1)
+	while (game->map[bottom][j] == ' ' && bottom < MAX_ROWS - 1)
 		bottom++;
-	if (map[top][j] == '0' || map[bottom][j] == '0')
+	if (game->map[top][j] == '0' || game->map[bottom][j] == '0')
 		return (false);
 	return (true);
 }
 
-bool	check_around_spaces(void)
+bool	check_around_spaces(t_game *game)
 {
 	int	start;
 	int	end;
@@ -53,18 +53,18 @@ bool	check_around_spaces(void)
 
 	start = 0;
 	i = 0;
-	end = strlen(map[0]) - 1;
+	end = strlen(game->map[0]) - 1;
 	while (i < MAX_ROWS)
 	{
-		while (map[i][start] == ' ')
+		while (game->map[i][start] == ' ')
 			start++;
-		while (map[i][end] == ' ')
+		while (game->map[i][end] == ' ')
 			end--;
 		j = start;
 		while (j <= end)
 		{
-			if (map[i][j] == ' ')
-				if (!check_lr(i, j) || !check_ud(i, j))
+			if (game->map[i][j] == ' ')
+				if (!check_lr(i, j, game) || !check_ud(i, j, game))
 					return (false);
 			j++;
 		}
@@ -73,19 +73,19 @@ bool	check_around_spaces(void)
 	return (true);
 }
 
-bool	is_surrounded_by_walls(void)
+bool	is_surrounded_by_walls(t_game *game)
 {
-	if (!check_firs_last())
+	if (!check_firs_last(game))
 	{
 		printf("checkfirsNlast\n");
 		return (false);
 	}
-	if (!check_around_spaces())
+	if (!check_around_spaces(game))
 	{
 		printf("check_around_spaces\n");
 		return (false);
 	}
-	if (!check_columns())
+	if (!check_columns(game))
 	{
 		printf("check_columns\n");
 		return (false);
