@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:18 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/30 18:28:39 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/10/31 12:00:47 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,5 @@ int main(int ac, char **av)
 	{
 		if(cub(av[1]))
 			printf("done\n");
-		
 	}
 }
