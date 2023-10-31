@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 10:12:08 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/05/02 17:55:16 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/28 09:36:59 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*trim_buff(char *buff)
 		return (NULL);
 	count = 0;
 	nlindex = ft_hasnewline(buff);
-	bufflen = ft_strlen(buff);
+	bufflen = ft_len(buff);
 	if (nlindex == -1 || bufflen == nlindex + 1)
 		return (free(buff), NULL);
 	str = (char *)malloc(bufflen - nlindex + 1);

@@ -3,17 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 11:25:20 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 14:49:36 by tmoumni          ###   ########.fr       */
+/*   Created: 2023/10/21 13:43:18 by tmoumni           #+#    #+#             */
+/*   Updated: 2023/10/31 12:14:45 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	main(void)
+int	main(int ac, char **av)
 {
+	if (ac != 2)
+		write(2, "invalid path\n", 13);
+	else
+	{
+		if (cub(av[1]))
+			printf("done\n");
+	}
+
 	t_game		*g;
 	t_player	*p;
 	t_ray		*ray;
