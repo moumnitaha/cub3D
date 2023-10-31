@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:40:20 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/10/30 18:38:55 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/10/31 11:45:20 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	ft_open(char *file, int perm, t_game *game)
 {
 	int	fd;
 	int	fd_len;
-	// t_game	*game;
 
 	fd = open(file, perm);
 	if (fd < 0)
@@ -83,10 +82,11 @@ int get_info(t_game *game, char *line)
 			key_length = j - i;
 			key = malloc(key_length + 1);
 			if (!key)
-				return(0);
+				return (0);
             ft_strlcpy(key, line + i, key_length + 1);
-            if (ft_strcmp(key, "NO") == 0 || ft_strcmp(key, "SO") == 0 || ft_strcmp(key, "WE") == 0
-				|| ft_strcmp(key, "EA") == 0 || ft_strcmp(key, "F") == 0 || ft_strcmp(key, "C") == 0)
+            if (ft_strcmp(key, "NO") == 0 || ft_strcmp(key, "SO") == 0
+				|| ft_strcmp(key, "WE") == 0|| ft_strcmp(key, "EA") == 0
+				|| ft_strcmp(key, "F") == 0 || ft_strcmp(key, "C") == 0)
                 return(free(key), _line(game, line + j, j - i));
             else
                 _error("Error: Invalid Format\n");
@@ -128,6 +128,7 @@ void fill_spaces(t_game *game, size_t len, char **map)
         game->map[j][i] = '\0';
     }
     game->map[j] = NULL;
+	free(map);
 	j = -1;
 	printf("len : %zu\n" ,ft_strlen(game->map[++j]));
     while (game->map[++j])
@@ -142,7 +143,7 @@ void	_map(char **map, t_game *game)
 	size_t len;
 	int		j;
 
-	j = -1;
+	j = 0;
 	len = ft_strlen(map[0]);
 	while(map[++j])
 	{
@@ -180,5 +181,7 @@ void	read_map(char *file, t_game *game)
 	}
 	map = ft_split(l_map, '\n');
 	free(l_map);
+	free(line);
+	close(fd);
 	_map(map, game);
 }
