@@ -6,12 +6,11 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 19:17:27 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/30 19:17:40 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 11:38:41 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
 
 int	exit_game(t_game *game)
 {

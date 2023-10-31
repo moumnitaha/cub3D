@@ -6,28 +6,37 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:30:29 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/30 18:48:15 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 10:42:57 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void render3DProjectedWalls(t_game *game, double wallStripHeight, int X, int color)
+void	render_3d_walls(t_game *g, double wall_height, int x, int clr)
 {
-	wallStripHeight = round(wallStripHeight);
-	if (wallStripHeight > game->height)
-		wallStripHeight = game->height;
-	int i = 0;
-	for (i = 0; i < (game->height - wallStripHeight) / 2; i++)
+	int	i;
+	int	height;
+
+	wall_height = round(wall_height);
+	if (wall_height > g->height)
+		wall_height = g->height;
+	i = 0;
+	while (i < (g->height - wall_height) / 2)
 	{
-		mlx_pixel_put(game->mlx, game->win, X, i, bluesky);
+		mlx_pixel_put(g->mlx, g->win, x, i, BLUESKY);
+		i++;
 	}
-	for (i = 0; i <= wallStripHeight; i++)
+	i = 0;
+	height = (g->height - wall_height) / 2;
+	while (i <= wall_height)
 	{
-		mlx_pixel_put(game->mlx, game->win, X, ((game->height  - wallStripHeight) / 2) + i, color);
+		mlx_pixel_put(g->mlx, g->win, x, height + i, clr);
+		i++;
 	}
-	for (i = 0; i < (game->height - wallStripHeight) / 2; i++)
+	i = 0;
+	while (i < (g->height - wall_height) / 2)
 	{
-		mlx_pixel_put(game->mlx, game->win, X, game->height - i, white);
+		mlx_pixel_put(g->mlx, g->win, x, g->height - i, WHITE);
+		i++;
 	}
 }

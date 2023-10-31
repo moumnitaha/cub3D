@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/30 18:54:11 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 12:47:40 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@
 
 # define MAX_ROWS 10
 # define MAX_COLS 33
-# define green 0x00008000
-# define red  0x00FF0000
-# define blue 0x000000FF
-# define white 0x00FFFFFF
-# define black 0x00000000
-# define gray 0x00C0C0C0
-# define bluesky 0x00199EF3
+# define GREEN 0x00008000
+# define RED  0x00FF0000
+# define BLUE 0x000000FF
+# define WHITE 0x00FFFFFF
+# define BLACK 0x00000000
+# define GRAY 0x00C0C0C0
+# define BLUESKY 0x00199EF3
 
 # define DM				        32
 # define X_EVENT_KEY_PRESS		2
@@ -57,7 +57,7 @@ typedef struct s_player {
 	double		x;
 	double		y;
 	double		dir;
-	double		FOV;
+	double		fov;
 	int			turn_dir;
 	int			walk_dir;
 	int			rotation_angle;
@@ -66,20 +66,21 @@ typedef struct s_player {
 }	t_player;
 
 typedef struct s_ray {
-	double		rayAngle;
-	double		xHhit;
-	double		yHhit;
-	double		xVhit;
-	double		yVhit;
-	double		hHitDis;
-	double		vHitDis;
-	double		dToPP;
-	bool		isHzHit;
-	bool		isVcHit;
-	bool		isRayFacingUp;
-	bool		isRayFacingDown;
-	bool		isRayFacingLeft;
-	bool		isRayFacingRight;
+	double		ray_ang;
+	double		x_h_hit;
+	double		y_h_hit;
+	double		x_v_hit;
+	double		y_v_hit;
+	double		h_hit_dis;
+	double		v_hit_dis;
+	double		d_to_pp;
+	bool		is_hz_hit;
+	bool		is_vc_hit;
+	bool		is_ray_fup;
+	bool		is_ray_fdw;
+	bool		is_ray_flf;
+	bool		is_ray_frt;
+	int			index;
 }	t_ray;
 
 typedef struct s_game {
@@ -88,30 +89,31 @@ typedef struct s_game {
 	char		**map;
 	void		*mlx;
 	void		*win;
+	double		scale;
 	t_player	*player;
 }	t_game;
 
-void		initRayDirection(t_ray *ray);
-void		horizontalIntersection(t_game *g, t_ray *ray);
-void		verticalIntersection(t_game *g, t_ray *ray);
+void		init_ray_direction(t_ray *ray);
+void		horizontal_intersection(t_game *g, t_ray *ray);
+void		vertical_intersection(t_game *g, t_ray *ray);
 void		draw_rays(t_game *g);
-void		render3DProjectedWalls(t_game *g, double wallStripHeight, int i, int color);
-bool checkfirsNlast();
-bool checkColumns();
-bool checkAroundSpaces();
-bool isSurroundedByWalls();
-int get_player_position();
-int mouse_move(int x, int y, t_game *game);
-void draw_rect(t_game *g, int x , int y, int color, double scale);
-void draw_line(t_game *g, double X0, double Y0, double X1, double Y1, int color);
-void draw_player(t_game *g, double x_pos, double y_pos, double scale);
-void	draw_map(t_game *g, double scale);
-int mainDraws(t_game *game);
-double fixAngle(double angle);
-double degToRad(double deg);
-double dis_two_pnts(double x1, double y1, double x2, double y2);
-void initRayDirection(t_ray *ray);
-int	key_press(int keycode, t_game *game);
-int	exit_game(t_game *game);
-int	escape_game(t_game *game);
+void		render_3d_walls(t_game *g, double wall_height, int i, int color);
+bool		check_firs_last(void);
+bool		check_columns(void);
+bool		check_around_spaces(void);
+bool		is_surrounded_by_walls(void);
+int			get_player_position(void);
+int			mouse_move(int x, int y, t_game *game);
+void		draw_rect(t_game *g, int x, int y, int color);
+void		draw_line(t_game *g, double x_1, double y_1);
+void		draw_player(t_game *g, double x_pos, double y_pos, double scale);
+void		draw_map(t_game *g, double scale);
+int			main_draws(t_game *game);
+double		fix_ang(double angle);
+double		deg_to_rad(double deg);
+double		d_t_pnts(double x1, double y1, double x2, double y2);
+void		init_ray_direction(t_ray *ray);
+int			key_press(int keycode, t_game *game);
+int			exit_game(t_game *game);
+int			escape_game(t_game *game);
 #endif

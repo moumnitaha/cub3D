@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:24:05 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/30 18:47:27 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 12:05:42 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,18 @@ int	key_press(int keycode, t_game *game)
 	}
 	else if (keycode == KEY_LEFT)
 	{
-		game->player->dir -= degToRad(6);
+		game->player->dir -= deg_to_rad(6);
 		pX = game->player->x;
 		pY = game->player->y;
 	}
 	else if (keycode == KEY_RIGHT)
 	{
-		game->player->dir += degToRad(6);
+		game->player->dir += deg_to_rad(6);
 		pX = game->player->x;
 		pY = game->player->y;
 	}
 	else
 		return (0);
-	mainDraws(game);
+	main_draws(game);
 	return (0);
 }

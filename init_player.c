@@ -6,33 +6,37 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:33:54 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/30 18:47:21 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 12:43:34 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-// void	init_player(t_game *game)
-// {
-// 	game->player->x = 0;
-// 	game->player->y = 0;
-// 	game->player->dir = 0;
-// 	game->player->walkDirection = 0;
-// 	game->player->turnDirection = 0;
-// 	game->player->rotationAngle = 0;
-// 	game->player->moveSpeed = 5.0;
-// 	game->player->rotationSpeed = 3 * (M_PI / 180);
-// }
-
-int get_player_position()
+int	get_player_position(void)
 {
-	for (int i = 0; i < MAX_ROWS; i++)
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (i < MAX_ROWS)
 	{
-		for (int j = 0; j < MAX_COLS; j++)
+		j = 0;
+		while (j < MAX_COLS)
 		{
 			if (map[i][j] == 'P')
-				return i * MAX_COLS + j;
+				return (i * MAX_COLS + j);
+			j++;
 		}
+		i++;
 	}
-	return -1;
+	return (-1);
+}
+
+void	init_player(t_game *game)
+{
+	game->player->x = (get_player_position() % MAX_COLS) * DM + DM / 2;
+	game->player->y = (get_player_position() / MAX_COLS) * DM + DM / 2;
+	game->player->dir = -M_PI_2;
+	game->player->fov = 60;
 }

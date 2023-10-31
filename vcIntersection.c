@@ -6,40 +6,48 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:27:58 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/30 18:48:21 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 12:00:36 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void verticalIntersection(t_game *g, t_ray *ray)
+void	get_vintersections(t_game *g, t_ray *ray, float x_step, float y_step)
 {
-	double xStep;
-	double yStep;
-
-	ray->xVhit = floor(g->player->x / DM) * DM;
-	if (ray->isRayFacingRight)
-		ray->xVhit += DM;
-	ray->yVhit = g->player->y + (ray->xVhit - g->player->x) * tanf(ray->rayAngle);
-	xStep = DM;
-	if (ray->isRayFacingLeft)
-		xStep *= -1;
-	yStep = DM * tanf(ray->rayAngle);
-	if (ray->isRayFacingUp && yStep > 0)
-		yStep *= -1;
-	if (ray->isRayFacingDown && yStep < 0)
-		yStep *= -1;
-	if (ray->isRayFacingLeft)
-		ray->xVhit -= (0.1 / g->width);
-	while (ray->xVhit >= 0 && ray->xVhit < g->width && ray->yVhit >= 0 && ray->yVhit < g->height)
+	while (ray->x_v_hit >= 0 && ray->x_v_hit < g->width
+		&& ray->y_v_hit >= 0 && ray->y_v_hit < g->height)
 	{
-		if (map[(int)(ray->yVhit / DM)][(int)(ray->xVhit / DM)] == '1')
+		if (map[(int)(ray->y_v_hit / DM)][(int)(ray->x_v_hit / DM)] == '1')
 		{
-			ray->isVcHit = true;
-			break;
+			ray->is_vc_hit = true;
+			break ;
 		}
-		ray->xVhit += xStep;
-		ray->yVhit += yStep;
+		ray->x_v_hit += x_step;
+		ray->y_v_hit += y_step;
 	}
-	ray->vHitDis = dis_two_pnts(g->player->x, g->player->y, ray->xVhit, ray->yVhit);
+}
+
+void	vertical_intersection(t_game *g, t_ray *ray)
+{
+	double	x_step;
+	double	y_step;
+
+	ray->x_v_hit = floor(g->player->x / DM) * DM;
+	if (ray->is_ray_frt)
+		ray->x_v_hit += DM;
+	ray->y_v_hit = g->player->y + 
+		(ray->x_v_hit - g->player->x) * tanf(ray->ray_ang);
+	x_step = DM;
+	if (ray->is_ray_flf)
+		x_step *= -1;
+	y_step = DM * tanf(ray->ray_ang);
+	if (ray->is_ray_fup && y_step > 0)
+		y_step *= -1;
+	if (ray->is_ray_fdw && y_step < 0)
+		y_step *= -1;
+	if (ray->is_ray_flf)
+		ray->x_v_hit -= (0.1 / g->width);
+	get_vintersections(g, ray, x_step, y_step);
+	ray->v_hit_dis = d_t_pnts(g->player->x, g->player->y,
+			ray->x_v_hit, ray->y_v_hit);
 }

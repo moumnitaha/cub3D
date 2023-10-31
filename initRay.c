@@ -6,22 +6,27 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:29:24 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/30 18:47:13 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 10:46:53 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void initRayDirection(t_ray *ray)
+void	init_ray_direction(t_ray *ray)
 {
-	ray->isRayFacingDown = false;
-	ray->isRayFacingUp = false;
-	ray->isRayFacingLeft = false;
-	ray->isRayFacingRight = false;
-	if (fixAngle(ray->rayAngle) > 0 && fixAngle(ray->rayAngle) < M_PI)
-		ray->isRayFacingDown = true;
-	ray->isRayFacingUp = !ray->isRayFacingDown;
-	if ((fixAngle(ray->rayAngle) < 0.5 * M_PI) || (fixAngle(ray->rayAngle) > 1.5 * M_PI))
-		ray->isRayFacingRight =	true;
-	ray->isRayFacingLeft = !ray->isRayFacingRight;
+	float	fixed_angle;
+
+	fixed_angle = fix_ang(ray->ray_ang);
+	ray->is_ray_fdw = false;
+	ray->is_ray_fup = false;
+	ray->is_ray_flf = false;
+	ray->is_ray_frt = false;
+	ray->is_hz_hit = false;
+	ray->is_vc_hit = false;
+	if (fixed_angle > 0 && fixed_angle < M_PI)
+		ray->is_ray_fdw = true;
+	ray->is_ray_fup = !ray->is_ray_fdw;
+	if ((fixed_angle < M_PI_2) || (fixed_angle > 1.5 * M_PI))
+		ray->is_ray_frt = true;
+	ray->is_ray_flf = !ray->is_ray_frt;
 }

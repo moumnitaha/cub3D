@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:25:20 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/30 19:17:36 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 12:47:40 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int main()
 {
-    if (isSurroundedByWalls()) {
+    if (is_surrounded_by_walls()) {
         printf("The map is completely surrounded by walls.\n");
     } else {
         printf("XXXX The map is not completely surrounded by walls. XXXX\n");
@@ -31,13 +31,14 @@ int main()
 	g->height = MAX_ROWS * DM;
 	g->width = MAX_COLS * DM;
 	g->win = mlx_new_window(g->mlx, g->width, g->height, "./cub3D");
+	g->scale = 0.2;
 	p->x = (get_player_position() % MAX_COLS) * DM + DM / 2;
 	p->y = (get_player_position() / MAX_COLS) * DM + DM / 2;
 	p->dir = -M_PI_2;
-	p->FOV = 60;
+	p->fov = 60;
 
 	g->player = p;
-	mainDraws(g);
+	main_draws(g);
 	mlx_hook(g->win, X_EVENT_KEY_PRESS, 0, &key_press, g);
 	mlx_hook(g->win, 6, 1L << 6, mouse_move, g);
 	mlx_hook(g->win, X_EVENT_KEY_EXIT, 0, &escape_game, g);
