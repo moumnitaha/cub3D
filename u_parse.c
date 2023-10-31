@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:40:20 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/10/31 16:42:06 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 18:13:19 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void	fill_spaces(t_game *game, size_t len, char **map)
 	size_t	j;
 	size_t	i;
 
-	printf("mlen : %d\n", game->mlen);
-	game->map = malloc(sizeof(char *) * (game->mlen + 1));
+	game->map = malloc(sizeof(char *) * (game->m_h + 1));
 	if (!game->map)
 		return ;
 	j = -1;
@@ -89,6 +88,8 @@ void	_map(char **map, t_game *game)
 		if (ft_strlen(map[j]) > len)
 			len = ft_strlen(map[j]);
 	}
+	game->m_h = j;
+	game->m_w = (int)len;
 	fill_spaces(game, len, map);
 }
 
@@ -112,6 +113,7 @@ char	*read_line(char *file, t_game *game)
 			if (_spaces(line))
 				write(2, "Map not found\n", 14);
 			l_map = ft_strjoin(l_map, line);
+			// printf("l_map : %s\n", l);
 			i++;
 		}
 		else if (!_spaces(line) && i < 6)

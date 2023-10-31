@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:19:35 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/10/31 16:41:01 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 18:13:34 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	init_map(t_game *game)
 	game->ea_txt = NULL;
 	game->so_txt = NULL;
 	game->we_txt = NULL;
-	game->mlen = 0;
+	game->m_h = 0;
+	game->m_w = 0;
 }
 
 int	cub(char *av, t_game *game)

@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:33:54 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 17:03:43 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 18:15:11 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ int	get_player_position(t_game *game)
 
 	i = 0;
 	j = 0;
-	while (i < MAX_ROWS)
+	while (i < game->m_h)
 	{
 		j = 0;
-		while (j < MAX_COLS)
+		while (j < game->m_w)
 		{
 			if (game->map[i][j] == 'N')
-				return (i * MAX_COLS + j);
+				return (i * game->m_w + j);
 			j++;
 		}
 		i++;
@@ -35,8 +35,8 @@ int	get_player_position(t_game *game)
 
 void	init_player(t_game *game)
 {
-	game->player->x = (get_player_position(game) % MAX_COLS) * DM + DM / 2;
-	game->player->y = (get_player_position(game) / MAX_COLS) * DM + DM / 2;
+	game->player->x = (get_player_position(game) % game->m_w) * DM + DM / 2;
+	game->player->y = (get_player_position(game) / game->m_w) * DM + DM / 2;
 	game->player->dir = -M_PI_2;
 	game->player->fov = 60;
 	game->player->walk_dir = 0;

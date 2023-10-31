@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:45:44 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 16:34:49 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 18:14:24 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ bool	check_ll(t_game *game)
 
 	start = 0;
 	end = strlen(game->map[0]) - 1;
-	while (game->map[MAX_ROWS - 1][start] == ' ')
+	while (game->map[game->m_h - 1][start] == ' ')
 		start++;
-	while (game->map[MAX_ROWS - 1][end] == ' ')
+	while (game->map[game->m_h - 1][end] == ' ')
 		end--;
 	while (start <= end)
 	{
-		if (game->map[MAX_ROWS - 1][start] != '1' && 
-			game->map[MAX_ROWS - 1][start] != ' ')
+		if (game->map[game->m_h - 1][start] != '1' && 
+			game->map[game->m_h - 1][start] != ' ')
 			return (false);
 		start++;
 	}
@@ -64,7 +64,7 @@ bool	check_firs_last(t_game *game)
 
 bool	check_clm(int i, int index, t_game *game)
 {
-	if (i < MAX_ROWS - 1 && game->map[i + 1][index] == '0')
+	if (i < game->m_h - 1 && game->map[i + 1][index] == '0')
 		return (false);
 	if (i > 0 && game->map[i - 1][index] == '0')
 		return (false);
@@ -78,7 +78,7 @@ bool	check_columns(t_game *game)
 	int	i;
 
 	i = -1;
-	while (++i < MAX_ROWS)
+	while (++i < game->m_h)
 	{
 		start = 0;
 		end = strlen(game->map[0]) - 1;

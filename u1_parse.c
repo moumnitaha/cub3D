@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 12:55:19 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/10/31 16:31:33 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 17:57:03 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	maplen(int fd)
 
 int	ft_open(char *file, int perm, t_game *game)
 {
+	(void)game;
 	int	fd;
 	int	fd_len;
 
@@ -57,7 +58,7 @@ int	ft_open(char *file, int perm, t_game *game)
 		write(2, "Empty file\n", 11);
 		exit(1);
 	}
-	game->mlen = fd_len;
+	// game->m_h = fd_len;
 	close(fd);
 	fd = open(file, perm);
 	return (fd);

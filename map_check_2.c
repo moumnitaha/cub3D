@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 15:12:52 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 16:32:47 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 18:14:24 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ bool	check_ud(int i, int j, t_game *game)
 	bottom = i;
 	while (game->map[top][j] == ' ' && top > 0)
 		top--;
-	while (game->map[bottom][j] == ' ' && bottom < MAX_ROWS - 1)
+	while (game->map[bottom][j] == ' ' && bottom < game->m_h - 1)
 		bottom++;
 	if (game->map[top][j] == '0' || game->map[bottom][j] == '0')
 		return (false);
@@ -54,7 +54,7 @@ bool	check_around_spaces(t_game *game)
 	start = 0;
 	i = 0;
 	end = strlen(game->map[0]) - 1;
-	while (i < MAX_ROWS)
+	while (i < game->m_h)
 	{
 		while (game->map[i][start] == ' ')
 			start++;

@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 17:03:58 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 18:15:20 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include "gnl/get_next_line.h"
 # include "math.h"
 
-# define MAX_ROWS 14
-# define MAX_COLS 38
+// # define game->m_h 14
+// # define game->m_w 38
 
 # define GREEN 0x00008000
 # define RED  0x00FF0000
@@ -89,7 +89,8 @@ typedef struct s_game
 {
 	int			floor_c;
 	int			ceilling_c;
-	int			mlen;
+	int			m_h;
+	int			m_w;
 	double		height;
 	double		width;
 	double		scale;

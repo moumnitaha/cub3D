@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:31:11 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 16:56:58 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/10/31 18:15:27 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,10 @@ void	draw_map(t_game *g, double scale)
 	p_ang = g->player->dir;
 	i = 0;
 	j = 0;
-	while (i < MAX_ROWS)
+	while (i < g->m_h)
 	{
 		j = 0;
-		while (j < MAX_COLS)
+		while (j < g->m_w)
 		{
 			if (g->map[i][j] == '1')
 				draw_rect(g, j * (DM * scale), i * (DM * scale), BLACK);
