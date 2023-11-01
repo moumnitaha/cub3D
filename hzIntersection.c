@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:27:29 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 16:37:24 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/01 19:07:06 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ void	horizontal_intersection(t_game *g, t_ray *ray)
 	if (ray->is_ray_fdw)
 		ray->y_h_hit += DM;
 	ray->x_h_hit = g->player->x + 
-		(ray->y_h_hit - g->player->y) / tanf(ray->ray_ang);
+		(ray->y_h_hit - g->player->y) / tan(ray->ray_ang);
 	y_step = DM;
 	if (ray->is_ray_fup)
 		y_step *= -1;
-	x_step = DM / tanf(ray->ray_ang);
+	x_step = DM / tan(ray->ray_ang);
 	if (ray->is_ray_flf && x_step > 0)
 		x_step *= -1;
 	if (ray->is_ray_frt && x_step < 0)
