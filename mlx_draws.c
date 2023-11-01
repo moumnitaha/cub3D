@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:31:11 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/01 13:59:27 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/01 16:17:03 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,17 @@ void	draw_player(t_game *g, double x_pos, double y_pos, double scale)
 	double	i;
 	double	j;
 
-	width = 18 + y_pos;
-	height = 18 + x_pos;
+	width = DM * 0.5;
+	height = DM * 0.5;
 	i = y_pos;
 	j = x_pos;
-	while (i < width)
+	while (i < width + y_pos)
 	{
 		j = x_pos;
-		while (j < height)
+		while (j < height + x_pos)
 		{
-			mlx_pixel_put(g->mlx, g->win, (j - 9) * 
-				scale, (i - 9) * scale, BLUE);
+			mlx_pixel_put(g->mlx, g->win, (j - width / 2) * 
+				scale, (i - height / 2) * scale, BLUE);
 			j++;
 		}
 		i++;
