@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:45:44 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 18:14:24 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/01 15:25:39 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ bool	check_fl(t_game *game)
 	int	end;
 
 	start = 0;
-	end = strlen(game->map[0]) - 1;
+	end = ft_strlen(game->map[0]) - 1;
+	if (end < 0)
+		return (false);
 	while (game->map[0][start] == ' ')
 		start++;
 	while (game->map[0][end] == ' ')
@@ -38,7 +40,7 @@ bool	check_ll(t_game *game)
 	int	end;
 
 	start = 0;
-	end = strlen(game->map[0]) - 1;
+	end = ft_strlen(game->map[0]) - 1;
 	while (game->map[game->m_h - 1][start] == ' ')
 		start++;
 	while (game->map[game->m_h - 1][end] == ' ')
@@ -81,7 +83,7 @@ bool	check_columns(t_game *game)
 	while (++i < game->m_h)
 	{
 		start = 0;
-		end = strlen(game->map[0]) - 1;
+		end = ft_strlen(game->map[0]) - 1;
 		while (game->map[i][start] == ' ')
 		{
 			if (!check_clm(i, start, game))

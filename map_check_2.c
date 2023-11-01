@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 15:12:52 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 18:14:24 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/01 15:24:19 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ bool	check_around_spaces(t_game *game)
 
 	start = 0;
 	i = 0;
-	end = strlen(game->map[0]) - 1;
+	end = ft_strlen(game->map[0]) - 1;
 	while (i < game->m_h)
 	{
 		while (game->map[i][start] == ' ')

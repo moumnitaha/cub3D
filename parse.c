@@ -3,42 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:39:27 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/10/31 12:56:19 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/01 15:29:52 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	_colors(char *line, int *rgb)
+int _colors(char *line, int *rgb)
 {
-	int	i;
-	int	j;
-	int	start;
+    int i;
+    int j;
+    int start;
 
-	j = -1;
-	i = -1;
-	while (line[++i])
-	{
-		if (line[i] && !ft_isdigit(line[i]))
-		{
-			if (line[i] == ',')
-			{
-				if (++j > 1)
-					_error("Error: Invalid Color 2\n");
-			}
-			else if (line[i] != ' ' && line[i] != '\n')
-				_error("Error: Invalid Color 2\n");
-		}
-		if (line[i] && ft_isdigit(line[i]))
-			start = i;
-		rgb[j + 1] = ft_atoi(line + start);
-		if ((i - start > 3) || rgb[j + 1] < 0 || rgb[j + 1] > 255)
-			_error("Error: Invalid Color 1\n");
-	}
-	return (i);
+    j = 0;
+    i = 0;
+    while (line[i])
+    {
+        while (line[i] && !ft_isdigit(line[i]))
+        {
+            if (line[i] == ',')
+            {
+                j++;
+                if (j > 2)
+                    _error("Error: Invalid Color 2\n");
+            }
+            else if (line[i] != ' ' && line[i] != '\n')
+            {
+                _error("Error: Invalid Color 2\n");
+            }
+            i++;
+        }
+        start = i;
+        while (line[i] && ft_isdigit(line[i]))
+            i++;
+        rgb[j] = ft_atoi(line + start);
+        if ((i - start > 3) || rgb[j] < 0 || rgb[j] > 255)
+            _error("Error: Invalid Color 1\n");
+    }
+    return (i);
 }
 
 int	get_color(char *line)

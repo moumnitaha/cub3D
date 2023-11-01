@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:32 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/01 12:20:08 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/01 13:55:26 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	handle_render(t_game *g, t_ray *ray, double vw_height, double hw_height)
 		render_3d_walls(g, vw_height, ray->index, GREEN);
 }
 
-void	draw_rays(t_game *g)
+void	render_rays(t_game *g)
 {
 	t_ray	*ray;
 	double	v_wall_height;

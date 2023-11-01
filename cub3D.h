@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/01 12:20:49 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/01 15:35:32 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 // # define game->m_h 14
 // # define game->m_w 38
 
-# define GREEN 0x00008000
+# define GREEN 0x00778899
 # define RED  0x00FF0000
 # define BLUE 0x000000FF
 # define WHITE 0x00FFFFFF
@@ -116,7 +116,7 @@ typedef struct s_game
 void		init_ray_direction(t_ray *ray);
 void		horizontal_intersection(t_game *g, t_ray *ray);
 void		vertical_intersection(t_game *g, t_ray *ray);
-void		draw_rays(t_game *g);
+void		render_rays(t_game *g);
 void		render_3d_walls(t_game *g, double wall_height, int i, int color);
 bool		check_firs_last(t_game *game);
 bool		check_columns(t_game *game);
@@ -138,7 +138,7 @@ void		init_game(t_game *g, t_player*player, t_img *img);
 int			key_press(int keycode, t_game *game);
 int			exit_game(t_game *game);
 int			escape_game(t_game *game);
-int			render(t_game *data);
+int			render_ceil_floor(t_game *data);
 
 // *** LIBFT FUNCTIONS *** //
 

@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:40:20 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/10/31 18:13:19 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/01 15:25:16 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,11 @@ void	_map(char **map, t_game *game)
 
 	j = 0;
 	len = ft_strlen(map[0]);
-	while (map[++j])
+	while (map[j])
 	{
 		if (ft_strlen(map[j]) > len)
 			len = ft_strlen(map[j]);
+		j++;
 	}
 	game->m_h = j;
 	game->m_w = (int)len;

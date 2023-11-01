@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:31:11 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/01 11:58:13 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/01 13:59:27 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,8 @@ void	draw_map(t_game *g, double scale)
 int	main_draws(t_game *game)
 {
 	mlx_clear_window(game->mlx, game->win);
-	render(game);
-	draw_rays(game);
+	render_ceil_floor(game);
+	render_rays(game);
 	draw_map(game, game->scale);
 	return (0);
 }
