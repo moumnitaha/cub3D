@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+         #
+#    By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/21 13:47:28 by tmoumni           #+#    #+#              #
-#    Updated: 2023/10/31 17:32:52 by akhaliss         ###   ########.fr        #
+#    Updated: 2023/11/01 12:30:32 by tmoumni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,9 +27,9 @@ L = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
 SRCS = cub3D.c draw_rays.c fixAngle.c hzIntersection.c initRay.c map_check.c mlx_params.c\
 		init_player.c key_press.c mlx_draws.c mouse_move.c render3DProjectedWalls.c map_check_2.c\
-		vcIntersection.c init_game.c\
-    utils.c gnl/get_next_line.c gnl/get_next_line_utils.c utils/ft_1.c utils/ft_2.c \
-		parse.c u_parse.c utils/ft_3.c u1_parse.c #map.c
+		vcIntersection.c init_game.c render_ceil_floor.c\
+    	utils.c gnl/get_next_line.c gnl/get_next_line_utils.c utils/ft_1.c utils/ft_2.c \
+		parse.c u_parse.c utils/ft_3.c u1_parse.c
 OBJS_DIR = OBJS_FILES
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
@@ -77,7 +77,7 @@ $(NAME): $(OBJS)
 
 $(OBJS_DIR)/%.o: %.c $(HEADER)
 	@mkdir -p $(@D)
-	@$(CC) -c $(KEYCODES) $(FLAGS) $< -o $@
+	@$(CC) $(FLAGS) -c $< -o $@
 	@printf "$(CYAN)Compiling:$(END) $< ...\n"
 
 clean:

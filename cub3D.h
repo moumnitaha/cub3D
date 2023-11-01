@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 18:15:20 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/01 12:20:49 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,14 @@
 // # define KEY_DOWN				65364
 // # define KEY_UP					65362
 
+typedef struct s_img
+{
+	void	*mlx_img;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}	t_img;
 typedef struct s_player {
 	double		x;
 	double		y;
@@ -101,6 +109,7 @@ typedef struct s_game
 	char		*ea_txt;
 	void		*mlx;
 	void		*win;
+	t_img		img;
 	t_player	*player;
 }	t_game;
 
@@ -125,10 +134,11 @@ double		deg_to_rad(double deg);
 double		d_t_pnts(double x1, double y1, double x2, double y2);
 void		init_ray_direction(t_ray *ray);
 void		init_player(t_game *game);
-void		init_game(t_game *g, t_player*player);
+void		init_game(t_game *g, t_player*player, t_img *img);
 int			key_press(int keycode, t_game *game);
 int			exit_game(t_game *game);
 int			escape_game(t_game *game);
+int			render(t_game *data);
 
 // *** LIBFT FUNCTIONS *** //
 

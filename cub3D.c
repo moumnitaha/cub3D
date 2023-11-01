@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:18 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 18:03:48 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/01 12:23:53 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ int	main(int ac, char **av)
 {
 	t_game		*g;
 	t_player	*p;
-	t_ray		*ray;
+	t_img		*myimg;
 
 	g = malloc(sizeof(t_game));
 	p = malloc(sizeof(t_player));
-	ray = malloc(sizeof(t_ray));
+	myimg = malloc(sizeof(t_img));
 	if (ac != 2)
 		write(2, "invalid path\n", 13);
 	else
@@ -28,7 +28,7 @@ int	main(int ac, char **av)
 		if (cub(av[1], g))
 		{
 			g->mlx = mlx_init();
-			init_game(g, p);
+			init_game(g, p, myimg);
 			init_player(g);
 			main_draws(g);
 			mlx_hook(g->win, X_EVENT_KEY_PRESS, 0, &key_press, g);
@@ -37,10 +37,7 @@ int	main(int ac, char **av)
 			mlx_loop(g->mlx);
 		}
 		else
-		{
 			write(2, "invalid map\n", 12);
-			return (0);
-		}
 	}
 	return (0);
 }

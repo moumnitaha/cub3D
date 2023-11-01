@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:32 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 11:57:35 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/01 12:20:08 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	handle_render(t_game *g, t_ray *ray, double vw_height, double hw_height)
 {
 	if (ray->is_hz_hit && ray->is_vc_hit)
 	{
-		if (ray->h_hit_dis < ray->v_hit_dis + (0.1 / g->width))
+		if (ray->h_hit_dis < ray->v_hit_dis)
 			render_3d_walls(g, hw_height, ray->index, GRAY);
 		else
 			render_3d_walls(g, vw_height, ray->index, GREEN);
