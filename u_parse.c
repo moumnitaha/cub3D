@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:40:20 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/11/02 22:00:33 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/02 22:04:29 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,8 @@ void	read_map(char *file, t_game *game)
 	char	*l_map;
 	char	**tab;
 
-	tab = ft_split(l_map, '\n');
 	l_map = read_line(file, game);
+	tab = ft_split(l_map, '\n');
 	_map(tab, game);
 	free(l_map);
 }
