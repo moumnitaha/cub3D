@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_1.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: admin <admin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:39:00 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/10/28 15:50:28 by admin            ###   ########.fr       */
+/*   Updated: 2023/11/02 10:33:41 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../cub3D.h"
 
@@ -62,7 +61,7 @@ int	ft_atoi(const char *str)
 	{
 		if (str[i] == '-')
 			sign *= (-1);
-			i++;
+		i++;
 	}
 	while (str[i] && (str[i] >= 48 && str[i] <= 57))
 	{

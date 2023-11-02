@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   u_parse.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:40:20 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/11/01 15:25:16 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/02 10:33:17 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,6 @@ void	fill_spaces(t_game *game, size_t len, char **map)
 	size_t	j;
 	size_t	i;
 
-	game->map = malloc(sizeof(char *) * (game->m_h + 1));
-	if (!game->map)
-		return ;
 	j = -1;
 	while (map[++j])
 	{
@@ -71,9 +68,6 @@ void	fill_spaces(t_game *game, size_t len, char **map)
 		game->map[j][i] = '\0';
 	}
 	game->map[j] = NULL;
-	free(map);
-	// int i = -1;
-	// while ()
 }
 
 void	_map(char **map, t_game *game)
@@ -91,7 +85,11 @@ void	_map(char **map, t_game *game)
 	}
 	game->m_h = j;
 	game->m_w = (int)len;
+	game->map = malloc(sizeof(char *) * (game->m_h + 1));
+	if (!game->map)
+		return ;
 	fill_spaces(game, len, map);
+	free(map);
 }
 
 char	*read_line(char *file, t_game *game)
@@ -114,7 +112,6 @@ char	*read_line(char *file, t_game *game)
 			if (_spaces(line))
 				write(2, "Map not found\n", 14);
 			l_map = ft_strjoin(l_map, line);
-			// printf("l_map : %s\n", l);
 			i++;
 		}
 		else if (!_spaces(line) && i < 6)

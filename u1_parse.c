@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   u1_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 12:55:19 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/10/31 17:57:03 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/02 10:31:36 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ int	maplen(int fd)
 
 int	ft_open(char *file, int perm, t_game *game)
 {
-	(void)game;
 	int	fd;
 	int	fd_len;
 
+	(void)game;
 	fd = open(file, perm);
 	if (fd < 0)
 	{
@@ -58,7 +58,6 @@ int	ft_open(char *file, int perm, t_game *game)
 		write(2, "Empty file\n", 11);
 		exit(1);
 	}
-	// game->m_h = fd_len;
 	close(fd);
 	fd = open(file, perm);
 	return (fd);
