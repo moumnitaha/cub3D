@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:31:11 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/02 12:59:15 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/02 13:39:25 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,8 @@ void	draw_map(t_game *g, double scale)
 	int		j;
 
 	p_ang = g->player->dir;
-	i = g->player->y / DM - 5;
-	j = g->player->x / DM - 5;
-	printf("i = %d\n", i);
-	printf("j = %d\n", j);
-	printf("map width = %d\n", g->m_w);
-	printf("map height = %d\n", g->m_h);
+	i = 0;
+	j = 0;
 	while (i < g->m_h)
 	{
 		j = 0;

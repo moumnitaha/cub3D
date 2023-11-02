@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:27:58 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/02 12:23:20 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/02 13:42:01 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ void	vertical_intersection(t_game *g, t_ray *ray)
 	if (ray->is_ray_flf)
 		ray->x_v_hit -= 0.1 / (g->m_w * g->m_h);
 	get_vintersections(g, ray, x_step, y_step);
-	// if (ray->is_vc_hit)
-	// 	ray->x_v_hit += 0.1 / (g->m_w * g->m_h);
 	ray->v_hit_dis = d_t_pnts(g->player->x, g->player->y,
 			ray->x_v_hit, ray->y_v_hit);
 }
