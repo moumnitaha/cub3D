@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/01 15:35:32 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/02 12:50:19 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 // # define game->m_h 14
 // # define game->m_w 38
 
-# define GREEN 0x00778899
+# define GRAYF 0x00778899
 # define RED  0x00FF0000
 # define BLUE 0x000000FF
 # define WHITE 0x00FFFFFF

@@ -6,13 +6,13 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:27:29 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/01 19:07:06 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/02 12:23:18 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	get_hintersections(t_game *g, t_ray *ray, float x_step, float y_step)
+void	get_hintersections(t_game *g, t_ray *ray, double x_step, double y_step)
 {
 	while (ray->x_h_hit >= 0 && ray->x_h_hit < g->width
 		&& ray->y_h_hit >= 0 && ray->y_h_hit < g->height)
@@ -46,8 +46,10 @@ void	horizontal_intersection(t_game *g, t_ray *ray)
 	if (ray->is_ray_frt && x_step < 0)
 		x_step *= -1;
 	if (ray->is_ray_fup)
-		ray->y_h_hit -= (0.1 / g->width);
+		ray->y_h_hit -= 0.1 / (g->m_w * g->m_h);
 	get_hintersections(g, ray, x_step, y_step);
+	// if (ray->is_hz_hit)
+	// 	ray->y_h_hit += 0.1 / (g->m_w * g->m_h);
 	ray->h_hit_dis = d_t_pnts(g->player->x, g->player->y,
 			ray->x_h_hit, ray->y_h_hit);
 }

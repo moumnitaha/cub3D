@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:32 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/01 13:55:26 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/02 12:53:25 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	handle_render(t_game *g, t_ray *ray, double vw_height, double hw_height)
 		if (ray->h_hit_dis < ray->v_hit_dis)
 			render_3d_walls(g, hw_height, ray->index, GRAY);
 		else
-			render_3d_walls(g, vw_height, ray->index, GREEN);
+			render_3d_walls(g, vw_height, ray->index, GRAYF);
 	}
 	else if (ray->is_hz_hit)
 		render_3d_walls(g, hw_height, ray->index, GRAY);
 	else if (ray->is_vc_hit)
-		render_3d_walls(g, vw_height, ray->index, GREEN);
+		render_3d_walls(g, vw_height, ray->index, GRAYF);
 }
 
 void	render_rays(t_game *g)
@@ -34,6 +34,8 @@ void	render_rays(t_game *g)
 	double	h_wall_height;
 
 	ray = malloc(sizeof(t_ray));
+	if (ray == NULL)
+		return ;
 	ray->index = 0;
 	ray->ray_ang = g->player->dir - deg_to_rad(g->player->fov / 2);
 	while (ray->ray_ang < g->player->dir + deg_to_rad(g->player->fov / 2))
@@ -41,7 +43,7 @@ void	render_rays(t_game *g)
 		init_ray_direction(ray);
 		horizontal_intersection(g, ray);
 		vertical_intersection(g, ray);
-		ray->d_to_pp = (g->width / 2) * cos(deg_to_rad(g->player->fov / 2));
+		ray->d_to_pp = (g->width / 2) / tan(deg_to_rad(g->player->fov / 2));
 		h_wall_height = (DM / ray->h_hit_dis) * ray->d_to_pp;
 		h_wall_height /= cos(g->player->dir - ray->ray_ang);
 		v_wall_height = (DM / ray->v_hit_dis) * ray->d_to_pp;
