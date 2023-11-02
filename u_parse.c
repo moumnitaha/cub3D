@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   u_parse.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:40:20 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/11/02 10:33:17 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/02 22:00:33 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,9 @@ void	_map(char **map, t_game *game)
 	if (!game->map)
 		return ;
 	fill_spaces(game, len, map);
+	j = 0;
+	while (map[j])
+		free(map[j++]);
 	free(map);
 }
 
@@ -116,6 +119,7 @@ char	*read_line(char *file, t_game *game)
 		}
 		else if (!_spaces(line) && i < 6)
 			i += get_info(game, line);
+		free(line);
 	}
 	return (free(line), close(fd), l_map);
 }
@@ -123,8 +127,10 @@ char	*read_line(char *file, t_game *game)
 void	read_map(char *file, t_game *game)
 {
 	char	*l_map;
+	char	**tab;
 
+	tab = ft_split(l_map, '\n');
 	l_map = read_line(file, game);
-	_map(ft_split(l_map, '\n'), game);
+	_map(tab, game);
 	free(l_map);
 }
