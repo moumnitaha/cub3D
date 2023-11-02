@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/02 12:50:19 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/02 18:05:36 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ typedef struct s_game
 	char		*ea_txt;
 	void		*mlx;
 	void		*win;
-	t_img		img;
+	t_img		*img;
 	t_player	*player;
 }	t_game;
 
@@ -138,7 +138,8 @@ void		init_game(t_game *g, t_player*player, t_img *img);
 int			key_press(int keycode, t_game *game);
 int			exit_game(t_game *game);
 int			escape_game(t_game *game);
-int			render_ceil_floor(t_game *data);
+int			fill_img(t_game *g, int x, int y);
+void		img_pix_put(t_game *g, int x, int y, int color);
 
 // *** LIBFT FUNCTIONS *** //
 
