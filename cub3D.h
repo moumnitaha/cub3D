@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/02 18:05:36 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/03 11:51:25 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@
 # include "gnl/get_next_line.h"
 # include "math.h"
 
-// # define game->m_h 14
-// # define game->m_w 38
-
 # define GRAYF 0x00778899
 # define RED  0x00FF0000
 # define BLUE 0x000000FF
@@ -38,10 +35,10 @@
 # define X_EVENT_KEY_PRESS		2
 # define X_EVENT_KEY_RELEASE	3
 # define X_EVENT_KEY_EXIT		17
-// # define KEY_W					13
-// # define KEY_A					0
-// # define KEY_S					1
-// # define KEY_D					2
+# define KEY_W					13
+# define KEY_A					0
+# define KEY_S					1
+# define KEY_D					2
 
 # define KEY_ESC				53
 # define KEY_LEFT				123
@@ -138,7 +135,6 @@ void		init_game(t_game *g, t_player*player, t_img *img);
 int			key_press(int keycode, t_game *game);
 int			exit_game(t_game *game);
 int			escape_game(t_game *game);
-int			fill_img(t_game *g, int x, int y);
 void		img_pix_put(t_game *g, int x, int y, int color);
 
 // *** LIBFT FUNCTIONS *** //

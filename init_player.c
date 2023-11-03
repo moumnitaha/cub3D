@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:33:54 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 18:15:11 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/03 11:51:56 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,5 @@ void	init_player(t_game *game)
 	game->player->dir = -M_PI_2;
 	game->player->fov = 60;
 	game->player->walk_dir = 0;
-	game->player->turn_dir = 6;
+	game->player->turn_dir = 10;
 }

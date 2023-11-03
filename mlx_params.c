@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 19:17:27 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/31 11:38:41 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/03 11:17:59 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	exit_game(t_game *game)
 {
+	mlx_destroy_image(game->mlx, game->img);
 	mlx_destroy_window(game->mlx, game->win);
 	exit(0);
 }
