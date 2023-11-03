@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/03 12:44:49 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/03 18:18:15 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_ray {
 	double		y_v_hit;
 	double		h_hit_dis;
 	double		v_hit_dis;
+	double		dist;
 	double		d_to_pp;
 	bool		is_hz_hit;
 	bool		is_vc_hit;

@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:32 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/02 18:05:52 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/03 18:29:03 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,26 +41,35 @@ void	fill_wall_img(t_game *g, int x, double wall_height, int color)
 	}
 }
 
-void	handle_render(t_game *g, t_ray *ray, double vw_height, double hw_height)
+void	handle_render(t_game *g, t_ray *ray, double w_height)
 {
 	if (ray->is_hz_hit && ray->is_vc_hit)
 	{
 		if (ray->h_hit_dis < ray->v_hit_dis)
-			fill_wall_img(g, ray->index, hw_height, GRAY);
+			fill_wall_img(g, ray->index, w_height, GRAY);
 		else
-			fill_wall_img(g, ray->index, vw_height, GRAYF);
+			fill_wall_img(g, ray->index, w_height, GRAYF);
 	}
 	else if (ray->is_hz_hit)
-		fill_wall_img(g, ray->index, hw_height, GRAY);
+		fill_wall_img(g, ray->index, w_height, GRAY);
 	else if (ray->is_vc_hit)
-		fill_wall_img(g, ray->index, vw_height, GRAYF);
+		fill_wall_img(g, ray->index, w_height, GRAYF);
+}
+
+void	handle_ray_dis(t_ray *ray)
+{
+	if (ray->is_hz_hit && ray->is_vc_hit)
+		ray->dist = fmin(ray->h_hit_dis, ray->v_hit_dis);
+	else if (ray->is_hz_hit)
+		ray->dist = ray->h_hit_dis;
+	else if (ray->is_vc_hit)
+		ray->dist = ray->v_hit_dis;
 }
 
 void	render_rays(t_game *g)
 {
 	t_ray	*ray;
-	double	v_wall_height;
-	double	h_wall_height;
+	double	wall_height;
 
 	ray = malloc(sizeof(t_ray));
 	if (ray == NULL)
@@ -73,14 +82,14 @@ void	render_rays(t_game *g)
 		horizontal_intersection(g, ray);
 		vertical_intersection(g, ray);
 		ray->d_to_pp = (g->width / 2) / tan(deg_to_rad(g->player->fov / 2));
-		h_wall_height = (DM / ray->h_hit_dis) * ray->d_to_pp;
-		h_wall_height /= cos(g->player->dir - ray->ray_ang);
-		v_wall_height = (DM / ray->v_hit_dis) * ray->d_to_pp;
-		v_wall_height /= cos(g->player->dir - ray->ray_ang);
-		handle_render(g, ray, v_wall_height, h_wall_height);
+		handle_ray_dis(ray);
+		wall_height = (DM / ray->dist) * ray->d_to_pp;
+		wall_height /= cos(g->player->dir - ray->ray_ang);
+		handle_render(g, ray, wall_height);
 		ray->ray_ang += deg_to_rad(g->player->fov / g->width);
 		ray->index++;
 	}
+	mlx_clear_window(g->mlx, g->win);
 	mlx_put_image_to_window(g->mlx, g->win, g->img->mlx_img, 0, 0);
 	free(ray);
 }
