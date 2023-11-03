@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:27:58 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/02 15:07:10 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/03 12:42:54 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	get_vintersections(t_game *g, t_ray *ray, double x_step, double y_step)
 {
-	while (ray->x_v_hit >= 0 && ray->x_v_hit < g->width
-		&& ray->y_v_hit >= 0 && ray->y_v_hit < g->height)
+	while (ray->x_v_hit >= 0 && ray->x_v_hit < g->m_w * DM
+		&& ray->y_v_hit >= 0 && ray->y_v_hit < g->m_h * DM)
 	{
 		if (g->map[(int)(ray->y_v_hit / DM)][(int)(ray->x_v_hit / DM)] == '1')
 		{
