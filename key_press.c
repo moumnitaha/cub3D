@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:24:05 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/04 18:18:50 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/04 19:24:51 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,14 @@ void	update_player(t_game *game)
 	double	p_x;
 	double	p_y;
 	int		w_dir;
+	int		spd;
 	int		c;
 
 	c = game->player->lf;
 	w_dir = game->player->walk_dir;
-	p_x = game->player->x + (cos(game->player->dir + c * M_PI_2)) * w_dir * 5;
-	p_y = game->player->y + (sin(game->player->dir + c * M_PI_2)) * w_dir * 5;
+	spd = game->player->walk_speed;
+	p_x = game->player->x + (cos(game->player->dir + c * M_PI_2)) * w_dir * spd;
+	p_y = game->player->y + (sin(game->player->dir + c * M_PI_2)) * w_dir * spd;
 	if (!is_wall(game, p_x, game->player->y))
 		game->player->x = p_x;
 	if (!is_wall(game, game->player->x, p_y))
@@ -57,13 +59,19 @@ int	key_press(int keycode, t_game *game)
 	if (keycode == KEY_DOWN)
 		game->player->walk_dir = -1;
 	if (keycode == KEY_LEFT)
-		game->player->turn_dir = -3.5;
+		game->player->turn_dir = -game->player->turn_speed;
 	if (keycode == KEY_RIGHT)
-		game->player->turn_dir = 3.5;
+		game->player->turn_dir = game->player->turn_speed;
 	if (keycode == KEY_A)
+	{
 		game->player->lf = -1;
+		game->player->walk_dir = 1;
+	}
 	if (keycode == KEY_D)
-		game->player->lf = 1;
+	{
+		game->player->lf = -1;
+		game->player->walk_dir = -1;
+	}
 	return (0);
 }
 
@@ -78,8 +86,14 @@ int	key_release(int keycode, t_game *game)
 	if (keycode == KEY_RIGHT)
 		game->player->turn_dir = 0;
 	if (keycode == KEY_A)
+	{
 		game->player->lf = 0;
+		game->player->walk_dir = 0;
+	}
 	if (keycode == KEY_D)
+	{
 		game->player->lf = 0;
+		game->player->walk_dir = 0;
+	}
 	return (0);
 }

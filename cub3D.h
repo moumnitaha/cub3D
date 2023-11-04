@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/04 17:21:16 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/04 19:31:09 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,10 @@ typedef struct s_player {
 	double		dir;
 	double		lf;
 	double		fov;
-	double		turn_dir;
+	double		turn_speed;
+	double		walk_speed;
+	int			turn_dir;
 	int			walk_dir;
-	int			rotation_angle;
-	int			walk_speed;
-	int			turn_speed;
 }	t_player;
 
 typedef struct s_ray {
