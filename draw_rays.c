@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:32 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/03 18:29:03 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/04 17:19:09 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,30 @@
 
 void	fill_wall_img(t_game *g, int x, double wall_height, int color)
 {
-	int	i;
+	int	y;
 	int	height;
 
 	wall_height = round(wall_height);
 	if (wall_height > g->height)
 		wall_height = g->height;
-	i = 0;
+	y = 0;
 	height = (g->height - wall_height) / 2;
-	while (i < height)
+	while (y < height)
 	{
-		img_pix_put(g, x, i, g->ceilling_c);
-		i++;
+		img_pix_put(g, x, y, g->ceilling_c);
+		y++;
 	}
-	i = 0;
-	while (i < wall_height)
+	y = 0;
+	while (y < wall_height)
 	{
-		img_pix_put(g, x, i + height, color);
-		i++;
+		img_pix_put(g, x, y + height, color);
+		y++;
 	}
-	i = 0;
-	while (i < height)
+	y = 0;
+	while (y < height)
 	{
-		img_pix_put(g, x, i + height + wall_height, g->floor_c);
-		i++;
+		img_pix_put(g, x, y + height + wall_height, g->floor_c);
+		y++;
 	}
 }
 
@@ -89,7 +89,6 @@ void	render_rays(t_game *g)
 		ray->ray_ang += deg_to_rad(g->player->fov / g->width);
 		ray->index++;
 	}
-	mlx_clear_window(g->mlx, g->win);
 	mlx_put_image_to_window(g->mlx, g->win, g->img->mlx_img, 0, 0);
 	free(ray);
 }

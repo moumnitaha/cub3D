@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/03 18:18:15 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/04 17:21:16 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@
 typedef struct s_img
 {
 	void	*mlx_img;
-	char	*addr;
+	int		*addr;
 	int		bpp;
 	int		line_len;
 	int		endian;
@@ -64,8 +64,9 @@ typedef struct s_player {
 	double		x;
 	double		y;
 	double		dir;
+	double		lf;
 	double		fov;
-	int			turn_dir;
+	double		turn_dir;
 	int			walk_dir;
 	int			rotation_angle;
 	int			walk_speed;
@@ -134,9 +135,11 @@ void		init_ray_direction(t_ray *ray);
 void		init_player(t_game *game);
 void		init_game(t_game *g, t_player*player, t_img *img);
 int			key_press(int keycode, t_game *game);
+int			key_release(int keycode, t_game *game);
 int			exit_game(t_game *game);
 int			escape_game(t_game *game);
 void		img_pix_put(t_game *g, int x, int y, int color);
+void		update_player(t_game *game);
 
 // *** LIBFT FUNCTIONS *** //
 
