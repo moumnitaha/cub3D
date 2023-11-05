@@ -6,11 +6,16 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:32 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/04 17:19:09 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/05 09:45:25 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+void	img_pix_put(t_game *g, int x, int y, int color)
+{
+	g->img->addr[y * (int)g->width + x] = color;
+}
 
 void	fill_wall_img(t_game *g, int x, double wall_height, int color)
 {
@@ -22,21 +27,14 @@ void	fill_wall_img(t_game *g, int x, double wall_height, int color)
 		wall_height = g->height;
 	y = 0;
 	height = (g->height - wall_height) / 2;
-	while (y < height)
+	while (y < g->height)
 	{
-		img_pix_put(g, x, y, g->ceilling_c);
-		y++;
-	}
-	y = 0;
-	while (y < wall_height)
-	{
-		img_pix_put(g, x, y + height, color);
-		y++;
-	}
-	y = 0;
-	while (y < height)
-	{
-		img_pix_put(g, x, y + height + wall_height, g->floor_c);
+		if (y < height)
+			img_pix_put(g, x, y, g->ceilling_c);
+		else if (y < height + wall_height)
+			img_pix_put(g, x, y, color);
+		else if (y < g->height)
+			img_pix_put(g, x, y, g->floor_c);
 		y++;
 	}
 }
@@ -76,7 +74,8 @@ void	render_rays(t_game *g)
 		return ;
 	ray->index = 0;
 	ray->ray_ang = g->player->dir - deg_to_rad(g->player->fov / 2);
-	while (ray->ray_ang < g->player->dir + deg_to_rad(g->player->fov / 2))
+	while (ray->ray_ang < g->player->dir + deg_to_rad(g->player->fov / 2) 
+		&& ray->index < g->width)
 	{
 		init_ray_direction(ray);
 		horizontal_intersection(g, ray);
