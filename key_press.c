@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:24:05 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/08 15:32:26 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/08 18:12:34 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,9 @@ int	key_press(int keycode, t_game *game)
 	if (keycode == KEY_RIGHT)
 		game->player->turn_dir = game->player->turn_speed;
 	if (keycode == KEY_A)
-	{
 		game->player->lf = -1;
-		game->player->walk_dir = 1;
-	}
 	if (keycode == KEY_D)
-	{
-		game->player->lf = -1;
-		game->player->walk_dir = -1;
-	}
+		game->player->lf = 1;
 	return (0);
 }
 
@@ -88,14 +82,8 @@ int	key_release(int keycode, t_game *game)
 	if (keycode == KEY_RIGHT)
 		game->player->turn_dir = 0;
 	if (keycode == KEY_A)
-	{
 		game->player->lf = 0;
-		game->player->walk_dir = 1;
-	}
 	if (keycode == KEY_D)
-	{
 		game->player->lf = 0;
-		game->player->walk_dir = 1;
-	}
 	return (0);
 }
