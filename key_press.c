@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:24:05 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/08 15:10:09 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/08 15:32:26 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,15 @@ void	update_player(t_game *game)
 	double	p_y;
 	int		w_dir;
 	int		spd;
-	int		c;
+	int		lf;
 
-	c = game->player->lf;
+	lf = game->player->lf;
 	w_dir = game->player->walk_dir;
 	spd = game->player->walk_speed;
-	p_x = game->player->x + (cos(game->player->dir + 
-				(c * M_PI_2))) * w_dir * spd;
-	p_y = game->player->y + (sin(game->player->dir + 
-				(c * M_PI_2))) * w_dir * spd;
+	p_x = game->player->x + (cos(game->player->dir)) * w_dir * spd + (lf * -sin(
+				game->player->dir));
+	p_y = game->player->y + (sin(game->player->dir)) * w_dir * spd + (lf * cos(
+				game->player->dir));
 	if (!is_wall(game, p_x, game->player->y))
 		game->player->x = p_x;
 	if (!is_wall(game, game->player->x, p_y))
