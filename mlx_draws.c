@@ -6,34 +6,11 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:31:11 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/04 17:16:59 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/08 12:51:50 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-void	draw_rect(t_game *g, int x, int y, int color)
-{
-	double	width;
-	double	height;
-	int		i;
-	int		j;
-
-	width = (DM * g->scale) + y;
-	height = (DM * g->scale) + x;
-	i = y;
-	j = x;
-	while (i < width)
-	{
-		j = x;
-		while (j < height)
-		{
-			mlx_pixel_put(g->mlx, g->win, j, i, color);
-			j++;
-		}
-		i++;
-	}
-}
 
 void	draw_line(t_game *g, double x_1, double y_1)
 {
@@ -43,8 +20,8 @@ void	draw_line(t_game *g, double x_1, double y_1)
 	double	y_inc;
 	double	steps;
 
-	p_x = g->player->x * g->scale;
-	p_y = g->player->y * g->scale;
+	p_x = (g->mini_map_w / 2);
+	p_y = (g->mini_map_h / 2);
 	if (fabs(x_1 - p_x) > fabs(y_1 - p_y))
 		steps = fabs(x_1 - p_x);
 	else
@@ -84,60 +61,83 @@ void	draw_player(t_game *g, double x_pos, double y_pos, double scale)
 	}
 }
 
-void	draw_map(t_game *g, double scale)
+int	check_wall_collision(t_game *g, double x, double y)
+{
+	int	x0;
+	int	y0;
+
+	if (x < 0 || x > g->width || y < 0 || y > g->height)
+		return (-1);
+	x0 = floor(x / DM);
+	y0 = floor(y / DM);
+	if (x0 < 0 || x0 > g->m_w - 1 || y0 < 0 || y0 > g->m_h - 1)
+		return (-1);
+	if (g->map[y0][x0] == '1' || g->map[y0][x0] == ' ')
+		return (1);
+	else
+		return (0);
+}
+
+int	mis_wall(t_game *game, double x, double y)
+{
+	if (check_wall_collision(game, x, y) == 1)
+		return (1);
+	else if (check_wall_collision(game, x, y) == -1)
+		return (-1);
+	else
+		return (0);
+}
+
+void	draw_map(t_game *g)
 {
 	double	p_ang;
 	int		i;
 	int		j;
+	double	tmp_y;
+	double	tmp_x;
+	double	p_x;
+	double	p_y;
 
 	p_ang = g->player->dir;
+	p_x = g->player->x - (g->mini_map_w / 2);
+	p_y = g->player->y - (g->mini_map_h / 2);
 	i = 0;
 	j = 0;
-	while (i < g->m_h)
+	tmp_x = p_x;
+	while (i < g->mini_map_w)
 	{
 		j = 0;
-		while (j < g->m_w)
+		tmp_y = p_y;
+		while (j < g->mini_map_h)
 		{
-			if (g->map[i][j] == '1')
-				draw_rect(g, j * (DM * scale), i * (DM * scale), BLACK);
-			else if (g->map[i][j] == ' ')
-				draw_rect(g, j * (DM * scale), i * (DM * scale), RED);
-			else if (g->map[i][j] == '0' || g->map[i][j] == 'N')
-				draw_rect(g, j * (DM * scale), i * (DM * scale), WHITE);
+			if (mis_wall(g, tmp_x, tmp_y) == 1)
+			{
+				mlx_pixel_put(g->mlx, g->win, i, j, BLACK);
+			}
+			else if (mis_wall(g, tmp_x, tmp_y) == 0)
+			{
+				mlx_pixel_put(g->mlx, g->win, i, j, WHITE);
+			}
+			else if (mis_wall(g, tmp_x, tmp_y) == -1)
+			{
+				mlx_pixel_put(g->mlx, g->win, i, j, BLACK);
+			}
 			j++;
+			tmp_y++;
 		}
 		i++;
+		tmp_x++;
 	}
-	draw_player(g, g->player->x, g->player->y, scale);
-	draw_line(g, (g->player->x + cos(p_ang) * 40) * 
-		scale, (g->player->y + sin(p_ang) * 40) * scale);
+	draw_player(g, (g->mini_map_w / 2), (g->mini_map_h / 2), 1);
+	draw_line(g, ((g->mini_map_w / 2) + cos(p_ang) * 14), 
+		((g->mini_map_h / 2) + sin(p_ang) * 14));
 }
-
-// void mlx_draw_cercle(t_game *g)
-// {
-// 	int x = 10;
-// 	int y = 10;
-// 	int r = 5;
-// 	int i = 0;
-// 	int j = 0;
-// 	while (i < 2 * r)
-// 	{
-// 		j = 0;
-// 		while (j < 2 * r)
-// 		{
-// 			if ((int)sqrt((i - r) * (i - r) + (j - r) * (j - r)) == r)
-// 				mlx_pixel_put(g->mlx, g->win, x + i, y + j, RED);
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
 
 int	main_draws(t_game *game)
 {
 	mlx_clear_window(game->mlx, game->win);
 	update_player(game);
 	render_rays(game);
-	draw_map(game, game->scale);
+	draw_map(game);
 	return (0);
 }

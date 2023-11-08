@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/04 19:31:09 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/08 12:45:21 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define GRAY 0x00C0C0C0
 # define BLUESKY 0x00199EF3
 
-# define DM				        24
+# define DM				        19
 # define X_EVENT_KEY_PRESS		2
 # define X_EVENT_KEY_RELEASE	3
 # define X_EVENT_KEY_EXIT		17
@@ -100,6 +100,8 @@ typedef struct s_game
 	double		height;
 	double		width;
 	double		scale;
+	double		mini_map_w;
+	double		mini_map_h;
 	char		**map;
 	char		*no_txt;
 	char		*so_txt;
@@ -125,7 +127,7 @@ int			mouse_move(int x, int y, t_game *game);
 void		draw_rect(t_game *g, int x, int y, int color);
 void		draw_line(t_game *g, double x_1, double y_1);
 void		draw_player(t_game *g, double x_pos, double y_pos, double scale);
-void		draw_map(t_game *g, double scale);
+void		draw_map(t_game *g);
 int			main_draws(t_game *game);
 double		fix_ang(double angle);
 double		deg_to_rad(double deg);
