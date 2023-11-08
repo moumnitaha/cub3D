@@ -4,7 +4,7 @@ WE ./xpms/path_to_the_west_texture.xpm
 EA ./xpms/path_to_the_east_texture.xpm
 
 C 25, 158, 243
-F 250,250,250
+F 25,25,25
                          111111111
                         10000000001
                         10000000001

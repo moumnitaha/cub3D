@@ -6,11 +6,16 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:31:11 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/08 12:51:50 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/08 14:56:35 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+void	mimg_pix_put(t_game *g, int x, int y, int color)
+{
+	g->mini_map->addr[y * (int)g->mini_map_w + x] = color;
+}
 
 void	draw_line(t_game *g, double x_1, double y_1)
 {
@@ -30,14 +35,14 @@ void	draw_line(t_game *g, double x_1, double y_1)
 	y_inc = (y_1 - p_y) / (double)steps;
 	while ((int)steps)
 	{
-		mlx_pixel_put(g->mlx, g->win, p_x, p_y, RED);
+		mimg_pix_put(g, p_x, p_y, RED);
 		p_x += x_inc;
 		p_y += y_inc;
 		steps -= 1;
 	}
 }
 
-void	draw_player(t_game *g, double x_pos, double y_pos, double scale)
+void	draw_player(t_game *g, double x_pos, double y_pos)
 {
 	double	width;
 	double	height;
@@ -53,8 +58,7 @@ void	draw_player(t_game *g, double x_pos, double y_pos, double scale)
 		j = x_pos;
 		while (j < height + x_pos)
 		{
-			mlx_pixel_put(g->mlx, g->win, (j - width / 2) * 
-				scale, (i - height / 2) * scale, BLUE);
+			mimg_pix_put(g, (j - width / 2), (i - height / 2), BLUE);
 			j++;
 		}
 		i++;
@@ -111,26 +115,21 @@ void	draw_map(t_game *g)
 		while (j < g->mini_map_h)
 		{
 			if (mis_wall(g, tmp_x, tmp_y) == 1)
-			{
-				mlx_pixel_put(g->mlx, g->win, i, j, BLACK);
-			}
+				mimg_pix_put(g, i, j, BLACK);
 			else if (mis_wall(g, tmp_x, tmp_y) == 0)
-			{
-				mlx_pixel_put(g->mlx, g->win, i, j, WHITE);
-			}
+				mimg_pix_put(g, i, j, WHITE);
 			else if (mis_wall(g, tmp_x, tmp_y) == -1)
-			{
-				mlx_pixel_put(g->mlx, g->win, i, j, BLACK);
-			}
+				mimg_pix_put(g, i, j, BLACK);
 			j++;
 			tmp_y++;
 		}
 		i++;
 		tmp_x++;
 	}
-	draw_player(g, (g->mini_map_w / 2), (g->mini_map_h / 2), 1);
+	draw_player(g, (g->mini_map_w / 2), (g->mini_map_h / 2));
 	draw_line(g, ((g->mini_map_w / 2) + cos(p_ang) * 14), 
 		((g->mini_map_h / 2) + sin(p_ang) * 14));
+	mlx_put_image_to_window(g->mlx, g->win, g->mini_map->mlx_img, 5, 5);
 }
 
 int	main_draws(t_game *game)

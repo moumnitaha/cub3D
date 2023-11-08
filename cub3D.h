@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/08 12:45:21 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/08 14:41:58 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct s_game
 	void		*mlx;
 	void		*win;
 	t_img		*img;
+	t_img		*mini_map;
 	t_player	*player;
 }	t_game;
 
@@ -124,9 +125,8 @@ bool		check_around_spaces(t_game *game);
 bool		is_surrounded_by_walls(t_game *game);
 int			get_player_position(t_game *game);
 int			mouse_move(int x, int y, t_game *game);
-void		draw_rect(t_game *g, int x, int y, int color);
 void		draw_line(t_game *g, double x_1, double y_1);
-void		draw_player(t_game *g, double x_pos, double y_pos, double scale);
+void		draw_player(t_game *g, double x_pos, double y_pos);
 void		draw_map(t_game *g);
 int			main_draws(t_game *game);
 double		fix_ang(double angle);

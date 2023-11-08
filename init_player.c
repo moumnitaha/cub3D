@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:33:54 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/04 19:31:44 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/08 14:46:09 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	init_player(t_game *game)
 	game->player->fov = 60;
 	game->player->walk_dir = 0;
 	game->player->turn_dir = 0;
-	game->player->walk_speed = 4;
-	game->player->turn_speed = 3.5;
+	game->player->walk_speed = 2.5;
+	game->player->turn_speed = 2.5;
 	game->player->lf = 0;
 }

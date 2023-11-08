@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:24:05 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/04 19:24:51 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/08 15:10:09 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ void	update_player(t_game *game)
 	c = game->player->lf;
 	w_dir = game->player->walk_dir;
 	spd = game->player->walk_speed;
-	p_x = game->player->x + (cos(game->player->dir + c * M_PI_2)) * w_dir * spd;
-	p_y = game->player->y + (sin(game->player->dir + c * M_PI_2)) * w_dir * spd;
+	p_x = game->player->x + (cos(game->player->dir + 
+				(c * M_PI_2))) * w_dir * spd;
+	p_y = game->player->y + (sin(game->player->dir + 
+				(c * M_PI_2))) * w_dir * spd;
 	if (!is_wall(game, p_x, game->player->y))
 		game->player->x = p_x;
 	if (!is_wall(game, game->player->x, p_y))
@@ -88,12 +90,12 @@ int	key_release(int keycode, t_game *game)
 	if (keycode == KEY_A)
 	{
 		game->player->lf = 0;
-		game->player->walk_dir = 0;
+		game->player->walk_dir = 1;
 	}
 	if (keycode == KEY_D)
 	{
 		game->player->lf = 0;
-		game->player->walk_dir = 0;
+		game->player->walk_dir = 1;
 	}
 	return (0);
 }
