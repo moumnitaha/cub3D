@@ -6,11 +6,21 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:18 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/04 17:05:24 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/09 12:51:22 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+void	main_hooks(t_game *g)
+{
+	mlx_hook(g->win, X_EVENT_KEY_PRESS, 0, &key_press, g);
+	mlx_hook(g->win, X_EVENT_KEY_RELEASE, 0, &key_release, g);
+	mlx_hook(g->win, 6, 1L << 6, mouse_move, g);
+	mlx_hook(g->win, X_EVENT_KEY_EXIT, 0, &escape_game, g);
+	mlx_loop_hook(g->mlx, main_draws, g);
+	mlx_loop(g->mlx);
+}
 
 int	main(int ac, char **av)
 {
@@ -30,12 +40,7 @@ int	main(int ac, char **av)
 			g->mlx = mlx_init();
 			init_game(g, p, myimg);
 			init_player(g);
-			mlx_hook(g->win, X_EVENT_KEY_PRESS, 0, &key_press, g);
-			mlx_hook(g->win, X_EVENT_KEY_RELEASE, 0, &key_release, g);
-			mlx_hook(g->win, 6, 1L << 6, mouse_move, g);
-			mlx_hook(g->win, X_EVENT_KEY_EXIT, 0, &escape_game, g);
-			mlx_loop_hook(g->mlx, main_draws, g);
-			mlx_loop(g->mlx);
+			main_hooks(g);
 		}
 		else
 			write(2, "invalid map\n", 12);

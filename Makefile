@@ -6,7 +6,7 @@
 #    By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/21 13:47:28 by tmoumni           #+#    #+#              #
-#    Updated: 2023/11/08 14:42:20 by tmoumni          ###   ########.fr        #
+#    Updated: 2023/11/09 12:39:36 by tmoumni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ L = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
 SRCS = cub3D.c draw_rays.c fixAngle.c hzIntersection.c initRay.c map_check.c mlx_params.c\
 		init_player.c key_press.c mlx_draws.c mouse_move.c map_check_2.c\
-		vcIntersection.c init_game.c\
+		vcIntersection.c init_game.c mlx_draws2.c\
     	utils.c gnl/get_next_line.c gnl/get_next_line_utils.c utils/ft_1.c utils/ft_2.c \
 		parse.c u_parse.c utils/ft_3.c u1_parse.c
 OBJS_DIR = OBJS_FILES

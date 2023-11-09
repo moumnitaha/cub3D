@@ -6,64 +6,11 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:31:11 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/08 14:56:35 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/09 12:49:31 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-void	mimg_pix_put(t_game *g, int x, int y, int color)
-{
-	g->mini_map->addr[y * (int)g->mini_map_w + x] = color;
-}
-
-void	draw_line(t_game *g, double x_1, double y_1)
-{
-	double	p_x;
-	double	p_y;
-	double	x_inc;
-	double	y_inc;
-	double	steps;
-
-	p_x = (g->mini_map_w / 2);
-	p_y = (g->mini_map_h / 2);
-	if (fabs(x_1 - p_x) > fabs(y_1 - p_y))
-		steps = fabs(x_1 - p_x);
-	else
-		steps = fabs(y_1 - p_y);
-	x_inc = (x_1 - p_x) / (double)steps;
-	y_inc = (y_1 - p_y) / (double)steps;
-	while ((int)steps)
-	{
-		mimg_pix_put(g, p_x, p_y, RED);
-		p_x += x_inc;
-		p_y += y_inc;
-		steps -= 1;
-	}
-}
-
-void	draw_player(t_game *g, double x_pos, double y_pos)
-{
-	double	width;
-	double	height;
-	double	i;
-	double	j;
-
-	width = DM * 0.5;
-	height = DM * 0.5;
-	i = y_pos;
-	j = x_pos;
-	while (i < width + y_pos)
-	{
-		j = x_pos;
-		while (j < height + x_pos)
-		{
-			mimg_pix_put(g, (j - width / 2), (i - height / 2), BLUE);
-			j++;
-		}
-		i++;
-	}
-}
 
 int	check_wall_collision(t_game *g, double x, double y)
 {
@@ -94,49 +41,39 @@ int	mis_wall(t_game *game, double x, double y)
 
 void	draw_map(t_game *g)
 {
-	double	p_ang;
 	int		i;
 	int		j;
-	double	tmp_y;
-	double	tmp_x;
 	double	p_x;
 	double	p_y;
 
-	p_ang = g->player->dir;
+	i = -1;
 	p_x = g->player->x - (g->mini_map_w / 2);
-	p_y = g->player->y - (g->mini_map_h / 2);
-	i = 0;
-	j = 0;
-	tmp_x = p_x;
-	while (i < g->mini_map_w)
+	while (++i < g->mini_map_w)
 	{
-		j = 0;
-		tmp_y = p_y;
-		while (j < g->mini_map_h)
+		j = -1;
+		p_y = g->player->y - (g->mini_map_h / 2);
+		while (++j < g->mini_map_h)
 		{
-			if (mis_wall(g, tmp_x, tmp_y) == 1)
+			if (mis_wall(g, p_x, p_y) == 1 || mis_wall(g, p_x, p_y) == -1)
 				mimg_pix_put(g, i, j, BLACK);
-			else if (mis_wall(g, tmp_x, tmp_y) == 0)
+			else if (mis_wall(g, p_x, p_y) == 0)
 				mimg_pix_put(g, i, j, WHITE);
-			else if (mis_wall(g, tmp_x, tmp_y) == -1)
-				mimg_pix_put(g, i, j, BLACK);
-			j++;
-			tmp_y++;
+			if (i < 5 || i > g->mini_map_w - 5 || j < 5 || 
+				j > g->mini_map_h - 5)
+				mimg_pix_put(g, i, j, GRAYF);
+			p_y++;
 		}
-		i++;
-		tmp_x++;
+		p_x++;
 	}
-	draw_player(g, (g->mini_map_w / 2), (g->mini_map_h / 2));
-	draw_line(g, ((g->mini_map_w / 2) + cos(p_ang) * 14), 
-		((g->mini_map_h / 2) + sin(p_ang) * 14));
-	mlx_put_image_to_window(g->mlx, g->win, g->mini_map->mlx_img, 5, 5);
 }
 
-int	main_draws(t_game *game)
+int	main_draws(t_game *g)
 {
-	mlx_clear_window(game->mlx, game->win);
-	update_player(game);
-	render_rays(game);
-	draw_map(game);
+	mlx_clear_window(g->mlx, g->win);
+	update_player(g);
+	render_rays(g);
+	draw_map(g);
+	draw_player(g, (g->mini_map_w / 2), (g->mini_map_h / 2));
+	mlx_put_image_to_window(g->mlx, g->win, g->mini_map->mlx_img, 0, 0);
 	return (0);
 }

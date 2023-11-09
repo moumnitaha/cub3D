@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/08 14:41:58 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/09 12:52:04 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ void		init_ray_direction(t_ray *ray);
 void		horizontal_intersection(t_game *g, t_ray *ray);
 void		vertical_intersection(t_game *g, t_ray *ray);
 void		render_rays(t_game *g);
-void		render_3d_walls(t_game *g, double wall_height, int i, int color);
 bool		check_firs_last(t_game *game);
 bool		check_columns(t_game *game);
 bool		check_around_spaces(t_game *game);
@@ -141,6 +140,7 @@ int			exit_game(t_game *game);
 int			escape_game(t_game *game);
 void		img_pix_put(t_game *g, int x, int y, int color);
 void		update_player(t_game *game);
+void		mimg_pix_put(t_game *g, int x, int y, int color);
 
 // *** LIBFT FUNCTIONS *** //
 
