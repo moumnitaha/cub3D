@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/09 12:52:04 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/10 10:45:35 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define GRAY 0x00C0C0C0
 # define BLUESKY 0x00199EF3
 
-# define DM				        19
+# define DM				        18.75
 # define X_EVENT_KEY_PRESS		2
 # define X_EVENT_KEY_RELEASE	3
 # define X_EVENT_KEY_EXIT		17
