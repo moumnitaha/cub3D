@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:32 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/10 11:02:47 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/11 17:32:18 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,12 @@ void	render_rays(t_game *g)
 	if (ray == NULL)
 		return ;
 	ray->index = 0;
+	g->player->dir = fix_ang(g->player->dir);
 	ray->ray_ang = g->player->dir - deg_to_rad(g->player->fov / 2);
 	mlx_clear_window(g->mlx, g->win);
+	mlx_destroy_image(g->mlx, g->img->mlx_img);
+	g->img->mlx_img = mlx_new_image(g->mlx, g->width, g->height);
+	g->img->addr = (int *)mlx_get_data_addr(g->img->mlx_img, &g->img->bpp, &g->img->line_len, &g->img->endian);
 	while (ray->ray_ang < g->player->dir + deg_to_rad(g->player->fov / 2) 
 		&& ray->index < g->width)
 	{
