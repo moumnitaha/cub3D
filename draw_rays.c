@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_rays.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:32 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/12 17:36:23 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/12 17:44:24 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,16 +71,15 @@ void renderWal(t_game *g, double wall_height, t_ray *ray, int dir/*, int width, 
 		{
 			// printf("WIDTH: %d\n", g->no_h);
 			offset_y = j * (g->no_h / wall_height);
-			offset_x = offset_x * (g->no_w / DM);
+			int ot_x = offset_x * (g->no_w / DM);
 
-			if(offset_x + offset_y * g->no_w < g->no_w * g->no_h && offset_x + offset_y * g->no_w > 0 
+			if(ot_x + offset_y * g->no_w < g->no_w * g->no_h && ot_x + offset_y * g->no_w > 0 
 				&& j + h < g->height && j + h > 0)
 			{
-				color = g->north.addr[((int)offset_y * g->no_w) + (int)offset_x];
+				color = g->north.addr[((int)offset_y * g->no_w) + (int)ot_x];
 				// color = n_color(g, offset_x, offset_y);
 				img_pix_put(g, ray->index, j + h, color);
 			}
-				printf("w: %d, h: %d\n", g->no_w , g->no_h);
 		}
 		else if (dir == 2)
 		{	
