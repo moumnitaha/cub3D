@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/10 10:45:35 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/12 15:04:00 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ typedef struct s_img
 	int		bpp;
 	int		line_len;
 	int		endian;
+	int		bits_pp;
+	int		ll;
+	int		en;
+
 }	t_img;
 typedef struct s_player {
 	double		x;
@@ -97,6 +101,14 @@ typedef struct s_game
 	int			ceilling_c;
 	int			m_h;
 	int			m_w;
+	int			no_w;
+	int			ea_w;
+	int			we_w;
+	int			so_w;
+	int			no_h;
+	int			ea_h;
+	int			we_h;
+	int			so_h;
 	double		height;
 	double		width;
 	double		scale;
@@ -109,6 +121,10 @@ typedef struct s_game
 	char		*ea_txt;
 	void		*mlx;
 	void		*win;
+	t_img		north;
+	t_img		south;
+	t_img		east;
+	t_img		west;
 	t_img		*img;
 	t_img		*mini_map;
 	t_player	*player;
@@ -171,5 +187,11 @@ void		read_map(char *file, t_game *game);
 void		init_map(t_game *game);
 void		set_txt(t_game *game, char c, char *path);
 char		*_path(char *path);
+unsigned int	get_txt_color(t_game *g, int x, int y);
+void			xpm_files(t_game *g);
+int n_color(t_game *game, int x, int y);
+// unsigned int	e_color(t_game *game, int x, int y);
+// unsigned int	s_color(t_game *game, int x, int y);
+// unsigned int	w_color(t_game *game, int x, int y);
 
 #endif

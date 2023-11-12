@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:39:27 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/11/02 10:55:00 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/12 15:28:21 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,5 +123,6 @@ int	_line(t_game *game, char *line, int l)
 		return (0);
 	ft_strlcpy(value, line + start, end - start + 1);
 	m_elem(game, c, value, *(line - l + 1));
-	return (free(value), 1);
+	// free(value);
+	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_rays.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:32 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/11 17:32:18 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/12 17:36:23 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	img_pix_put(t_game *g, int x, int y, int color)
 	g->img->addr[y * (int)g->width + x] = color;
 }
 
-void renderWal(t_game *g, double wall_height, t_ray *ray, int dir, int width, int height, char *texture)
+void renderWal(t_game *g, double wall_height, t_ray *ray, int dir/*, int width, int height, int *texture*/)
 {
 	int j;
 	int color;
@@ -38,31 +38,90 @@ void renderWal(t_game *g, double wall_height, t_ray *ray, int dir, int width, in
 		offset_x = DM - fmod(ray->x_h_hit , DM);
 	else if (ray->is_hz_hit && ray->is_ray_fup)
 		offset_x = fmod(ray->x_h_hit , DM);
-	offset_x = offset_x * (width / DM);
+	// offset_x = offset_x * (width / DM);
 	while (j < h)
 	{
 		img_pix_put(g, ray->index, j, g->ceilling_c);
 		j++;
 	}
 	j = 0;
+	// while(j < wall_height)
+	// {
+	// 	offset_y = j * (height / wall_height);
+	// 	if (dir == 1)
+	// 	{	
+	// 		if(offset_x + offset_y * width < width * height && offset_x + offset_y * width > 0 
+	// 			&& j + h < g->height && j + h > 0)
+	// 		{
+	// 			color = (texture)[((int)offset_y * width) + (int)offset_x];
+	// 			img_pix_put(g, ray->index, j + h, color);
+	// 		}
+	// 	}
+	// 	else if (dir == 2)
+	// 		color = (int)g->so_txt[(int)offset_y * 64 + (int)offset_x * 4];
+	// 	else if (dir == 3)
+	// 		color = (int)g->we_txt[(int)offset_y * 64 + (int)offset_x * 4];
+	// 	else if (dir == 4)
+	// 		color = (int)g->ea_txt[(int)offset_y * 64 + (int)offset_x * 4];
+	// 	j++;
+	// }
 	while(j < wall_height)
 	{
-		offset_y = j * (height / wall_height);
 		if (dir == 1)
-		{	
-			if(offset_x + offset_y * width < width * height && offset_x + offset_y * width > 0 
+		{
+			// printf("WIDTH: %d\n", g->no_h);
+			offset_y = j * (g->no_h / wall_height);
+			offset_x = offset_x * (g->no_w / DM);
+
+			if(offset_x + offset_y * g->no_w < g->no_w * g->no_h && offset_x + offset_y * g->no_w > 0 
 				&& j + h < g->height && j + h > 0)
 			{
-				color = ((int *)texture)[((int)offset_y * width) + (int)offset_x];
+				color = g->north.addr[((int)offset_y * g->no_w) + (int)offset_x];
+				// color = n_color(g, offset_x, offset_y);
+				img_pix_put(g, ray->index, j + h, color);
+			}
+				printf("w: %d, h: %d\n", g->no_w , g->no_h);
+		}
+		else if (dir == 2)
+		{	
+			offset_y = j * (g->so_h / wall_height);
+			offset_x = offset_x * (g->so_w / DM);
+
+			if(offset_x + offset_y * g->so_w < g->so_w * g->so_h && offset_x + offset_y * g->so_w > 0 
+				&& j + h < g->height && j + h > 0)
+			{
+				color = g->south.addr[((int)offset_y * g->so_w) + (int)offset_x];
+				// color = n_color(g, offset_x, offset_y);
 				img_pix_put(g, ray->index, j + h, color);
 			}
 		}
-		else if (dir == 2)
-			color = (int)g->so_txt[(int)offset_y * 64 + (int)offset_x * 4];
 		else if (dir == 3)
-			color = (int)g->we_txt[(int)offset_y * 64 + (int)offset_x * 4];
+		{	
+			offset_y = j * (g->we_h / wall_height);
+			offset_x = offset_x * (g->we_w / DM);
+
+			if(offset_x + offset_y * g->we_w < g->we_w * g->we_h && offset_x + offset_y * g->we_w > 0 
+				&& j + h < g->height && j + h > 0)
+			{
+				color = g->west.addr[((int)offset_y * g->we_w) + (int)offset_x];
+				// color = n_color(g, offset_x, offset_y);
+				img_pix_put(g, ray->index, j + h, color);
+			}
+		}
 		else if (dir == 4)
-			color = (int)g->ea_txt[(int)offset_y * 64 + (int)offset_x * 4];
+		{	
+			offset_y = j * (g->ea_h / wall_height);
+			offset_x = offset_x * (g->ea_w / DM);
+
+			if(offset_x + offset_y * g->ea_w < g->ea_w * g->ea_h && offset_x + offset_y * g->ea_w > 0 
+				&& j + h < g->height && j + h > 0)
+			{
+				color = g->east.addr[((int)offset_y * g->ea_w) + (int)offset_x];
+				// color = n_color(g, offset_x, offset_y);
+				img_pix_put(g, ray->index, j + h, color);
+			}
+
+		}
 		j++;
 	}
 	while (j + h < g->height)
@@ -97,13 +156,16 @@ void	render_rays(t_game *g)
 {
 	t_ray	*ray;
 	double	wall_height;
-	char *texture;
-	char *tex;
-	int width;
-	int height;
-	char *path = "./xpms/bricksx64.xpm";
-	tex = mlx_xpm_file_to_image(g->mlx, path, &width, &height);
-	texture = mlx_get_data_addr(tex, &g->img->bpp, &g->img->line_len, &g->img->endian);
+	// char *texture;
+	// char *tex;
+	// int width;
+	// int height;
+	// char *path = "./xpms/bricksx64.xpm";
+	// tex = mlx_xpm_file_to_image(g->mlx, path, &width, &height);
+	// texture = mlx_get_data_addr(tex, &g->img->bpp, &g->img->line_len, &g->img->endian);
+	// g->south.mlx_img = mlx_xpm_file_to_image(g->mlx, g->so_txt, &g->so_w, &g->so_h);
+    // g->south.addr = (int *)mlx_get_data_addr(g->south.mlx_img, &g->img->bits_pp,
+    //     &g->img->ll, &g->img->en);
 	ray = malloc(sizeof(t_ray));
 	if (ray == NULL)
 		return ;
@@ -111,9 +173,11 @@ void	render_rays(t_game *g)
 	g->player->dir = fix_ang(g->player->dir);
 	ray->ray_ang = g->player->dir - deg_to_rad(g->player->fov / 2);
 	mlx_clear_window(g->mlx, g->win);
+	
+	xpm_files(g);
 	mlx_destroy_image(g->mlx, g->img->mlx_img);
 	g->img->mlx_img = mlx_new_image(g->mlx, g->width, g->height);
-	g->img->addr = (int *)mlx_get_data_addr(g->img->mlx_img, &g->img->bpp, &g->img->line_len, &g->img->endian);
+    g->img->addr = (int *)mlx_get_data_addr(g->img->mlx_img, &g->img->bpp, &g->img->line_len, &g->img->endian);
 	while (ray->ray_ang < g->player->dir + deg_to_rad(g->player->fov / 2) 
 		&& ray->index < g->width)
 	{
@@ -125,7 +189,7 @@ void	render_rays(t_game *g)
 		wall_height = (DM / ray->dist) * ray->d_to_pp;
 		wall_height /= cos(g->player->dir - ray->ray_ang);
 		handle_hit(ray);
-		renderWal(g, wall_height, ray, 1, width, height, texture);
+		renderWal(g, wall_height, ray, 1/*, g->so_w, g->so_h, g->south.addr*/);
 		ray->ray_ang += deg_to_rad(g->player->fov / g->width);
 		ray->index++;
 	}
