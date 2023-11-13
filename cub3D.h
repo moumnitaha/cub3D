@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/12 15:04:00 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/13 10:00:18 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,8 @@ char		*_path(char *path);
 unsigned int	get_txt_color(t_game *g, int x, int y);
 void			xpm_files(t_game *g);
 int n_color(t_game *game, int x, int y);
+double  off_x(t_ray *ray);
+int _dir(t_ray *ray);
 // unsigned int	e_color(t_game *game, int x, int y);
 // unsigned int	s_color(t_game *game, int x, int y);
 // unsigned int	w_color(t_game *game, int x, int y);

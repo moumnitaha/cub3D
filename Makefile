@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+         #
+#    By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/21 13:47:28 by tmoumni           #+#    #+#              #
-#    Updated: 2023/11/12 17:49:36 by tmoumni          ###   ########.fr        #
+#    Updated: 2023/11/13 08:42:49 by akhaliss         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ NAME = cub3D
 HEADER = cub3D.h
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 MFLAGS = -lmlx -framework OpenGL -framework AppKit -O3
 I = -I/usr/include -Imlx_linux -O3
 L = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
