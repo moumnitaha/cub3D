@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 13:03:25 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/11/13 11:30:26 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/13 12:47:04 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,59 +51,102 @@ int _dir(t_ray *ray)
     int dir;
     
     dir = 0;
-    // if (ray->ray_ang >= 0 && ray->ray_ang <= 180)
-    // {
-    //     if (ray->is_vc_hit)
-    //         dir = 4;
-    //     else if (ray->is_hz_hit)
-    //         dir = 2;
-    // }
-    // if (ray->ray_ang >= 180 && ray->ray_ang <= 360)
-    // {
+
 	    if (ray->is_hz_hit  && ray->is_ray_fup)
             dir = 1;
         else if (ray->is_vc_hit && ray->is_ray_frt)
             dir = 4;
     	else if (ray->is_vc_hit && ray->is_ray_flf)
             dir = 3;
-    // }
-    // else if (ray->ray_ang >= 0 && ray->ray_ang <= 180)
-    // {
 	    else if (ray->is_hz_hit && ray->is_ray_fdw)
             dir = 2;
-    //     else if (ray->is_vc_hit && ray->is_ray_flf)
-    //         dir = 3;
-    // 	else if (ray->is_vc_hit && ray->is_ray_frt)
-    //         dir = 4;
-    // }
-    // else if ((ray->ray_ang >= 0 && ray->ray_ang <= 90) || (ray->ray_ang >= 270 && ray->ray_ang <= 360))
-    // {
-    //     dir = 4;
-    // }
-    // else if (ray->ray_ang >= 900 && ray->ray_ang <= 270)
-    // {
-    //     dir = 3;
-    // }
-    // if (ray->ray_ang >= 180 && ray->ray_ang <= 360)
-    // {
-    //     if (ray->is_vc_hit)
-    //         dir = 1;
-    //     else if (ray->is_hz_hit)
-    //         dir = 4;
-    // }
     return (dir);
 
 }
 
-// int n_color(t_game *game, int x, int y)
+// int n_color(t_game *g, int x, int y, int j)
 // {
+//     int color;
+//     // (void)j;
     
-//     int offset = (y * game->ea_w + x);
-//     // printf("%d\n", game->ea_w);
-//     int color = game->north.addr[offset];
-//     // unsigned int color = game->north.addr[offset];
-//     // unsigned int color = game->west.addr[offset];
-//     // unsigned int color = game->south.addr[offset];
-
+//     color = 0;
+//     if(x + y * g->no_w < g->no_w * g->no_h && x + y * g->no_w > 0 
+//     	&& j < g->height && j > 0)
+//     {
+//         color = g->north.addr[y * g->no_w + x];
+//     }
 //     return (color);
+// }
+// void wall_tex(t_game *g, double wall_height, t_ray *ray, int dir)
+// {
+//     int j;
+// 	int color;
+// 	double offset_y;
+// 	int ot_x;
+// 	int h;
+
+//     j = 0;
+// 	ot_x = 0;
+// 	// offset_x = 0;
+// 	offset_y = 0;
+// 	wall_height = floor(wall_height);
+// 	h = (g->height - wall_height) / 2;
+//     j = 0;
+// 	while(j < wall_height)
+// 	{
+// 		if (dir == 1)
+// 		{
+// 			offset_y = j * (g->no_h / wall_height);
+// 			ot_x = off_x(ray) * (g->no_w / DM);
+
+// 			if(ot_x + offset_y * g->no_w < g->no_w * g->no_h && ot_x + offset_y * g->no_w > 0 
+// 				&& j + h < g->height && j + h > 0)
+// 			{
+// 				color = g->north.addr[((int)offset_y * g->no_w) + (int)ot_x];
+// 				// color = n_color(g, ot_x, offset_y, j + h);
+// 				img_pix_put(g, ray->index, j + h, color);
+// 			}
+// 		}
+// 		else if (dir == 2)
+// 		{	
+// 			offset_y = j * (g->so_h / wall_height);
+// 			ot_x = off_x(ray) * (g->so_w / DM);
+
+// 			if(ot_x + offset_y * g->so_w < g->so_w * g->so_h && ot_x + offset_y * g->so_w > 0 
+// 				&& j + h < g->height && j + h > 0)
+// 			{
+// 				color = g->south.addr[((int)offset_y * g->so_w) + (int)ot_x];
+// 				// color = n_color(g, off_x(ray), offset_y);
+// 				img_pix_put(g, ray->index, j + h, color);
+// 			}
+// 		}
+// 		else if (dir == 3)
+// 		{	
+// 			offset_y = j * (g->we_h / wall_height);
+// 			ot_x = off_x(ray) * (g->we_w / DM);
+
+// 			if(ot_x + offset_y * g->we_w < g->we_w * g->we_h && ot_x + offset_y * g->we_w > 0 
+// 				&& j + h < g->height && j + h > 0)
+// 			{
+// 				color = g->west.addr[((int)offset_y * g->we_w) + (int)ot_x];
+// 				// color = n_color(g, off_x(ray), offset_y);
+// 				img_pix_put(g, ray->index, j + h, color);
+// 			}
+// 		}
+// 		else if (dir == 4)
+// 		{	
+// 			offset_y = j * (g->ea_h / wall_height);
+// 			ot_x = off_x(ray) * (g->ea_w / DM);
+
+// 			if(ot_x + offset_y * g->ea_w < g->ea_w * g->ea_h && ot_x + offset_y * g->ea_w > 0 
+// 				&& j + h < g->height && j + h > 0)
+// 			{
+// 				color = g->east.addr[((int)offset_y * g->ea_w) + (int)ot_x];
+// 				// color = n_color(g, off_x(ray), offset_y);
+// 				img_pix_put(g, ray->index, j + h, color);
+// 			}
+
+// 		}
+// 		j++;
+// 	}
 // }

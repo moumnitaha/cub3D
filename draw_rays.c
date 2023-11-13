@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:32 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/13 11:03:25 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:54:33 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,126 @@ void	img_pix_put(t_game *g, int x, int y, int color)
 	g->img->addr[y * (int)g->width + x] = color;
 }
 
-void renderWal(t_game *g, double wall_height, t_ray *ray, int dir)
+// void renderWal(t_game *g, double wall_height, t_ray *ray, int dir)
+// {
+// 	double offset_x;
+// 	int j;
+// 	int color;
+// 	double offset_y;
+// 	int ot_x;
+// 	int h;
+
+// 	j = 0;
+// 	ot_x = 0;
+// 	offset_x = 0;
+// 	offset_y = 0;
+// 	wall_height = floor(wall_height);
+// 	h = (g->height - wall_height) / 2;
+// 	offset_x = off_x(ray);
+// 	while (j < h)
+// 	{
+// 		img_pix_put(g, ray->index, j, g->ceilling_c);
+// 		j++;
+// 	}
+// 	j = 0;
+// 	while(j < wall_height)
+// 	{
+// 		if (dir == 1)
+// 		{
+// 			offset_y = j * (g->no_h / wall_height);
+// 			ot_x = offset_x * (g->no_w / DM);
+
+// 			if(ot_x + offset_y * g->no_w < g->no_w * g->no_h && ot_x + offset_y * g->no_w > 0 
+// 				&& j + h < g->height && j + h > 0)
+// 			{
+// 				color = g->north.addr[((int)offset_y * g->no_w) + (int)ot_x];
+// 				img_pix_put(g, ray->index, j + h, color);
+// 			}
+// 		}
+// 		else if (dir == 2)
+// 		{	
+// 			offset_y = j * (g->so_h / wall_height);
+// 			ot_x = offset_x * (g->so_w / DM);
+
+// 			if(ot_x + offset_y * g->so_w < g->so_w * g->so_h && ot_x + offset_y * g->so_w > 0 
+// 				&& j + h < g->height && j + h > 0)
+// 			{
+// 				color = g->south.addr[((int)offset_y * g->so_w) + (int)ot_x];
+// 				img_pix_put(g, ray->index, j + h, color);
+// 			}
+// 		}
+// 		j++;
+// 	}
+// 	j = 0;
+// 	while(j < wall_height)
+// 	{
+// 		if (dir == 3)
+// 		{	
+// 			offset_y = j * (g->we_h / wall_height);
+// 			ot_x = offset_x * (g->we_w / DM);
+
+// 			if(ot_x + offset_y * g->we_w < g->we_w * g->we_h && ot_x + offset_y * g->we_w > 0 
+// 				&& j + h < g->height && j + h > 0)
+// 			{
+// 				color = g->west.addr[((int)offset_y * g->we_w) + (int)ot_x];
+// 				img_pix_put(g, ray->index, j + h, color);
+// 			}
+// 		}
+// 		else if (dir == 4)
+// 		{	
+// 			offset_y = j * (g->ea_h / wall_height);
+// 			ot_x = offset_x * (g->ea_w / DM);
+
+// 			if(ot_x + offset_y * g->ea_w < g->ea_w * g->ea_h && ot_x + offset_y * g->ea_w > 0 
+// 				&& j + h < g->height && j + h > 0)
+// 			{
+// 				color = g->east.addr[((int)offset_y * g->ea_w) + (int)ot_x];
+// 				img_pix_put(g, ray->index, j + h, color);
+// 			}
+// 		}
+// 		j++;
+// 	}
+// 	while (j + h < g->height)
+// 	{
+// 		img_pix_put(g, ray->index, j + h, g->floor_c);
+// 		j++;
+// 	}
+// }
+// wall_tex(g, wall_height, ray, dir);
+
+void r_ceiling_floor(t_game *g, int h, int rayIndex)
 {
-	int j;
+    int j;
+
+	j = 0;
+    while (j < h)
+	{
+        img_pix_put(g, rayIndex, j, g->ceilling_c);
+        j++;
+    }
+    j = 0;
+    while (j + h < g->height)
+	{
+        img_pix_put(g, rayIndex, j + h, g->floor_c);
+        j++;
+    }
+}
+
+void renderWallSection(t_game *g, /*double offset_x, double offset_y, int ot_x, int j,*//* int h, int dir,*/ t_ray *ray, double wall_height) {
+    
 	int color;
 	double offset_x;
 	double offset_y;
-	int ot_x;
-	int h;
-
-	j = 0;
-	ot_x = 0;
-	offset_x = 0;
-	offset_y = 0;
-	wall_height = floor(wall_height);
+    int h;
+	int	ot_x;
+	int	dir;
+	int j;
+	
 	h = (g->height - wall_height) / 2;
 	offset_x = off_x(ray);
-	while (j < h)
-	{
-		img_pix_put(g, ray->index, j, g->ceilling_c);
-		j++;
-	}
+	ot_x = 0;
+	color = 0;
+	dir = _dir(ray);
 	j = 0;
 	while(j < wall_height)
 	{
@@ -45,17 +144,15 @@ void renderWal(t_game *g, double wall_height, t_ray *ray, int dir)
 		{
 			offset_y = j * (g->no_h / wall_height);
 			ot_x = offset_x * (g->no_w / DM);
-
 			if(ot_x + offset_y * g->no_w < g->no_w * g->no_h && ot_x + offset_y * g->no_w > 0 
 				&& j + h < g->height && j + h > 0)
 			{
 				color = g->north.addr[((int)offset_y * g->no_w) + (int)ot_x];
-				// color = n_color(g, offset_x, offset_y);
 				img_pix_put(g, ray->index, j + h, color);
 			}
 		}
 		else if (dir == 2)
-		{	
+		{
 			offset_y = j * (g->so_h / wall_height);
 			ot_x = offset_x * (g->so_w / DM);
 
@@ -63,12 +160,16 @@ void renderWal(t_game *g, double wall_height, t_ray *ray, int dir)
 				&& j + h < g->height && j + h > 0)
 			{
 				color = g->south.addr[((int)offset_y * g->so_w) + (int)ot_x];
-				// color = n_color(g, offset_x, offset_y);
 				img_pix_put(g, ray->index, j + h, color);
 			}
 		}
-		else if (dir == 3)
-		{	
+		j++;
+	}
+	j = 0;
+	while(j < wall_height)
+	{
+		if (dir == 3)
+		{
 			offset_y = j * (g->we_h / wall_height);
 			ot_x = offset_x * (g->we_w / DM);
 
@@ -76,12 +177,11 @@ void renderWal(t_game *g, double wall_height, t_ray *ray, int dir)
 				&& j + h < g->height && j + h > 0)
 			{
 				color = g->west.addr[((int)offset_y * g->we_w) + (int)ot_x];
-				// color = n_color(g, offset_x, offset_y);
 				img_pix_put(g, ray->index, j + h, color);
 			}
-		}
+    	}
 		else if (dir == 4)
-		{	
+		{
 			offset_y = j * (g->ea_h / wall_height);
 			ot_x = offset_x * (g->ea_w / DM);
 
@@ -89,19 +189,32 @@ void renderWal(t_game *g, double wall_height, t_ray *ray, int dir)
 				&& j + h < g->height && j + h > 0)
 			{
 				color = g->east.addr[((int)offset_y * g->ea_w) + (int)ot_x];
-				// color = n_color(g, offset_x, offset_y);
 				img_pix_put(g, ray->index, j + h, color);
 			}
-
 		}
 		j++;
 	}
-	while (j + h < g->height)
-	{
-		img_pix_put(g, ray->index, j + h, g->floor_c);
-		j++;
-	}
 }
+
+
+
+void renderWal(t_game *g, double wall_height, t_ray *ray/*, int dir*/)
+{
+    // double offset_x;
+    // int j;
+    int h;
+	// int ot_x;
+	// double offset_y;
+
+	h = (g->height - wall_height) / 2;
+	// offset_x = off_x(ray);
+    r_ceiling_floor(g, h, ray->index);
+        // ot_x = offset_x * (g->no_w / DM);
+        // offset_y = j * (g->no_h / wall_height);
+    renderWallSection(g,/* offset_x, offset_y, ot_x, j,*/ /*h, dir,*/ ray, wall_height);
+
+}
+
 
 void	handle_hit(t_ray *ray)
 {
@@ -128,7 +241,7 @@ void	render_rays(t_game *g)
 {
 	t_ray	*ray;
 	double	wall_height;
-	int	dir;
+	// int	dir;
 	ray = malloc(sizeof(t_ray));
 	if (ray == NULL)
 		return ;
@@ -151,8 +264,8 @@ void	render_rays(t_game *g)
 		wall_height = (DM / ray->dist) * ray->d_to_pp;
 		wall_height /= cos(g->player->dir - ray->ray_ang);
 		handle_hit(ray);
-		dir = _dir(ray);
-		renderWal(g, wall_height, ray, dir);
+		// dir = _dir(ray);
+		renderWal(g, wall_height, ray/*, dir*/);
 		ray->ray_ang += deg_to_rad(g->player->fov / g->width);
 		ray->index++;
 	}

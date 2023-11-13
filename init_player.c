@@ -6,42 +6,12 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:33:54 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/13 08:51:43 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/13 12:01:52 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-
-
-// int	get_player_position(t_game *game)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = -1;
-// 	while (++i < game->m_h)
-// 	{
-// 		j = -1;
-// 		while (++j < game->m_w)
-// 		{
-// 			if (game->map[i][j] == 'N' || game->map[i][j] == 'S' || game->map[i][j] == 'W' \
-// 				|| game->map[i][j] == 'E')
-// 			{
-// 				if (game->map[i][j] == 'N')
-// 					game->player->dir = deg_to_rad(270);
-// 				else if (game->map[i][j] == 'S')
-// 					game->player->dir = deg_to_rad(90);
-// 				else if (game->map[i][j] == 'W')
-// 					game->player->dir = deg_to_rad(180);
-// 				else
-// 					game->player->dir = deg_to_rad(0);
-// 				return (i * game->m_w + j);	
-// 			}
-// 		}
-// 	}
-// 	return (-1);
-// }
 
 int find_player_position(t_game *game)
 {
