@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:32 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/14 15:06:46 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:31:40 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,101 +43,21 @@ void r_floor(t_game *g, int j, int wall_height, int rayIndex)
     }
 }
 
-void renderWallSection(t_game *g, /*double offset_x, double offset_y, int ot_x, int j,*//* int h, int dir,*/ t_ray *ray, double wall_height) {
-    
-	// int color;
-	double offset_x;
-	// double offset_y;
-    int h;
-	// int	ot_x;
-	// int	dir;
-	// int j;
-	
-	h = (g->height - wall_height) / 2;
-	offset_x = off_x(ray);
-	// ot_x = 0;
-	// color = 0;
-	// dir = _dir(ray);
-	// j = 0;
-	// while(j < wall_height)
-	// {
-	// 	if (ray->is_hz_hit  && ray->is_ray_fup)
-	// 	{
-	// 		offset_y = j * (g->no_h / wall_height);
-	// 		ot_x = offset_x * (g->no_w / DM);
-	// 		if(ot_x + offset_y * g->no_w < g->no_w * g->no_h && ot_x + offset_y * g->no_w > 0 
-	// 			&& j + h < g->height && j + h > 0)
-	// 		{
-	// 			color = g->north.addr[((int)offset_y * g->no_w) + (int)ot_x];
-	// 			img_pix_put(g, ray->index, j + h, color);
-	// 		}
-	// 	}
-	// 	else if (ray->is_hz_hit && ray->is_ray_fdw)
-	// 	{
-	// 		offset_y = j * (g->so_h / wall_height);
-	// 		ot_x = offset_x * (g->so_w / DM);
-
-	// 		if(ot_x + offset_y * g->so_w < g->so_w * g->so_h && ot_x + offset_y * g->so_w > 0 
-	// 			&& j + h < g->height && j + h > 0)
-	// 		{
-	// 			color = g->south.addr[((int)offset_y * g->so_w) + (int)ot_x];
-	// 			img_pix_put(g, ray->index, j + h, color);
-	// 		}
-	// 	}
-	// 	j++;
-	// }
-	r_so_no(g, ray, offset_x, wall_height);
-	// j = 0;
-	// while(j < wall_height)
-	// {
-	// 	if (ray->is_vc_hit && ray->is_ray_flf)
-	// 	{
-	// 		offset_y = j * (g->we_h / wall_height);
-	// 		ot_x = offset_x * (g->we_w / DM);
-
-	// 		if(ot_x + offset_y * g->we_w < g->we_w * g->we_h && ot_x + offset_y * g->we_w > 0 
-	// 			&& j + h < g->height && j + h > 0)
-	// 		{
-	// 			color = g->west.addr[((int)offset_y * g->we_w) + (int)ot_x];
-	// 			img_pix_put(g, ray->index, j + h, color);
-	// 		}
-    // 	}
-	// 	else if (ray->is_vc_hit && ray->is_ray_frt)
-	// 	{
-	// 		offset_y = j * (g->ea_h / wall_height);
-	// 		ot_x = offset_x * (g->ea_w / DM);
-
-	// 		if(ot_x + offset_y * g->ea_w < g->ea_w * g->ea_h && ot_x + offset_y * g->ea_w > 0 
-	// 			&& j + h < g->height && j + h > 0)
-	// 		{
-	// 			color = g->east.addr[((int)offset_y * g->ea_w) + (int)ot_x];
-	// 			img_pix_put(g, ray->index, j + h, color);
-	// 		}
-	// 	}
-	// 	j++;
-	// }
-	r_we_ea(g, ray, offset_x, wall_height);
-}
-
-
-
-void renderWal(t_game *g, double wall_height, t_ray *ray/*, int dir*/)
+void renderWallSection(t_game *g, t_ray *ray, double wall_height)
 {
-    // double offset_x;
-    // int j;
-	// int ot_x;
-	// double offset_y;
-    // int h;
-
-	// h = (g->height - wall_height) / 2;
+    int h;
+	// double offset_x;
+	
 	// offset_x = off_x(ray);
-    // r_ceiling_floor(g, wall_height, ray->index);
-        // ot_x = offset_x * (g->no_w / DM);
-        // offset_y = j * (g->no_h / wall_height);
-    renderWallSection(g,/* offset_x, offset_y, ot_x, j,*/ /*h, dir,*/ ray, wall_height);
-
+	h = (g->height - wall_height) / 2;
+	r_so_no(g, ray, wall_height);
+	// r_we_ea(g, ray, offset_x, wall_height);
 }
 
+// void renderWal(t_game *g, double wall_height, t_ray *ray/*, int dir*/)
+// {
+//     renderWallSection(g, ray, wall_height);
+// }
 
 void	handle_hit(t_ray *ray)
 {
@@ -164,7 +84,6 @@ void	render_rays(t_game *g)
 {
 	t_ray	*ray;
 	double	wall_height;
-	// int	dir;
 	ray = malloc(sizeof(t_ray));
 	if (ray == NULL)
 		return ;
@@ -188,9 +107,8 @@ void	render_rays(t_game *g)
 		wall_height /= cos(g->player->dir - ray->ray_ang);
 		handle_hit(ray);
 		r_ceiling(g, wall_height, ray->index);
-	    renderWallSection(g,/* offset_x, offset_y, ot_x, j,*/ /*h, dir,*/ ray, wall_height);
-		// dir = _dir(ray);
-		// renderWal(g, wall_height, ray/*, dir*/);
+	    renderWallSection(g, ray, wall_height);
+		// renderWal(g, wall_height, ray);
 		ray->ray_ang += deg_to_rad(g->player->fov / g->width);
 		ray->index++;
 	}
