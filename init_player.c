@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:33:54 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/13 12:01:52 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/14 13:04:10 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void set_player_direction(t_game *game, char direction)
     else if (direction == 'W')
         game->player->dir = deg_to_rad(180);
     else
-        game->player->dir = deg_to_rad(0);      
+        game->player->dir = deg_to_rad(0);     
 }
 
 int get_player_position(t_game *game)
