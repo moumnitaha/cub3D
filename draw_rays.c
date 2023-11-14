@@ -6,16 +6,11 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:32 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/14 15:31:40 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:44:09 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-void	img_pix_put(t_game *g, int x, int y, int color)
-{
-	g->img->addr[y * (int)g->width + x] = color;
-}
 
 void r_ceiling(t_game *g, int wall_height, int rayIndex)
 {
@@ -42,23 +37,6 @@ void r_floor(t_game *g, int j, int wall_height, int rayIndex)
         j++;
     }
 }
-
-void renderWallSection(t_game *g, t_ray *ray, double wall_height)
-{
-    int h;
-	// double offset_x;
-	
-	// offset_x = off_x(ray);
-	h = (g->height - wall_height) / 2;
-	r_so_no(g, ray, wall_height);
-	// r_we_ea(g, ray, offset_x, wall_height);
-}
-
-// void renderWal(t_game *g, double wall_height, t_ray *ray/*, int dir*/)
-// {
-//     renderWallSection(g, ray, wall_height);
-// }
-
 void	handle_hit(t_ray *ray)
 {
 	if (ray->is_hz_hit && ray->is_vc_hit)
@@ -106,9 +84,7 @@ void	render_rays(t_game *g)
 		wall_height = (DM / ray->dist) * ray->d_to_pp;
 		wall_height /= cos(g->player->dir - ray->ray_ang);
 		handle_hit(ray);
-		r_ceiling(g, wall_height, ray->index);
-	    renderWallSection(g, ray, wall_height);
-		// renderWal(g, wall_height, ray);
+		render_wall(g, ray, wall_height);
 		ray->ray_ang += deg_to_rad(g->player->fov / g->width);
 		ray->index++;
 	}

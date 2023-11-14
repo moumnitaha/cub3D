@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/14 15:31:08 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:42:44 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,15 +189,9 @@ void		set_txt(t_game *game, char c, char *path);
 char		*_path(char *path);
 unsigned int	get_txt_color(t_game *g, int x, int y);
 void			xpm_files(t_game *g);
-int n_color(t_game *g, int x, int y, int j);
 double  off_x(t_ray *ray);
-int _dir(t_ray *ray);
 void	wall_tex(t_game *g, double wall_height, t_ray *ray, int dir);
-void	r_so_no(t_game *g, t_ray *ray,/* double offset_x, */double wall_height);
-// void    r_we_ea(t_game *g, t_ray *ray, double offset_x, double wall_height);
+void	render_wall(t_game *g, t_ray *ray, double wall_height);
 void r_floor(t_game *g, int j, int wall_height, int rayIndex);
-// unsigned int	e_color(t_game *game, int x, int y);
-// unsigned int	s_color(t_game *game, int x, int y);
-// unsigned int	w_color(t_game *game, int x, int y);
-
+void r_ceiling(t_game *g, int wall_height, int rayIndex);
 #endif
