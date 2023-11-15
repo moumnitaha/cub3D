@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:39:27 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/11/12 15:28:21 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/15 10:18:45 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	get_color(char *line)
 	return ((rgb[0] << 16) | (rgb[1] << 8) | rgb[2]);
 }
 
-
 void	set_txt(t_game *game, char c, char *path)
 {
 	if (c == 'N')
@@ -85,12 +84,12 @@ void	m_elem(t_game *game, char c, char *value, char l)
 		_error("Error: Duplicate values\n");
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E' )
 	{
-		printf("texture : %c%c %s\n", c, l, value);
+		printf("texture : %c%c %s\n", c, l, value); // printf
 		set_txt(game, c, value); 
 	}
 	else if (c == 'F' || c == 'C')
 	{
-		printf("texture : %c%c %s\n", c, l, value);
+		printf("texture : %c%c %s\n", c, l, value); // printf
 		if (c == 'F')
 			game->floor_c = get_color(value);
 		else

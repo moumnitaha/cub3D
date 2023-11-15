@@ -6,37 +6,38 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:32 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/14 16:52:07 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/15 09:54:18 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void r_ceiling(t_game *g, int wall_height, int rayIndex)
+void	r_ceiling(t_game *g, int wall_height, int rayIndex)
 {
-    int j;
-	int h;
+	int	j;
+	int	h;
 
 	h = (g->height - wall_height) / 2;
 	j = 0;
-    while (j < h)
+	while (j < h)
 	{
-        img_pix_put(g, rayIndex, j, g->ceilling_c);
-        j++;
-    }
+		img_pix_put(g, rayIndex, j, g->ceilling_c);
+		j++;
+	}
 }
 
-void r_floor(t_game *g, int j, int wall_height, int rayIndex)
+void	r_floor(t_game *g, int j, int wall_height, int rayIndex)
 {
-	int h;
+	int	h;
 
 	h = (g->height - wall_height) / 2;
-    while (j + h < g->height)
+	while (j + h < g->height)
 	{
-        img_pix_put(g, rayIndex, j + h, g->floor_c);
-        j++;
-    }
+		img_pix_put(g, rayIndex, j + h, g->floor_c);
+		j++;
+	}
 }
+
 void	handle_hit(t_ray *ray)
 {
 	if (ray->is_hz_hit && ray->is_vc_hit)
@@ -64,17 +65,14 @@ void	render_rays(t_game *g)
 {
 	t_ray	*ray;
 	double	wall_height;
+
 	ray = malloc(sizeof(t_ray));
 	if (ray == NULL)
 		return ;
 	ray->index = 0;
 	g->player->dir = fix_ang(g->player->dir);
 	ray->ray_ang = g->player->dir - deg_to_rad(g->player->fov / 2);
-	mlx_clear_window(g->mlx, g->win);
 	xpm_files(g);
-	mlx_destroy_image(g->mlx, g->img->mlx_img);
-	g->img->mlx_img = mlx_new_image(g->mlx, g->width, g->height);
-    g->img->addr = (int *)mlx_get_data_addr(g->img->mlx_img, &g->img->bpp, &g->img->line_len, &g->img->endian);
 	while (ray->ray_ang < g->player->dir + deg_to_rad(g->player->fov / 2) 
 		&& ray->index < g->width)
 	{

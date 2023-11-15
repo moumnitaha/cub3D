@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:18 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/12 17:15:37 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/15 09:39:36 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	main(int ac, char **av)
 			init_game(g, p, myimg);
 			init_player(g);
 			main_hooks(g);
+			mlx_clear_window(g->mlx, g->win);
+			mlx_destroy_image(g->mlx, g->img->mlx_img);
 		}
 		else
 			write(2, "invalid map\n", 12);

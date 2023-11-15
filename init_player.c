@@ -6,58 +6,57 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:33:54 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/14 13:04:10 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/15 09:57:04 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-
-int find_player_position(t_game *game)
+int	find_player_position(t_game *game)
 {
-    int i;
-    int j;
+	int	i;
+	int	j;
 
-    i = -1;
-    while (++i < game->m_h)
-    {
-        j = -1;
-        while (++j < game->m_w)
-        {
-            if (game->map[i][j] == 'N' || game->map[i][j] == 'S'
-                || game->map[i][j] == 'W' || game->map[i][j] == 'E')
-                return (i * game->m_w + j);
-        }
-    }
-    return (-1);
+	i = -1;
+	while (++i < game->m_h)
+	{
+		j = -1;
+		while (++j < game->m_w)
+		{
+			if (game->map[i][j] == 'N' || game->map[i][j] == 'S'
+				|| game->map[i][j] == 'W' || game->map[i][j] == 'E')
+				return (i * game->m_w + j);
+		}
+	}
+	return (-1);
 }
 
-void set_player_direction(t_game *game, char direction)
+void	set_player_direction(t_game *game, char direction)
 {
-    if (direction == 'N')
-        game->player->dir = deg_to_rad(270);
-    else if (direction == 'S')
-        game->player->dir = deg_to_rad(90);
-    else if (direction == 'W')
-        game->player->dir = deg_to_rad(180);
-    else
-        game->player->dir = deg_to_rad(0);     
+	if (direction == 'N')
+		game->player->dir = deg_to_rad(270);
+	else if (direction == 'S')
+		game->player->dir = deg_to_rad(90);
+	else if (direction == 'W')
+		game->player->dir = deg_to_rad(180);
+	else
+		game->player->dir = deg_to_rad(0);
 }
 
-int get_player_position(t_game *game)
+int	get_player_position(t_game *game)
 {
-    int i;
-    int position;
-    int j;
+	int	i;
+	int	position;
+	int	j;
 
-    position = find_player_position(game);    
-    if (position != -1)
-    {
-        i = position / game->m_w;
-        j = position % game->m_w;
-        set_player_direction(game, game->map[i][j]);
-    }
-    return (position);
+	position = find_player_position(game);
+	if (position != -1)
+	{
+		i = position / game->m_w;
+		j = position % game->m_w;
+		set_player_direction(game, game->map[i][j]);
+	}
+	return (position);
 }
 
 void	init_player(t_game *game)
