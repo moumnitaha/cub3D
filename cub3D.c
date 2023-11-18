@@ -6,11 +6,46 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:18 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/15 09:39:36 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/18 11:51:56 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+void	validate_rgb(int value)
+{
+	if (value < 0 || value > 255)
+		_error("Error: Invalid Color 1\n");
+}
+
+int	extract_rgb(char *line, int *rgb, int *j)
+{
+	int	i;
+	int	start;
+
+	i = 0;
+	while (line[i])
+	{
+		while (line[i] && !ft_isdigit(line[i]))
+		{
+			if (line[i] == ',')
+			{
+				(*j)++;
+				if (*j > 2)
+					_error("Error: Invalid Color 2\n");
+			}
+			else if (line[i] != ' ' && line[i] != '\n')
+				_error("Error: Invalid Color 2\n");
+			i++;
+		}
+		start = i;
+		while (line[i] && ft_isdigit(line[i]))
+			i++;
+		rgb[*j] = ft_atoi(line + start);
+		validate_rgb(rgb[*j]);
+	}
+	return (i);
+}
 
 void	main_hooks(t_game *g)
 {

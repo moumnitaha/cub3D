@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:39:27 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/11/15 10:18:45 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/18 11:52:32 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,10 @@ int	_colors(char *line, int *rgb)
 {
 	int	i;
 	int	j;
-	int	start;
 
-	j = 0;
 	i = 0;
-	while (line[i])
-	{
-		while (line[i] && !ft_isdigit(line[i]))
-		{
-			if (line[i] == ',')
-			{
-				j++;
-				if (j > 2)
-					_error("Error: Invalid Color 2\n");
-			}
-			else if (line[i] != ' ' && line[i] != '\n')
-				_error("Error: Invalid Color 2\n");
-			i++;
-		}
-		start = i;
-		while (line[i] && ft_isdigit(line[i]))
-			i++;
-		rgb[j] = ft_atoi(line + start);
-		if ((i - start > 3) || rgb[j] < 0 || rgb[j] > 255)
-			_error("Error: Invalid Color 1\n");
-	}
+	j = 0;
+	i = extract_rgb(line, rgb, &j);
 	return (i);
 }
 
@@ -58,6 +37,7 @@ int	get_color(char *line)
 	{
 		_error("Error: Invalid Color 3\n");
 	}
+	free(line);
 	return ((rgb[0] << 16) | (rgb[1] << 8) | rgb[2]);
 }
 
@@ -75,7 +55,7 @@ void	set_txt(t_game *game, char c, char *path)
 		_error("Error: Invalid Texture Key\n");
 }
 
-void	m_elem(t_game *game, char c, char *value, char l)
+void	m_elem(t_game *game, char c, char *value)
 {
 	if ((c == 'N' && game->no_txt) || (c == 'S' && game->so_txt)
 		|| (c == 'W' && game->we_txt) || (c == 'E' && game->ea_txt)
@@ -84,12 +64,10 @@ void	m_elem(t_game *game, char c, char *value, char l)
 		_error("Error: Duplicate values\n");
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E' )
 	{
-		printf("texture : %c%c %s\n", c, l, value); // printf
 		set_txt(game, c, value); 
 	}
 	else if (c == 'F' || c == 'C')
 	{
-		printf("texture : %c%c %s\n", c, l, value); // printf
 		if (c == 'F')
 			game->floor_c = get_color(value);
 		else
@@ -121,7 +99,6 @@ int	_line(t_game *game, char *line, int l)
 	if (!value)
 		return (0);
 	ft_strlcpy(value, line + start, end - start + 1);
-	m_elem(game, c, value, *(line - l + 1));
-	// free(value);
+	m_elem(game, c, value);
 	return (1);
 }

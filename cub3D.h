@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/15 09:59:55 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/18 11:52:15 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,8 @@ int				maplen(int fd);
 int				p_name(char *s);
 int				ft_open(char *file, int perm, t_game *game);
 int				get_info(t_game *game, char *line);
+void			validate_rgb(int value);
+int				extract_rgb(char *line, int *rgb, int *j);
 int				_line(t_game *game, char *line, int l);
 int				get_color(char *line);
 int				_colors(char *line, int *rgb);
