@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_textures.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 13:03:25 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/11/15 10:03:25 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/20 12:36:07 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	img_pix_put(t_game *g, int x, int y, int color)
 
 void	xpm_files(t_game *g)
 {
+	mlx_destroy_image(g->mlx, g->img->mlx_img);
+	mlx_clear_window(g->mlx, g->win);
 	g->img->mlx_img = mlx_new_image(g->mlx, g->width, g->height);
 	g->img->addr = (int *)mlx_get_data_addr(g->img->mlx_img,
 			&g->img->bpp, &g->img->line_len, &g->img->endian);

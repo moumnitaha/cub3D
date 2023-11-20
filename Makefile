@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+         #
+#    By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/21 13:47:28 by tmoumni           #+#    #+#              #
-#    Updated: 2023/11/18 11:46:40 by akhaliss         ###   ########.fr        #
+#    Updated: 2023/11/20 13:54:46 by tmoumni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ MFLAGS = -lmlx -framework OpenGL -framework AppKit -O3
 I = -I/usr/include -Imlx_linux -O3
 L = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
-SRCS = cub3D.c draw_rays.c fixAngle.c hzIntersection.c initRay.c map_check.c mlx_params.c\
+SRCS = cub3D.c draw_rays.c math.c hzIntersection.c init_ray.c map_check.c mlx_params.c\
 		init_player.c key_press.c mlx_draws.c mouse_move.c map_check_2.c\
 		vcIntersection.c init_game.c mlx_draws2.c\
     	utils.c gnl/get_next_line.c gnl/get_next_line_utils.c utils/ft_1.c utils/ft_2.c \

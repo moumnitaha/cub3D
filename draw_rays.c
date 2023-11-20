@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_rays.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:32 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/15 09:54:18 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/20 13:52:15 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ void	r_ceiling(t_game *g, int wall_height, int rayIndex)
 	}
 }
 
-void	r_floor(t_game *g, int j, int wall_height, int rayIndex)
+void	r_floor(t_game *g, int wall_height, int rayIndex)
 {
 	int	h;
+	int	j;
 
+	j = wall_height;
 	h = (g->height - wall_height) / 2;
 	while (j + h < g->height)
 	{
@@ -49,7 +51,7 @@ void	handle_hit(t_ray *ray)
 	}
 }
 
-void	handle_ray_dis(t_ray *ray)
+void	handle_ray_dis(t_game *g, t_ray *ray, double *wall_height)
 {
 	if (ray->is_hz_hit && ray->is_vc_hit)
 		ray->dist = fmin(ray->h_hit_dis, ray->v_hit_dis);
@@ -59,6 +61,8 @@ void	handle_ray_dis(t_ray *ray)
 		ray->dist = ray->v_hit_dis;
 	else
 		ray->dist = INFINITY;
+	*wall_height = (DM / ray->dist) * ray->d_to_pp;
+	*wall_height /= cos(g->player->dir - ray->ray_ang);
 }
 
 void	render_rays(t_game *g)
@@ -80,9 +84,7 @@ void	render_rays(t_game *g)
 		horizontal_intersection(g, ray);
 		vertical_intersection(g, ray);
 		ray->d_to_pp = (g->width / 2) / tan(deg_to_rad(g->player->fov / 2));
-		handle_ray_dis(ray);
-		wall_height = (DM / ray->dist) * ray->d_to_pp;
-		wall_height /= cos(g->player->dir - ray->ray_ang);
+		handle_ray_dis(g, ray, &wall_height);
 		handle_hit(ray);
 		render_wall(g, ray, wall_height);
 		ray->ray_ang += deg_to_rad(g->player->fov / g->width);
