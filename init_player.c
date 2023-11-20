@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:33:54 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/20 13:57:01 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/20 13:58:59 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int	get_player_position(t_game *game)
 	{
 		i = position / game->m_w;
 		j = position % game->m_w;
-		set_player_direction(game, game->map[i][j]);
 		if (game->map[i][j] == 'N')
 			game->player->dir = deg_to_rad(270);
 		else if (game->map[i][j] == 'S')

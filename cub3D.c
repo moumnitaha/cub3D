@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:18 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/18 11:51:56 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:44:43 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,15 @@ int	main(int ac, char **av)
 	t_player	*p;
 	t_img		*myimg;
 
-	g = malloc(sizeof(t_game));
-	p = malloc(sizeof(t_player));
-	myimg = malloc(sizeof(t_img));
 	if (ac != 2)
 		write(2, "invalid path\n", 13);
 	else
 	{
+		g = malloc(sizeof(t_game));
 		if (cub(av[1], g))
 		{
+			p = malloc(sizeof(t_player));
+			myimg = malloc(sizeof(t_img));
 			g->mlx = mlx_init();
 			init_game(g, p, myimg);
 			init_player(g);

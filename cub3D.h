@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/20 12:33:02 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/20 15:40:31 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,4 +196,5 @@ void			wall_tex(t_game *g, double wall_height, t_ray *ray, int dir);
 void			render_wall(t_game *g, t_ray *ray, double wall_height);
 void			r_floor(t_game *g, int wall_height, int rayIndex);
 void			r_ceiling(t_game *g, int wall_height, int rayIndex);
+void			free_mem(t_game *game);
 #endif

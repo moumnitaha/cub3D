@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:32 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/20 13:52:15 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/20 14:18:40 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ void	handle_ray_dis(t_game *g, t_ray *ray, double *wall_height)
 		ray->dist = ray->h_hit_dis;
 	else if (ray->is_vc_hit)
 		ray->dist = ray->v_hit_dis;
-	else
-		ray->dist = INFINITY;
 	*wall_height = (DM / ray->dist) * ray->d_to_pp;
 	*wall_height /= cos(g->player->dir - ray->ray_ang);
 }
@@ -84,8 +82,8 @@ void	render_rays(t_game *g)
 		horizontal_intersection(g, ray);
 		vertical_intersection(g, ray);
 		ray->d_to_pp = (g->width / 2) / tan(deg_to_rad(g->player->fov / 2));
-		handle_ray_dis(g, ray, &wall_height);
 		handle_hit(ray);
+		handle_ray_dis(g, ray, &wall_height);
 		render_wall(g, ray, wall_height);
 		ray->ray_ang += deg_to_rad(g->player->fov / g->width);
 		ray->index++;

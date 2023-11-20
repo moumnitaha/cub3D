@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:24:05 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/08 18:12:34 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/20 14:20:08 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ int	key_press(int keycode, t_game *game)
 {
 	if (keycode == KEY_ESC)
 		exit_game(game);
-	if (keycode == KEY_UP)
+	if (keycode == KEY_W)
 		game->player->walk_dir = 1;
-	if (keycode == KEY_DOWN)
+	if (keycode == KEY_S)
 		game->player->walk_dir = -1;
 	if (keycode == KEY_LEFT)
 		game->player->turn_dir = -game->player->turn_speed;
@@ -73,9 +73,9 @@ int	key_press(int keycode, t_game *game)
 
 int	key_release(int keycode, t_game *game)
 {
-	if (keycode == KEY_UP)
+	if (keycode == KEY_W)
 		game->player->walk_dir = 0;
-	if (keycode == KEY_DOWN)
+	if (keycode == KEY_S)
 		game->player->walk_dir = 0;
 	if (keycode == KEY_LEFT)
 		game->player->turn_dir = 0;
