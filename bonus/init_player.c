@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:33:54 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/21 12:32:53 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/21 13:54:24 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,8 @@ void	init_player(t_game *game)
 	y = (get_player_position(game) / game->m_w) * DM + (DM / 2);
 	game->player->x = x;
 	game->player->y = y;
-	game->player->m_x = 0;
-	game->player->m_y = 0;
+	game->player->m_x = x;
+	game->player->m_y = y;
 	game->player->fov = 60;
 	game->player->walk_dir = 0;
 	game->player->turn_dir = 0;
