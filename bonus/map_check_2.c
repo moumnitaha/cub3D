@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 15:12:52 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/01 16:37:11 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/21 12:27:55 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,14 @@ bool	is_surrounded_by_walls(t_game *game)
 {
 	if (!check_firs_last(game))
 	{
-		printf("checkfirsNlast\n");
 		return (false);
 	}
 	if (!check_around_spaces(game))
 	{
-		printf("check_around_spaces\n");
 		return (false);
 	}
 	if (!check_columns(game))
 	{
-		printf("check_columns\n");
 		return (false);
 	}
 	return (true);

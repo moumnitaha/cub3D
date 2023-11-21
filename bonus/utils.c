@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:19:35 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/11/20 15:43:28 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/21 12:03:13 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ int	cub(char *av, t_game *game)
 	if (!is_surrounded_by_walls(game))
 	{
 		ft_putstr_fd("Error: ", 2);
-		ft_putstr_fd("The map is not completely surrounded by walls.\n", 2);
+		if (!game->map[0])
+			ft_putstr_fd("Map not found\n", 2);
+		else
+			ft_putstr_fd("The map is not completely surrounded by walls.\n", 2);
 		free_mem(game);
 		return (0);
 	}

@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:18 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/20 15:44:43 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/21 13:00:07 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	main_hooks(t_game *g)
 {
 	mlx_hook(g->win, X_EVENT_KEY_PRESS, 0, &key_press, g);
 	mlx_hook(g->win, X_EVENT_KEY_RELEASE, 0, &key_release, g);
-	mlx_hook(g->win, 6, 1L << 6, mouse_move, g);
 	mlx_hook(g->win, X_EVENT_KEY_EXIT, 0, &escape_game, g);
 	mlx_loop_hook(g->mlx, main_draws, g);
 	mlx_loop(g->mlx);

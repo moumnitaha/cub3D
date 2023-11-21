@@ -1,8 +1,8 @@
 
-NO ./xpms/path_to_the_north_texture.xpm
-SO ./xpms/path_to_the_south_texture.xpm
-WE ./xpms/path_to_the_west_texture.xpm
-EA ./xpms/path_to_the_east_texture.xpm
+NO ../xpms/path_to_the_north_texture.xpm
+SO ../xpms/path_to_the_south_texture.xpm
+WE ../xpms/path_to_the_west_texture.xpm
+EA ../xpms/path_to_the_east_texture.xpm
 
 C 25, 158, 243
 F 250,250,250

@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/21 09:35:37 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/21 12:52:06 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <string.h>
 # include <math.h>
 # include <mlx.h>
-# include "gnl/get_next_line.h"
+# include "../gnl/get_next_line.h"
 # include "math.h"
 
 # define GRAYF 0x00778899
@@ -31,7 +31,7 @@
 # define GRAY 0x00C0C0C0
 # define BLUESKY 0x00199EF3
 
-# define DM				        18.75
+# define DM				        16
 # define X_EVENT_KEY_PRESS		2
 # define X_EVENT_KEY_RELEASE	3
 # define X_EVENT_KEY_EXIT		17
@@ -45,12 +45,6 @@
 # define KEY_RIGHT				124
 # define KEY_DOWN				125
 # define KEY_UP					126
-
-// # define KEY_ESC				65307
-// # define KEY_LEFT				65361
-// # define KEY_RIGHT				65363
-// # define KEY_DOWN				65364
-// # define KEY_UP					65362
 
 typedef struct s_img
 {

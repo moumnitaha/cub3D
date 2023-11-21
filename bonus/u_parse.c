@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:40:20 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/11/02 22:04:29 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/21 12:48:25 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,22 @@ void	read_map(char *file, t_game *game)
 {
 	char	*l_map;
 	char	**tab;
+	int		i;
+	int		j;
 
 	l_map = read_line(file, game);
+	i = 0;
+	j = ft_strlen(l_map) - 1;
+	while (l_map[i] && l_map[i] == '\n')
+		i++;
+	while (l_map[j] && l_map[j] == '\n')
+		j--;
+	while (l_map[i] && l_map[i + 1] && i < j)
+	{
+		if (l_map[i] == '\n' && l_map[i + 1] == '\n')
+			_error("Error: Invalid Map\n");
+		i++;
+	}
 	tab = ft_split(l_map, '\n');
 	_map(tab, game);
 	free(l_map);
