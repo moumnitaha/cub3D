@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:31:11 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/09 12:49:31 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/20 17:14:39 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_wall_collision(t_game *g, double x, double y)
 	int	x0;
 	int	y0;
 
-	if (x < 0 || x > g->width || y < 0 || y > g->height)
+	if (x < 0 || x > g->m_w * DM || y < 0 || y > g->m_h * DM)
 		return (-1);
 	x0 = floor(x / DM);
 	y0 = floor(y / DM);
