@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:29:24 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/20 15:00:48 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/21 09:59:56 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	init_ray_direction(t_ray *ray)
 	ray->is_vc_hit = false;
 	ray->h_hit_dis = INT_MAX;
 	ray->v_hit_dis = INT_MAX;
-	ray->dist = INFINITY;
+	ray->dist = 0;
 	if (fixed_angle > 0 && fixed_angle < M_PI)
 		ray->is_ray_fdw = true;
 	ray->is_ray_fup = !ray->is_ray_fdw;

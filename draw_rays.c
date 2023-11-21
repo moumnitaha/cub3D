@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:32 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/20 14:18:40 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/21 10:06:20 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	handle_hit(t_ray *ray)
 
 void	handle_ray_dis(t_game *g, t_ray *ray, double *wall_height)
 {
-	if (ray->is_hz_hit && ray->is_vc_hit)
+	if (ray->is_hz_hit == ray->is_vc_hit)
 		ray->dist = fmin(ray->h_hit_dis, ray->v_hit_dis);
 	else if (ray->is_hz_hit)
 		ray->dist = ray->h_hit_dis;

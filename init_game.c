@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 14:45:59 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/20 17:14:14 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/20 18:29:32 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_game(t_game *g, t_player*player, t_img *img)
 {
-	g->width = 1000;
+	g->width = 1200;
 	g->height = 600;
 	g->mini_map_w = g->width / 5;
 	g->mini_map_h = g->height / 5;

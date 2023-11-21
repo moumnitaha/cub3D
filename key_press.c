@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:24:05 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/20 14:20:08 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/20 19:30:41 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	is_wall(t_game *game, double x, double y)
 {
 	int	t;
 
-	t = 4;
+	t = DM / 3;
 	if (has_wall(game, x - t, y - t) || has_wall(game, x + t, y + t)
 		|| has_wall(game, x - t, y + t) || has_wall(game, x + t, y - t))
 		return (true);

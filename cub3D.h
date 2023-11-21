@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/20 15:40:31 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/21 09:35:37 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ typedef struct s_img
 typedef struct s_player {
 	double		x;
 	double		y;
+	double		m_x;
+	double		m_y;
 	double		dir;
 	double		lf;
 	double		fov;
