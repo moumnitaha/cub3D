@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 12:38:32 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/09 12:38:55 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/21 14:31:39 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	draw_player(t_game *g, double x_pos, double y_pos)
 	double	j;
 
 	p_ang = g->player->dir;
-	width = DM * 0.5;
-	height = DM * 0.5;
+	width = 10;
+	height = 10;
 	i = y_pos;
 	j = x_pos;
 	while (i < width + y_pos)
