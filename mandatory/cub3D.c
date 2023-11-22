@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:18 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/22 10:01:56 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/22 11:35:49 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ void	main_hooks(t_game *g)
 	mlx_loop(g->mlx);
 }
 
+void leaks()
+{
+	system("leaks cub3D");
+}
+
 int	main(int ac, char **av)
 {
 	t_game		*g;
@@ -64,28 +69,22 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 		_error("Error\ninvalid path\n");
-	else
+	g = malloc(sizeof(t_game));
+	if (!g)
+		return (0);
+	if (cub(av[1], g))
 	{
-		g = malloc(sizeof(t_game));
-		if (!g)
+		p = malloc(sizeof(t_player));
+		if (!p)
 			return (0);
-		if (cub(av[1], g))
-		{
-			p = malloc(sizeof(t_player));
-			if (!p)
-				return (0);
-			myimg = malloc(sizeof(t_img));
-			if (!myimg)
-				return (0);
-			g->mlx = mlx_init();
-			init_game(g, p, myimg);
-			init_player(g);
-			main_hooks(g);
-			mlx_clear_window(g->mlx, g->win);
-			mlx_destroy_image(g->mlx, g->img->mlx_img);
-		}
-		else
-			_error("Error\ninvalid map\n");
+		myimg = malloc(sizeof(t_img));
+		if (!myimg)
+			return (0);
+		g->mlx = mlx_init();
+		init_game(g, p, myimg);
+		init_player(g);
+		main_hooks(g);
 	}
+	atexit(leaks);
 	return (0);
 }

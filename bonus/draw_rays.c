@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:23:32 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/21 10:06:20 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/22 11:29:29 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,5 @@ void	render_rays(t_game *g)
 		ray->index++;
 	}
 	mlx_put_image_to_window(g->mlx, g->win, g->img->mlx_img, 0, 0);
-	free(ray);
+	free_imgs(g, ray);
 }
