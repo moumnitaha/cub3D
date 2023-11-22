@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 14:45:59 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/20 18:29:32 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/22 09:45:17 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	init_game(t_game *g, t_player*player, t_img *img)
 	g->img->addr = (int *)mlx_get_data_addr(g->img->mlx_img, &g->img->bpp, 
 			&g->img->line_len, &g->img->endian);
 	g->mini_map = malloc(sizeof(t_img));
+	if (!g->mini_map)
+		return ;
 	g->mini_map->mlx_img = mlx_new_image(g->mlx, g->mini_map_w, g->mini_map_h);
 	g->mini_map->addr = (int *)mlx_get_data_addr(g->mini_map->mlx_img, 
 			&g->mini_map->bpp, &g->mini_map->line_len, &g->mini_map->endian);

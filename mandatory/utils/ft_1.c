@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:39:00 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/11/02 10:33:41 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/22 09:34:00 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 
 int	ft_atoi(const char *str)
 {
-	int	i ;
-	int	res;
-	int	sign;
+	int		i;
+	size_t	res;
+	int		sign;
 
 	i = 0;
 	res = 0;
@@ -66,6 +66,8 @@ int	ft_atoi(const char *str)
 	while (str[i] && (str[i] >= 48 && str[i] <= 57))
 	{
 		res = (res * 10) + str[i] - '0';
+		if (res > LLONG_MAX)
+			return (-1);
 		i++;
 	}
 	return (res * sign);

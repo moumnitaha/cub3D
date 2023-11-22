@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   u_parse.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:40:20 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/11/21 12:48:25 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/22 09:56:21 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	get_info(t_game *game, char *line)
 				|| ft_strcmp(key, "F") == 0 || ft_strcmp(key, "C") == 0)
 				return (free(key), _line(game, line + j, j - i));
 			else
-				_error("Error: Invalid Format\n");
+				_error("Error\nInvalid Format\n");
 		}
 	}
 	return (0);
@@ -113,7 +113,7 @@ char	*read_line(char *file, t_game *game)
 		if (i >= 6)
 		{
 			if (_spaces(line))
-				write(2, "Map not found\n", 14);
+				_error("Error\nMap not found\n");
 			l_map = ft_strjoin(l_map, line);
 			i++;
 		}
@@ -141,7 +141,7 @@ void	read_map(char *file, t_game *game)
 	while (l_map[i] && l_map[i + 1] && i < j)
 	{
 		if (l_map[i] == '\n' && l_map[i + 1] == '\n')
-			_error("Error: Invalid Map\n");
+			_error("Error\nInvalid Map\n");
 		i++;
 	}
 	tab = ft_split(l_map, '\n');

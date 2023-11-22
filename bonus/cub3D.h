@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:22 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/21 12:52:06 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/22 09:38:48 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,4 +193,5 @@ void			render_wall(t_game *g, t_ray *ray, double wall_height);
 void			r_floor(t_game *g, int wall_height, int rayIndex);
 void			r_ceiling(t_game *g, int wall_height, int rayIndex);
 void			free_mem(t_game *game);
+void			xpms_(t_game *g);
 #endif
