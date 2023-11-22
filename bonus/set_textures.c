@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_textures.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 13:03:25 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/11/22 10:14:37 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/22 13:54:40 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,16 @@ void	xpms_(t_game *g)
 		_error("Error\nxpm protected");
 	g->north.addr = (int *)mlx_get_data_addr(g->north.mlx_img, &g->img->bits_pp,
 			&g->img->ll, &g->img->en);
+	if (!g->north.addr)
+		_error("Error\nxpm protected");
 	g->south.mlx_img = mlx_xpm_file_to_image(g->mlx, g->so_txt,
 			&g->so_w, &g->so_h);
 	if (!g->south.mlx_img)
 		_error("Error\nxpm protected");
 	g->south.addr = (int *)mlx_get_data_addr(g->south.mlx_img, &g->img->bits_pp,
 			&g->img->ll, &g->img->en);
+	if (!g->south.addr)
+		_error("Error\nxpm protected");
 }
 
 void	xpm_files(t_game *g)
@@ -47,12 +51,16 @@ void	xpm_files(t_game *g)
 		_error("Error\nxpm protected");
 	g->east.addr = (int *)mlx_get_data_addr(g->east.mlx_img, &g->img->bits_pp,
 			&g->img->ll, &g->img->en);
+	if (!g->east.addr)
+		_error("Error\nxpm protected");
 	g->west.mlx_img = mlx_xpm_file_to_image(g->mlx, g->we_txt,
 			&g->we_w, &g->we_h);
 	if (!g->west.mlx_img)
 		_error("Error\nxpm protected");
 	g->west.addr = (int *)mlx_get_data_addr(g->west.mlx_img, &g->img->bits_pp,
 			&g->img->ll, &g->img->en);
+	if (!g->west.addr)
+		_error("Error\nxpm protected");
 }
 
 double	off_x(t_ray *ray)
