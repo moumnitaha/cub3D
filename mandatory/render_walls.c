@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:40:26 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/11/21 12:48:05 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/22 14:24:03 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ void	r_no(t_game *g, t_ray *ray, double wall_height)
 
 	j = 0;
 	h = (g->height - wall_height) / 2;
-	while (j < wall_height && j + h <= g->height)
+	while (j < (wall_height - g->height) / 2)
+		j++;
+	while (j < wall_height && j + h < g->height)
 	{
 		if (ray->is_hz_hit && ray->is_ray_fup)
 		{
@@ -49,7 +51,9 @@ void	r_so(t_game *g, t_ray *ray, double wall_height)
 
 	j = 0;
 	h = (g->height - wall_height) / 2;
-	while (j < wall_height && j + h <= g->height)
+	while (j < (wall_height - g->height) / 2)
+		j++;
+	while (j < wall_height && j + h < g->height)
 	{
 		if (ray->is_hz_hit && ray->is_ray_fdw)
 		{
@@ -76,7 +80,9 @@ void	r_we(t_game *g, t_ray *ray, double wall_height)
 
 	j = 0;
 	h = (g->height - wall_height) / 2;
-	while (j < wall_height && j + h <= g->height)
+	while (j < (wall_height - g->height) / 2)
+		j++;
+	while (j < wall_height && j + h < g->height)
 	{
 		if (ray->is_vc_hit && ray->is_ray_flf)
 		{
@@ -103,7 +109,9 @@ void	r_ea(t_game *g, t_ray *ray, double wall_height)
 
 	j = 0;
 	h = (g->height - wall_height) / 2;
-	while (j < wall_height && j + h <= g->height)
+	while (j < (wall_height - g->height) / 2)
+		j++;
+	while (j < wall_height && j + h < g->height)
 	{
 		if (ray->is_vc_hit && ray->is_ray_frt)
 		{
