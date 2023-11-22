@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:18 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/22 11:35:49 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/22 13:47:16 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,6 @@ void	main_hooks(t_game *g)
 	mlx_loop(g->mlx);
 }
 
-void leaks()
-{
-	system("leaks cub3D");
-}
-
 int	main(int ac, char **av)
 {
 	t_game		*g;
@@ -85,6 +80,5 @@ int	main(int ac, char **av)
 		init_player(g);
 		main_hooks(g);
 	}
-	atexit(leaks);
 	return (0);
 }
