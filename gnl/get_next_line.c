@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 10:12:08 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/10/28 09:36:59 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/22 09:46:28 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ char	*trim_buff(char *buff)
 	if (nlindex == -1 || bufflen == nlindex + 1)
 		return (free(buff), NULL);
 	str = (char *)malloc(bufflen - nlindex + 1);
+	if (!str)
+		return (NULL);
 	while (count < bufflen - nlindex)
 	{
 		str[count] = buff[nlindex + 1 + count];

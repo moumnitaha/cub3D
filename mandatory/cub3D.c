@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 13:43:18 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/21 13:00:07 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/22 13:47:16 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	validate_rgb(int value)
 {
 	if (value < 0 || value > 255)
-		_error("Error: Invalid Color 1\n");
+		_error("Error\nInvalid Color\n");
 }
 
 int	extract_rgb(char *line, int *rgb, int *j)
@@ -32,10 +32,10 @@ int	extract_rgb(char *line, int *rgb, int *j)
 			{
 				(*j)++;
 				if (*j > 2)
-					_error("Error: Invalid Color 2\n");
+					_error("Error\nInvalid Color\n");
 			}
 			else if (line[i] != ' ' && line[i] != '\n')
-				_error("Error: Invalid Color 2\n");
+				_error("Error\nInvalid Color\n");
 			i++;
 		}
 		start = i;
@@ -63,23 +63,22 @@ int	main(int ac, char **av)
 	t_img		*myimg;
 
 	if (ac != 2)
-		write(2, "invalid path\n", 13);
-	else
+		_error("Error\ninvalid path\n");
+	g = malloc(sizeof(t_game));
+	if (!g)
+		return (0);
+	if (cub(av[1], g))
 	{
-		g = malloc(sizeof(t_game));
-		if (cub(av[1], g))
-		{
-			p = malloc(sizeof(t_player));
-			myimg = malloc(sizeof(t_img));
-			g->mlx = mlx_init();
-			init_game(g, p, myimg);
-			init_player(g);
-			main_hooks(g);
-			mlx_clear_window(g->mlx, g->win);
-			mlx_destroy_image(g->mlx, g->img->mlx_img);
-		}
-		else
-			write(2, "invalid map\n", 12);
+		p = malloc(sizeof(t_player));
+		if (!p)
+			return (0);
+		myimg = malloc(sizeof(t_img));
+		if (!myimg)
+			return (0);
+		g->mlx = mlx_init();
+		init_game(g, p, myimg);
+		init_player(g);
+		main_hooks(g);
 	}
 	return (0);
 }

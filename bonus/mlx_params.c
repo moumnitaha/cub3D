@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 19:17:27 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/05 09:44:44 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/22 10:52:49 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 int	exit_game(t_game *game)
 {
+	mlx_destroy_image(game->mlx, game->img->mlx_img);
+	mlx_destroy_image(game->mlx, game->mini_map->mlx_img);
+	mlx_clear_window(game->mlx, game->win);
 	mlx_destroy_window(game->mlx, game->win);
 	exit(0);
 }

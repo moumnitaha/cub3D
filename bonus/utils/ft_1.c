@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_1.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:39:00 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/11/02 10:33:41 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/22 10:46:31 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 
 int	ft_atoi(const char *str)
 {
-	int	i ;
-	int	res;
-	int	sign;
+	int		i ;
+	size_t	res;
+	int		sign;
 
 	i = 0;
 	res = 0;
@@ -66,6 +66,8 @@ int	ft_atoi(const char *str)
 	while (str[i] && (str[i] >= 48 && str[i] <= 57))
 	{
 		res = (res * 10) + str[i] - '0';
+		if (res > LLONG_MAX)
+			return (-1);
 		i++;
 	}
 	return (res * sign);
@@ -82,5 +84,13 @@ int	ft_strcmp(const char *s1, const char *s2)
 			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 		i++;
 	}
+	return (0);
+}
+
+int	is_whitspace(char c)
+{
+	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' 
+		| c == '\f' || c == '\r')
+		return (1);
 	return (0);
 }

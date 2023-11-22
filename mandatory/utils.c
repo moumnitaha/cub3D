@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:19:35 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/11/21 12:03:13 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/22 15:23:51 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	_spaces(char *line)
 {
 	while (*line)
 	{
-		if (*line != ' ' || *line != '\t'
-			|| *line != '\n')
+		if (*line != ' ' && *line != '\t'
+			&& *line != '\n')
 			return (0);
 		line++;
 	}
@@ -59,16 +59,15 @@ int	cub(char *av, t_game *game)
 
 	i = 0;
 	if (!p_name(av))
-		return (free(game), write(2, "Invalid map name\n", 17), 0);
+		return (free(game), _error("Error\nInvalid map name\n"), 0);
 	init_map(game);
 	read_map(av, game);
 	if (!is_surrounded_by_walls(game))
 	{
-		ft_putstr_fd("Error: ", 2);
 		if (!game->map[0])
-			ft_putstr_fd("Map not found\n", 2);
+			_error("Error\nMap not found\n");
 		else
-			ft_putstr_fd("The map is not completely surrounded by walls.\n", 2);
+			_error("Error\nThe map is not completely surrounded by walls.\n");
 		free_mem(game);
 		return (0);
 	}

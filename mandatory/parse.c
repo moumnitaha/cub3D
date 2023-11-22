@@ -6,7 +6,7 @@
 /*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:39:27 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/11/18 11:52:32 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/22 10:03:42 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	get_color(char *line)
 	i = _colors(line, rgb);
 	if (i == 0 || (i < ft_strlen(line) && ft_isdigit(line[i])))
 	{
-		_error("Error: Invalid Color 3\n");
+		_error("Error\nInvalid Color\n");
 	}
 	free(line);
 	return ((rgb[0] << 16) | (rgb[1] << 8) | rgb[2]);
@@ -52,7 +52,7 @@ void	set_txt(t_game *game, char c, char *path)
 	else if (c == 'E') 
 		game->ea_txt = _path(path);
 	else
-		_error("Error: Invalid Texture Key\n");
+		_error("Error\nInvalid Texture Key\n");
 }
 
 void	m_elem(t_game *game, char c, char *value)
@@ -61,7 +61,7 @@ void	m_elem(t_game *game, char c, char *value)
 		|| (c == 'W' && game->we_txt) || (c == 'E' && game->ea_txt)
 		|| (c == 'F' && game->floor_c != -1)
 		|| (c == 'C' && game->ceilling_c != -1))
-		_error("Error: Duplicate values\n");
+		_error("Error\nDuplicate values\n");
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E' )
 	{
 		set_txt(game, c, value); 
@@ -74,7 +74,7 @@ void	m_elem(t_game *game, char c, char *value)
 			game->ceilling_c = get_color(value);
 	}
 	else
-		_error("Error: Invalid Key\n");
+		_error("Error\nInvalid Key\n");
 }
 
 int	_line(t_game *game, char *line, int l)

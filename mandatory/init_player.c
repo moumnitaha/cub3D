@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
+/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:33:54 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/21 16:47:14 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/22 10:02:40 by akhaliss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,7 @@ void	init_player(t_game *game)
 
 	if (!check_map_chars(game) || get_chars_num(game) != 1)
 	{
-		ft_putstr_fd("Error\nInvalid map\n", 2);
-		exit(0);
+		_error("Error\nInvalid map\n");
 	}
 	x = (get_player_position(game) % game->m_w) * DM + (DM / 2);
 	y = (get_player_position(game) / game->m_w) * DM + (DM / 2);

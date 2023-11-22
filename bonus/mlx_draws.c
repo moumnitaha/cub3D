@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:31:11 by tmoumni           #+#    #+#             */
-/*   Updated: 2023/11/20 17:14:39 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/22 13:48:31 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ void	draw_map(t_game *g)
 
 int	main_draws(t_game *g)
 {
-	mlx_clear_window(g->mlx, g->win);
+	mlx_destroy_image(g->mlx, g->mini_map->mlx_img);
+	g->mini_map->mlx_img = mlx_new_image(g->mlx, g->mini_map_w, g->mini_map_h);
+	g->mini_map->addr = (int *)mlx_get_data_addr(g->mini_map->mlx_img, 
+			&g->mini_map->bpp, &g->mini_map->line_len, &g->mini_map->endian);
 	update_player(g);
 	render_rays(g);
 	draw_map(g);
