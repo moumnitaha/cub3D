@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 18:19:35 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/11/22 10:08:19 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/22 15:23:51 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	_spaces(char *line)
 {
 	while (*line)
 	{
-		if (*line != ' ' || *line != '\t'
-			|| *line != '\n')
+		if (*line != ' ' && *line != '\t'
+			&& *line != '\n')
 			return (0);
 		line++;
 	}
