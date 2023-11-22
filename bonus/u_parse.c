@@ -6,7 +6,7 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:40:20 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/11/22 15:31:45 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/22 15:42:19 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,24 +105,18 @@ char	*read_line(char *file, t_game *game)
 	i = 0;
 	l_map = ft_strdup("");
 	fd = ft_open(file, O_RDONLY, game);
-	while (1)
+	line = get_next_line(fd);
+	while (line)
 	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
 		if (i >= 6)
 		{
-			if (_spaces(line))
-				free(line);
-			else
-			{
+			if (!_spaces(line))
 				l_map = ft_strjoin(l_map, line);
-				free(line);
-			}
-			i++;
 		}
 		else if (!_spaces(line) && i < 6)
 			i += get_info(game, line);
+		free(line);
+		line = get_next_line(fd);
 	}
 	return (free(line), close(fd), l_map);
 }

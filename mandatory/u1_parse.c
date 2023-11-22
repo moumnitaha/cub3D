@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   u1_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 12:55:19 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/11/22 10:05:55 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/22 15:54:42 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	ft_open(char *file, int perm, t_game *game)
 	fd = open(file, perm);
 	if (fd < 0)
 	{
-		_error("Error\nWrong File\n");
+		_error("Error\nCan't open File\n");
 	}
 	fd_len = maplen(fd);
 	if (!fd_len)
