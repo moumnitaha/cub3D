@@ -6,11 +6,11 @@
 /*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:39:00 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/11/22 10:46:31 by tmoumni          ###   ########.fr       */
+/*   Updated: 2023/11/23 13:27:37 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3D.h"
+#include "../cub3D_bonus.h"
 
 void	ft_putstr_fd(char *s, int fd)
 {

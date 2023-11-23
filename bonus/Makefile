@@ -6,7 +6,7 @@
 #    By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/21 13:47:28 by tmoumni           #+#    #+#              #
-#    Updated: 2023/11/22 10:55:35 by tmoumni          ###   ########.fr        #
+#    Updated: 2023/11/23 13:27:27 by tmoumni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,17 +17,17 @@ CYAN = \033[1;36m
 END = \033[0m
 
 NAME = cub3D_bonus
-HEADER = cub3D.h
+HEADER = cub3D_bonus.h
 
 CC = cc
 FLAGS = -Wall -Wextra -Werror
 MFLAGS = -lmlx -framework OpenGL -framework AppKit
 
-SRCS = cub3D.c draw_rays.c math.c hzIntersection.c init_ray.c map_check.c mlx_params.c\
-		init_player.c key_press.c mlx_draws.c mouse_move.c map_check_2.c\
-		vcIntersection.c init_game.c mlx_draws2.c free_mem.c\
-    	utils.c ../gnl/get_next_line.c ../gnl/get_next_line_utils.c utils/ft_1.c utils/ft_2.c \
-		parse.c u_parse.c utils/ft_3.c u1_parse.c set_textures.c render_walls.c
+SRCS = cub3D_bn.c draw_rays_bn.c math_bn.c hzIntersection_bn.c init_ray_bn.c map_check_bn.c mlx_params_bn.c\
+		init_player_bn.c key_press_bn.c mlx_draws_bn.c mouse_move_bn.c map_check_2_bn.c\
+		vcIntersection_bn.c init_game_bn.c mlx_draws2_bn.c free_mem_bn.c\
+    	utils_bn.c ../gnl/get_next_line.c ../gnl/get_next_line_utils.c utils/ft_1.c utils/ft_2.c \
+		parse_bn.c u_parse_bn.c utils/ft_3.c u1_parse_bn.c set_textures_bn.c render_walls_bn.c
 OBJS_DIR = OBJS_FILES
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))

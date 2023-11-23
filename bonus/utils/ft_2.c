@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhaliss <akhaliss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmoumni <tmoumni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:39:06 by akhaliss          #+#    #+#             */
-/*   Updated: 2023/11/02 10:33:51 by akhaliss         ###   ########.fr       */
+/*   Updated: 2023/11/23 13:27:39 by tmoumni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3D.h"
+#include "../cub3D_bonus.h"
 
 static size_t	ft_lenw(char *c, char s, size_t j)
 {
